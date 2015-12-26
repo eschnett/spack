@@ -1,0 +1,48 @@
+--- libs/context/build/Jamfile.v2
++++ libs/context/build/Jamfile.v2
+@@ -90,7 +90,7 @@
+
+ actions gas64
+ {
+-    cpp -x assembler-with-cpp "$(>)" | as --64 -o "$(<)"
++    cpp -x assembler-with-cpp "$(>)" | as -o "$(<)"
+ }
+
+ actions gasx32
+--- tools/build/src/tools/gcc.jam
++++ tools/build/src/tools/gcc.jam
+@@ -823,8 +823,8 @@
+         toolset.flags $(toolset).link OPTIONS     $(condition)/<strip>on : -Wl,--strip-all   : unchecked ;
+         toolset.flags $(toolset).link RPATH       $(condition)           : <dll-path>        : unchecked ;
+         toolset.flags $(toolset).link RPATH_LINK  $(condition)           : <xdll-path>       : unchecked ;
+-        toolset.flags $(toolset).link START-GROUP $(condition)           : -Wl,--start-group : unchecked ;
+-        toolset.flags $(toolset).link END-GROUP   $(condition)           : -Wl,--end-group   : unchecked ;
++        toolset.flags $(toolset).link START-GROUP $(condition)           : : unchecked ;
++        toolset.flags $(toolset).link END-GROUP   $(condition)           : : unchecked ;
+
+         # gnu ld has the ability to change the search behaviour for libraries
+         # referenced by the -l switch. These modifiers are -Bstatic and
+@@ -858,10 +858,10 @@
+         # search patterns!
+
+         # On *nix mixing shared libs with static runtime is not a good idea.
+-        toolset.flags $(toolset).link FINDLIBS-ST-PFX
+-            $(condition)/<runtime-link>shared : -Wl,-Bstatic : unchecked ;
+-        toolset.flags $(toolset).link FINDLIBS-SA-PFX
+-            $(condition)/<runtime-link>shared : -Wl,-Bdynamic : unchecked ;
++        toolset.flags $(toolset).link FINDLIBS-ST-PFX
++            $(condition)/<runtime-link>shared : : unchecked ;
++        toolset.flags $(toolset).link FINDLIBS-SA-PFX
++            $(condition)/<runtime-link>shared : : unchecked ;
+
+         # On windows allow mixing of static and dynamic libs with static
+         # runtime is not a good idea.
+@@ -1018,7 +1018,7 @@
+ # Differs from 'link' above only by -shared.
+ actions link.dll bind LIBRARIES
+ {
+-    "$(CONFIG_COMMAND)" -L"$(LINKPATH)" -Wl,$(RPATH_OPTION:E=-R)$(SPACE)-Wl,$(RPATH) "$(.IMPLIB-COMMAND)$(<[1])" -o "$(<[-1])" $(HAVE_SONAME)-Wl,$(SONAME_OPTION)$(SPACE)-Wl,$(<[-1]:D=) -shared $(START-GROUP) "$(>)" "$(LIBRARIES)" $(FINDLIBS-ST-PFX) -l$(FINDLIBS-ST) $(FINDLIBS-SA-PFX) -l$(FINDLIBS-SA) $(END-GROUP) $(OPTIONS) $(USER_OPTIONS)
++    "$(CONFIG_COMMAND)" -L"$(LINKPATH)" -Wl,$(RPATH_OPTION:E=-R)$(SPACE)-Wl,$(RPATH) "$(.IMPLIB-COMMAND)$(<[1])" -o "$(<[-1])" -shared $(START-GROUP) "$(>)" "$(LIBRARIES)" $(FINDLIBS-ST-PFX) -l$(FINDLIBS-ST) $(FINDLIBS-SA-PFX) -l$(FINDLIBS-SA) $(END-GROUP) $(OPTIONS) $(USER_OPTIONS)
+ }
+
+ rule setup-threading ( targets * : sources * : properties * )
