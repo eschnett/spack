@@ -161,8 +161,9 @@ class Cactusext(Package):
         ["^"+dep+" %"+cactusext_compiler for dep in python_deps])
 
     # Options
-    # if sys.platform == "darwin":
+    if sys.platform == "darwin":
     #     deps["llvm"].append("~gold")
+        deps["llvm"].append("~compiler-rt ~libcxx ~lldb +shared_libs")
     # if (os.path.isfile("/usr/include/pmi.h") or
     #     os.path.isfile("/usr/slurm/include/pmi.h") or
     #     os.path.isfile("/usr/include/pmi2.h") or
