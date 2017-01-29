@@ -20,7 +20,8 @@ class Cactusext(Package):
     variant("charm", default=False, description="Enable Charm++")
     variant("funhpc", default=False, description="Enable FunHPC")
     variant("julia", default=False, description="Enable Julia")
-    variant("llvm", default=False, description="Enable LLVM")
+    # Cannot combine LLVM and GCC since both provide libgomp
+    # variant("llvm", default=False, description="Enable LLVM")
     # variant("scalasca", default=False, description="Enable Scalasca")
     variant("rust", default=False, description="Enable Rust")
     variant("simulationio", default=False, description="Enable SimulationIO")
@@ -53,7 +54,7 @@ class Cactusext(Package):
     whens["charm"] = ["+charm"]
     whens["funhpc"] = ["+funhpc"]
     whens["julia"] = ["+julia"]
-    whens["llvm"] = ["+llvm"]
+    # whens["llvm"] = ["+llvm"]
     whens["rust"] = ["+rust"]
     whens["simulationio"] = ["+simulationio"]
 
@@ -75,7 +76,7 @@ class Cactusext(Package):
     deps["jemalloc"] = []
     deps["julia"] = ["+hdf5", "+mpi"]   # "+plots", "+python", "@master"
     # deps["libsigsegv"] = []
-    deps["llvm"] = []
+    # deps["llvm"] = []
     deps["rust"] = []
     deps["tar"] = []
     deps["pkg-config"] = []
@@ -140,7 +141,7 @@ class Cactusext(Package):
     deps["charm"].append("%"+cactusext_compiler)
     deps["funhpc"].append("%"+cactusext_compiler)
     deps["julia"].append("%"+cactusext_compiler)
-    deps["llvm"].append("%"+cactusext_compiler)
+    # deps["llvm"].append("%"+cactusext_compiler)
     deps["rust"].append("%"+cactusext_compiler)
     deps["simulationio"].append("%"+cactusext_compiler)
 
@@ -161,9 +162,8 @@ class Cactusext(Package):
         ["^"+dep+" %"+cactusext_compiler for dep in python_deps])
 
     # Options
-    if sys.platform == "darwin":
-    #     deps["llvm"].append("~gold")
-        deps["llvm"].append("~compiler-rt ~libcxx ~lldb +shared_libs")
+    # if sys.platform == "darwin":
+    #     deps["llvm"].append("~compiler-rt ~libcxx ~lldb +shared_libs")
     # if (os.path.isfile("/usr/include/pmi.h") or
     #     os.path.isfile("/usr/slurm/include/pmi.h") or
     #     os.path.isfile("/usr/include/pmi2.h") or
