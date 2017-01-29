@@ -27,7 +27,7 @@ import inspect
 
 import llnl.util.tty as tty
 from llnl.util.filesystem import working_dir
-from spack.package import PackageBase
+from spack.package import PackageBase, run_after
 
 
 class MakefilePackage(PackageBase):
@@ -72,6 +72,7 @@ class MakefilePackage(PackageBase):
     #: phase
     install_targets = ['install']
 
+    @property
     def build_directory(self):
         """Returns the directory containing the main Makefile
 
@@ -89,15 +90,15 @@ class MakefilePackage(PackageBase):
         """Calls make, passing :py:attr:`~.MakefilePackage.build_targets`
         as targets.
         """
-        with working_dir(self.build_directory()):
+        with working_dir(self.build_directory):
             inspect.getmodule(self).make(*self.build_targets)
 
     def install(self, spec, prefix):
         """Calls make, passing :py:attr:`~.MakefilePackage.install_targets`
         as targets.
         """
-        with working_dir(self.build_directory()):
+        with working_dir(self.build_directory):
             inspect.getmodule(self).make(*self.install_targets)
 
     # Check that self.prefix is there after installation
-    PackageBase.sanity_check('install')(PackageBase.sanity_check_prefix)
+    run_after('install')(PackageBase.sanity_check_prefix)

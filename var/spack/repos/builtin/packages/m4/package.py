@@ -41,6 +41,8 @@ class M4(AutotoolsPackage):
 
     depends_on('libsigsegv', when='+sigsegv')
 
+    build_directory = 'spack-build'
+
     def _make_executable(self, name):
         return Executable(join_path(self.prefix.bin, name))
 
