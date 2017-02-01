@@ -25,14 +25,17 @@
 from spack import *
 
 
-class RThdata(RPackage):
-    """Contains data sets used in other packages Torsten Hothorn maintains."""
+class RDomc(RPackage):
+    """Provides a parallel backend for the %dopar% function using
+    the multicore functionality of the parallel package."""
 
-    homepage = "https://cran.r-project.org/package=TH.data"
-    url      = "https://cran.r-project.org/src/contrib/TH.data_1.0-7.tar.gz"
-    list_url = "https://cran.r-project.org/src/contrib/Archive/TH.data"
+    homepage = "https://cran.r-project.org/package=doMC"
+    url      = "https://cran.r-project.org/src/contrib/doMC_1.3.4.tar.gz"
+    list_url = "https://cran.r-project.org/src/contrib/Archive/doMC"
 
-    version('1.0-7', '3e8b6b1a4699544f175215aed7039a94')
+    version('1.3.4', 'f965b09add9056e84f99a831dc3af7d1')
 
-    depends_on('r-survival', type=('build', 'run'))
-    depends_on('r-mass', type=('build', 'run'))
+    depends_on('r@2.14.0:')
+
+    depends_on('r-foreach@1.2.0:', type=('build', 'run'))
+    depends_on('r-iterators@1.0.0:', type=('build', 'run'))
