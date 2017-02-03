@@ -117,7 +117,7 @@ class Cosmomc(Package):
             else:
                 shutil.copytree(entry, join_path(root, entry))
 
-    @AutotoolsPackage.sanity_check('install')
+    @run_after('install')
     def check_install(self):
         prefix = self.prefix
         spec = self.spec
