@@ -43,3 +43,7 @@ class Mpc(AutotoolsPackage):
             return "http://www.multiprecision.org/mpc/download/mpc-%s.tar.gz" % version
         else:
             return "https://ftp.gnu.org/gnu/mpc/mpc-%s.tar.gz" % version
+
+    def configure_args(self):
+        return ['--with-gmp=%s' % self.spec['gmp'].prefix,
+                '--with-mpfr=%s' % self.spec['mpfr'].prefix]
