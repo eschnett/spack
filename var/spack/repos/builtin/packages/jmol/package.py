@@ -23,34 +23,23 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 ##############################################################################
 from spack import *
+from distutils.dir_util import copy_tree
 
 
-class Nco(AutotoolsPackage):
-    """The NCO toolkit manipulates and analyzes data stored in
-    netCDF-accessible formats"""
+class Jmol(Package):
+    """Jmol: an open-source Java viewer for chemical structures in 3D
+    with features for chemicals, crystals, materials and biomolecules."""
 
-    homepage = "http://nco.sourceforge.net/"
-    url      = "https://github.com/nco/nco/archive/4.6.4.tar.gz"
+    homepage = "http://jmol.sourceforge.net/"
+    url      = "https://sourceforge.net/projects/jmol/files/Jmol/Version%2014.8/Jmol%2014.8.0/Jmol-14.8.0-binary.tar.gz"
 
-    version('4.6.4', '22f4e779d0011a9c0db90fda416c8e45')
-    version('4.6.3', '0e1d6616c65ed3a30c54cc776da4f987')
-    version('4.6.2', 'b7471acf0cc100343392f4171fb56113')
-    version('4.6.1', 'ef43cc989229c2790a9094bd84728fd8')
-    version('4.5.5', '9f1f1cb149ad6407c5a03c20122223ce')
+    version('14.8.0', '3c9f4004b9e617ea3ea0b78ab32397ea')
 
-    variant('doc', default=False, description='Build/install NCO TexInfo-based documentation')
+    depends_on('jdk', type='run')
 
-    # See "Compilation Requirements" at:
-    # http://nco.sourceforge.net/#bld
-    depends_on('netcdf')
-    depends_on('antlr@2.7.7+cxx')  # required for ncap2
-    depends_on('gsl')              # desirable for ncap2
-    depends_on('udunits2')         # allows dimensional unit transformations
+    def install(self, spec, prefix):
+        copy_tree('jmol-{0}'.format(self.version), prefix)
 
-    depends_on('flex', type='build')
-    depends_on('bison', type='build')
-    depends_on('texinfo@4.12:', type='build', when='+doc')
-
-    def configure_args(self):
-        spec = self.spec
-        return ['--{0}-doc'.format('enable' if '+doc' in spec else 'disable')]
+    def setup_environment(self, spack_env, run_env):
+        run_env.prepend_path('PATH', self.prefix)
+        run_env.set('JMOL_HOME', self.prefix)
