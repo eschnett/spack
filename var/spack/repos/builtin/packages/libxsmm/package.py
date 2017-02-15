@@ -32,10 +32,14 @@ class Libxsmm(Package):
     homepage = 'https://github.com/hfp/libxsmm'
     url      = 'https://github.com/hfp/libxsmm/archive/1.4.3.tar.gz'
 
+    version('1.7.1', 'a938335b1c2c90616dc72c2c1a5824ab')
     version('1.4.3', '9839bf0fb8be7badf1e97ce4c817149b')
     version('1.4.2', 'ea025761437f3b5c936821b9ca21ec31')
     version('1.4.1', '71648500ea4510529845d329091917df')
     version('1.4',   'b42f91bf5285e7ad0463446e55ebdc2b')
+
+    variant('header-only', default=True,
+            description='Produce header-only installation')
 
     def patch(self):
         kwargs = {'ignore_absent': False, 'backup': False, 'string': True}
@@ -51,16 +55,25 @@ class Libxsmm(Package):
         makefile.filter('FC = gfortran',    'FC ?= gfortran', **kwargs)
 
     def manual_install(self, prefix):
+        spec = self.spec
         install_tree('include', prefix.include)
-        install_tree('lib', prefix.lib)
+        if '+header-only' in spec and '@1.6.2:' in spec:
+            pass
+        else:
+            install_tree('lib', prefix.lib)
         install_tree('documentation', prefix.share + '/libxsmm/doc')
 
     def install(self, spec, prefix):
-        make_args = [
-            'ROW_MAJOR=0',
-            'INDICES_M={0}'.format(' '.join(str(i) for i in range(1, 25))),
-            'INDICES_N={0}'.format(' '.join(str(i) for i in range(1, 25))),
-            'INDICES_K={0}'.format(' '.join(str(i) for i in range(1, 25)))
-        ]
+        if '+header-only' in spec and '@1.6.2:' in spec:
+            make_args = [
+                'header-only'
+            ]
+        else:
+            make_args = [
+                'ROW_MAJOR=0',
+                'INDICES_M={0}'.format(' '.join(str(i) for i in range(1, 25))),
+                'INDICES_N={0}'.format(' '.join(str(i) for i in range(1, 25))),
+                'INDICES_K={0}'.format(' '.join(str(i) for i in range(1, 25)))
+            ]
         make(*make_args)
         self.manual_install(prefix)
