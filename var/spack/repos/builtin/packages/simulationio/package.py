@@ -11,7 +11,7 @@ class Simulationio(Package):
     version('master',
             git='https://github.com/eschnett/SimulationIO.git', branch='master')
 
-    variant('julia', default=True)
+    variant('julia', default=False)
     variant('python', default=True)
 
     depends_on('curl')
