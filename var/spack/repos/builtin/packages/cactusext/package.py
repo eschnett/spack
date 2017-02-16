@@ -57,6 +57,7 @@ class Cactusext(Package):
     # whens["llvm"] = ["+llvm"]
     whens["rust"] = ["+rust"]
     whens["simulationio"] = ["+simulationio"]
+    whens["simulationio+julia"] = ["+simulationio+julia"]
 
     # Configure dependencies for convenience
 
@@ -82,6 +83,7 @@ class Cactusext(Package):
     deps["pkg-config"] = []
     deps["python"] = []
     deps["simulationio"] = []
+    deps["simulationio+julia"] = []
 
     whens["gettext"] = ["+julia"]
     whens["git"] = ["+julia"]
