@@ -23,32 +23,26 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 ##############################################################################
 from spack import *
-import os
-
-from spack.pkg.builtin.intel import IntelInstaller
 
 
-class Daal(IntelInstaller):
-    """Intel Data Analytics Acceleration Library.
+class Libssh2(CMakePackage):
+    """libssh2 is a client-side C library implementing the SSH2 protocol"""
 
-    Note: You will have to add the download file to a
-    mirror so that Spack can find it. For instructions on how to set up a
-    mirror, see http://spack.readthedocs.io/en/latest/mirrors.html"""
+    homepage = "https://www.libssh2.org/"
+    url      = "https://www.libssh2.org/download/libssh2-1.7.0.tar.gz"
 
-    homepage = "https://software.intel.com/en-us/daal"
+    version('1.7.0', 'b01662a210e94cccf2f76094db7dac5c')
+    version('1.4.3', '071004c60c5d6f90354ad1b701013a0b') # CentOS7
 
-    version('2017.0.098', 'b4eb234de12beff4a5cba4b81ea60673',
-            url="file://%s/l_daal_2017.0.098.tgz" % os.getcwd())
-    version('2016.2.181', 'aad2aa70e5599ebfe6f85b29d8719d46',
-            url="file://%s/l_daal_2016.2.181.tgz" % os.getcwd())
-    version('2016.3.210', 'ad747c0dd97dace4cad03cf2266cad28',
-            url="file://%s/l_daal_2016.3.210.tgz" % os.getcwd())
+    variant('shared', default=True,
+            description="Build shared libraries")
 
-    def install(self, spec, prefix):
+    depends_on('cmake@2.8.11:', type='build')
+    depends_on('openssl')
+    depends_on('zlib')
+    depends_on('xz')
 
-        self.intel_prefix = os.path.join(prefix, "pkg")
-        IntelInstaller.install(self, spec, prefix)
-
-        daal_dir = os.path.join(self.intel_prefix, "daal")
-        for f in os.listdir(daal_dir):
-            os.symlink(os.path.join(daal_dir, f), os.path.join(self.prefix, f))
+    def cmake_args(self):
+        spec = self.spec
+        return [
+            '-DBUILD_SHARED_LIBS=%s' % ('YES' if '+shared' in spec else 'NO')]

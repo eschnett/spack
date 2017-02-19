@@ -23,32 +23,28 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 ##############################################################################
 from spack import *
-import os
-
-from spack.pkg.builtin.intel import IntelInstaller
 
 
-class Daal(IntelInstaller):
-    """Intel Data Analytics Acceleration Library.
+class PyGit2(PythonPackage):
+    """Pygit2 is a set of Python bindings to the libgit2 shared library,
+    libgit2 implements the core of Git.
+    """
 
-    Note: You will have to add the download file to a
-    mirror so that Spack can find it. For instructions on how to set up a
-    mirror, see http://spack.readthedocs.io/en/latest/mirrors.html"""
+    homepage = "http://www.pygit2.org/"
 
-    homepage = "https://software.intel.com/en-us/daal"
+    version('0.24.1', 'dd98b6a9fded731e36ca5a40484c8545',
+        url="https://pypi.python.org/packages/aa/56/84dcce942a48d4b7b970cfb7a779b8db1d904e5ec5f71e7a67a63a23a4e2/pygit2-0.24.1.tar.gz")
 
-    version('2017.0.098', 'b4eb234de12beff4a5cba4b81ea60673',
-            url="file://%s/l_daal_2017.0.098.tgz" % os.getcwd())
-    version('2016.2.181', 'aad2aa70e5599ebfe6f85b29d8719d46',
-            url="file://%s/l_daal_2016.2.181.tgz" % os.getcwd())
-    version('2016.3.210', 'ad747c0dd97dace4cad03cf2266cad28',
-            url="file://%s/l_daal_2016.3.210.tgz" % os.getcwd())
+    extends('python')
+    depends_on('py-setuptools', type='build')
+    # Version must match with libgit2
+    # See: http://www.pygit2.org/install.html
+    depends_on('libgit2@0.24:', when='@0.24:')
+    depends_on('py-six', type=('build', 'run'))
+    depends_on('py-cffi', type=('build', 'run'))
 
-    def install(self, spec, prefix):
-
-        self.intel_prefix = os.path.join(prefix, "pkg")
-        IntelInstaller.install(self, spec, prefix)
-
-        daal_dir = os.path.join(self.intel_prefix, "daal")
-        for f in os.listdir(daal_dir):
-            os.symlink(os.path.join(daal_dir, f), os.path.join(self.prefix, f))
+    def setup_environment(self, spack_env, run_env):
+        spec = self.spec
+        # http://www.pygit2.org/install.html
+        spack_env.set('LIBGIT2', spec['libgit2'].prefix)
+        spack_env.set('LIBGIT2_LIB', spec['libgit2'].prefix.lib)
