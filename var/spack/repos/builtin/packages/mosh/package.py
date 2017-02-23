@@ -25,34 +25,21 @@
 from spack import *
 
 
-class Jasper(AutotoolsPackage):
-    """Library for manipulating JPEG-2000 images"""
+class Mosh(AutotoolsPackage):
+    """Remote terminal application that allows roaming, supports intermittent
+    connectivity, and provides intelligent local echo and line editing of user
+    keystrokes. Mosh is a replacement for SSH. It's more robust and responsive,
+    especially over Wi-Fi, cellular, and long-distance links.
+    """
 
-    homepage = "https://www.ece.uvic.ca/~frodo/jasper/"
-    url = "https://www.ece.uvic.ca/~frodo/jasper/software/jasper-1.900.1.zip"
+    homepage = "https://mosh.org/"
+    url      = "https://mosh.org/mosh-1.2.6.tar.gz"
 
-    version('1.900.1', 'a342b2b4495b3e1394e161eb5d85d754')
+    version('1.2.6', 'bb4e24795bb135a754558176a981ee9e')
 
-    variant('shared', default=True,
-            description='Builds shared versions of the libraries')
-    variant('debug', default=False,
-            description='Builds debug versions of the libraries')
+    depends_on('protobuf')
+    depends_on('ncurses')
+    depends_on('zlib')
+    depends_on('openssl')
 
-    depends_on('libjpeg-turbo')
-
-    # Fixes a bug (still in upstream as of v.1.900.1) where an assertion fails
-    # when certain JPEG-2000 files with an alpha channel are processed
-    # see: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=469786
-    patch('fix_alpha_channel_assert_fail.patch')
-
-    def configure_args(self):
-        spec = self.spec
-        args = ['--mandir={0}'.format(spec.prefix.man)]
-
-        if '+shared' in spec:
-            args.append('--enable-shared')
-
-        if '+debug' not in spec:
-            args.append('--disable-debug')
-
-        return args
+    depends_on('perl', type='run')
