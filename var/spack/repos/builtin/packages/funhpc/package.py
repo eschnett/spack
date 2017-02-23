@@ -1,52 +1,27 @@
 from spack import *
-import glob
-import os
-import shutil
 
-class Funhpc(Package):
+class Funhpc(CMakePackage):
     """FunHPC: Functional HPC Programming"""
     homepage = "https://bitbucket.org/eschnett/funhpc.cxx"
+    url= "https://github.com/eschnett/FunHPC.cxx/archive/version/0.1.0.tar.gz"
 
+    version('0.1.1', 'b8c1dad706409869fd77efd7b79cc571')
+    version('0.1.0', 'eee8265c372edb4615ba2128bf0db63d')
     version('master',
             git='https://bitbucket.org/eschnett/funhpc.cxx', branch='master')
 
-    depends_on("cereal")
-    depends_on("curl")
-    depends_on("hwloc")
-    depends_on("jemalloc")
-    depends_on("mpi")
-    depends_on("qthreads")
+    variant('pic', default=True,
+            description="Produce position-independent code")
 
-    def install(self, spec, prefix):
-        # Build
-        make('CXX=c++',
-             'MPICXX=%s' % spec['mpi'].mpicxx,
-             'MPIRUN=%s' % join_path(spec['mpi'].prefix.bin, 'mpirun'),
-             'CEREAL_DIR=%s' % spec['cereal'].prefix,
-             'HWLOC_DIR=%s' % spec['hwloc'].prefix,
-             'JEMALLOC_DIR=%s' % spec['jemalloc'].prefix,
-             'QTHREADS_DIR=%s' % spec['qthreads'].prefix,
-             'lib',
-             # The selftests don't build on Comet (memory ulimit too tight?)
-             'selftest', 'selftest-funhpc',
-             'benchmark', 'benchmark2',  
-             'fibonacci', 'hello', 'pingpong',
-        )
+    depends_on('cereal')
+    depends_on('hwloc')
+    depends_on('jemalloc')
+    depends_on('mpi')
+    depends_on('qthreads')
 
-        # Install
-        shutil.rmtree(join_path(prefix, 'bin'), ignore_errors=True)
-        shutil.rmtree(join_path(prefix, 'include'), ignore_errors=True)
-        shutil.rmtree(join_path(prefix, 'lib'), ignore_errors=True)
-        os.mkdir(join_path(prefix, 'bin'))
-        os.mkdir(join_path(prefix, 'include'))
-        os.mkdir(join_path(prefix, 'lib'))
-        for binfile in [
-                'selftest', 'selftest-funhpc',
-                'benchmark', 'benchmark2', 'fibonacci', 'hello', 'pingpong',
-        ]:
-            shutil.copy(binfile, join_path(prefix, 'bin'))
-        for subdir in ['adt', 'cxx', 'fun', 'funhpc', 'qthread']:
-            os.mkdir(join_path(prefix, 'include', subdir))
-            for incfile in glob.iglob(join_path(subdir, '*.hpp')):
-                shutil.copy(incfile, join_path(prefix, 'include', subdir))
-        shutil.copy('libfunhpc.a', join_path(prefix, 'lib'))
+    def cmake_args(self):
+        spec = self.spec
+        options = []
+        if '+pic' in spec:
+            options.extend(["-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=true"])
+        return options
