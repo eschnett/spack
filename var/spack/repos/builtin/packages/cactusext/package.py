@@ -12,10 +12,9 @@ class Cactusext(Package):
     collaboration of physicists and computational scientists.
     """
     homepage = "http://www.cactuscode.org"
-    url      = "https://bitbucket.org/cactuscode/coredoc.git"
+    url      = "https://github.com/eschnett/empty/archive/1.0.0.tar.gz"
 
-    version("master",
-            git="https://bitbucket.org/cactuscode/coredoc.git", branch="master")
+    version("master", "ee69b350db517b309683603bc6bbab14")
 
     variant("charm", default=False, description="Enable Charm++")
     variant("funhpc", default=False, description="Enable FunHPC")
