@@ -5,8 +5,8 @@ class Funhpc(CMakePackage):
     homepage = "https://bitbucket.org/eschnett/funhpc.cxx"
     url= "https://github.com/eschnett/FunHPC.cxx/archive/version/0.1.0.tar.gz"
 
-    version('0.1.1', 'b8c1dad706409869fd77efd7b79cc571')
-    version('0.1.0', 'eee8265c372edb4615ba2128bf0db63d')
+    version('0.1.1', 'f0248710f2de88ed2a595ad40d99997c')
+    version('0.1.0', '00f7dabc08ed1ab77858785ce0809f50')
     version('master',
             git='https://bitbucket.org/eschnett/funhpc.cxx', branch='master')
 
