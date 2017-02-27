@@ -66,6 +66,7 @@ class Cactusext(Package):
 
     # Initialize dependencies that are mentioned below
     deps["bison"] = []
+    deps["bzip2"] = []
     deps["charm"] = ["-netlrts", "+mpi", "+smp"]
     if sys.platform != "darwin":
         deps["charm"].append("+papi")
@@ -83,6 +84,7 @@ class Cactusext(Package):
     deps["python"] = []
     deps["simulationio"] = []
     deps["simulationio+julia"] = []
+    deps["sqlite"] = []
 
     whens["gettext"] = ["+julia"]
     whens["git"] = ["+julia"]
@@ -98,27 +100,28 @@ class Cactusext(Package):
 
     # Compilers
     cactusext_compiler = "gcc@6.3.0-spack"
+    darwin_compiler = "clang@8.0.0-apple"
     bison_compiler = cactusext_compiler
     if sys.platform == "darwin":
-        bison_compiler = "clang@8.0.0-apple"
+        bison_compiler = darwin_compiler
     cmake_compiler = cactusext_compiler
     if sys.platform == "darwin":
-        cmake_compiler = "clang@8.0.0-apple"
+        cmake_compiler = darwin_compiler
     gettext_compiler = cactusext_compiler
     if sys.platform == "darwin":
-        gettext_compiler = "clang@8.0.0-apple"
+        gettext_compiler = darwin_compiler
     git_compiler = cactusext_compiler
     # if sys.platform == "darwin":
-    #     git_compiler = "clang@8.0.0-apple"
+    #     git_compiler = darwin_compiler
     jemalloc_compiler = cactusext_compiler
     # if sys.platform == "darwin":
-    #     jemalloc_compiler = "clang@8.0.0-apple"
+    #     jemalloc_compiler = darwin_compiler
     pkg_config_compiler = cactusext_compiler
     if sys.platform == "darwin":
-        pkg_config_compiler = "clang@8.0.0-apple"
+        pkg_config_compiler = darwin_compiler
     python_compiler = cactusext_compiler
-    # if sys.platform == "darwin":
-    #     python_compiler = "clang@8.0.0-apple"
+    if sys.platform == "darwin":
+        python_compiler = darwin_compiler
 
     deps["fftw"].append("%"+cactusext_compiler)
     deps["gsl"].append("%"+cactusext_compiler)
@@ -148,19 +151,21 @@ class Cactusext(Package):
 
     # These are apparently not deduced -- why?
     # deps["libsigsegv"].append("%"+cactusext_compiler)
+    deps["bzip2"].append("%"+cactusext_compiler)
+    deps["sqlite"].append("%"+cactusext_compiler)
 
     deps["bison"].append("%"+bison_compiler)
     deps["cmake"].append("%"+cmake_compiler)
     deps["gettext"].append("%"+gettext_compiler)
     deps["git"].append("%"+git_compiler)
-    git_deps = ["autoconf", "curl", "expat", "openssl", "zlib"]
-    deps["git"].extend(["^"+dep+" %"+cactusext_compiler for dep in git_deps])
+    # git_deps = ["autoconf", "curl", "expat", "openssl", "zlib"]
+    # deps["git"].extend(["^"+dep+" %"+cactusext_compiler for dep in git_deps])
     deps["jemalloc"].append("%"+jemalloc_compiler)
     deps["pkg-config"].append("%"+pkg_config_compiler)
     deps["python"].append("%"+python_compiler)
-    python_deps = ["bzip2", "ncurses", "readline", "openssl", "sqlite", "zlib"]
-    deps["python"].extend(
-        ["^"+dep+" %"+cactusext_compiler for dep in python_deps])
+    # python_deps = ["bzip2", "ncurses", "readline", "openssl", "sqlite", "zlib"]
+    # deps["python"].extend(
+    #     ["^"+dep+" %"+cactusext_compiler for dep in python_deps])
 
     # Options
     # if sys.platform == "darwin":
