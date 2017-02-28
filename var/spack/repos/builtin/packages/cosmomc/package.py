@@ -86,7 +86,11 @@ class Cosmomc(Package):
         else:
             raise InstallError("Only GCC and Intel compilers are supported")
         
-        make(wantmpi, choosecomp)
+        lapack = ("LAPACKL=%s %s" %
+                  (spec['lapack'].lapack_libs.ld_flags,
+                   spec['blas'].blas_libs.ld_flags))
+
+        make(wantmpi, choosecomp, lapack)
 
         # Install
         mkdirp(prefix.bin)
