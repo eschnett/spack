@@ -63,10 +63,7 @@ class Cosmomc(Package):
         os.environ.pop('WMAP', '')
         if '+planck' in spec:
             clikdir = join_path('data', 'clik')
-            try:
-                os.remove(clikdir)
-            except:
-                pass
+            shutil.rmtree(clikdir, ignore_errors=True)
             os.symlink(join_path(os.environ['CLIK_DATA'], 'plc_2.0'), clikdir)
         else:
             os.environ.pop('CLIK_DATA', '')
@@ -132,10 +129,7 @@ class Cosmomc(Package):
         prefix = self.prefix
         spec = self.spec
         cosmomc = Executable(join_path(prefix.bin, 'cosmomc'))
-        try:
-            shutil.rmtree('spack-check')
-        except:
-            pass
+        shutil.rmtree('spack-check', ignore_errors=True)
         with working_dir('spack-check', create=True):
             for entry in [
                 'camb',
