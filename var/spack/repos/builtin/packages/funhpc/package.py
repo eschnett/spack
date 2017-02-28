@@ -29,4 +29,6 @@ class Funhpc(CMakePackage):
             options.extend(["-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=true"])
         return options
 
-    # TODO: run tests with "make test CTEST_OUTPUT_ON_FAILURE=1"
+    def check(self):
+        with working_dir(self.build_directory):
+            make("test", "CTEST_OUTPUT_ON_FAILURE=1")
