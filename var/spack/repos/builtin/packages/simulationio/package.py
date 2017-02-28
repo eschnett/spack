@@ -28,18 +28,21 @@ class Simulationio(CMakePackage):
 
     def cmake_args(self):
         spec = self.spec
-        os.environ["PYTHONPATH"] = ":".join(
-            [
-                glob.glob(spec['py-h5py'].prefix + "/lib/python2.7/site-packages/h5py-*")[0],
-                glob.glob(spec['py-numpy'].prefix + "/lib/python2.7/site-packages/numpy-*")[0],
-                os.environ.get("PYTHONPATH", "")
-            ])
+        pythonpath = (
+            glob.glob(join_path(spec['py-h5py'].prefix, "lib", "python2.7",
+                                "site-packages", "h5py-*")) +
+            glob.glob(join_path(spec['py-numpy'].prefix, "lib", "python2.7",
+                                "site-packages", "numpy-*")))
+        try:
+            pythonpath.append(os.environ["PYTHONPATH"])
+        except KeyError:
+            pass
+        os.environ["PYTHONPATH"] = ":".join(pythonpath)
         options = []
         if '+pic' in spec:
-            options.extend(["-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=true"])
+            options.append("-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=true")
         return options
 
     def check(self):
         with working_dir(self.build_directory):
-            # self._if_make_target_execute('test')
             make("test", "CTEST_OUTPUT_ON_FAILURE=1")
