@@ -1,0 +1,14 @@
+--- a/source/Makefile
++++ b/source/Makefile
+@@ -57,11 +57,7 @@
+ #commented above is (I think) for Mac; this is standard linux (sudo apt-get install liblapack-dev)
+ LAPACKL = -lblas -llapack
+ 
+-#march native does not work on Mac, otherwise use (comment out if your cluster is inhomogeneous)
+-ifneq ($(shell uname -s),Darwin)
+-#native optimization does not work on Mac
+ FFLAGS+=-march=native
+-endif
+ 
+ endif
+ 

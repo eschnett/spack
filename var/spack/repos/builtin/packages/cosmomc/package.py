@@ -45,6 +45,7 @@ class Cosmomc(Package):
     variant('planck', default=False,
             description='Enable Planck Likelihood code and baseline data')
 
+    patch('Makefile.patch')
     patch('errorstop.patch')
 
     depends_on('mpi', when='+mpi')
