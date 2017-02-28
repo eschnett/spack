@@ -25,13 +25,7 @@
 from spack import *
 
 
-# Note: Although Swig uses autotools, its "Examples" subtree contains
-# hand-written Makefiles that cannot be re-generated automatically.
-# Running "autoreconf" creates a "configure" script that goes into an
-# endless loop for this subtree, eating up all disk space. We thus
-# need to keep this as a regular package so that Spack doesn't run
-# "autoreconf".
-class Swig(Package):
+class Swig(AutotoolsPackage):
     """SWIG is an interface compiler that connects programs written in
        C and C++ with scripting languages such as Perl, Python, Ruby,
        and Tcl. It works by taking the declarations found in C/C++
@@ -55,7 +49,4 @@ class Swig(Package):
 
     depends_on('pcre')
 
-    def install(self, spec, prefix):
-        configure("--prefix=%s" % prefix)
-        make()
-        make("install")
+    build_directory = 'spack-build'
