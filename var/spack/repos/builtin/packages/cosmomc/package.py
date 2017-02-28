@@ -55,6 +55,12 @@ class Cosmomc(Package):
 
     def install(self, spec, prefix):
         # Prepare
+        os.environ.pop('NERSC_HOST', '')
+        os.environ.pop('NONCLIKLIKE', '')
+        os.environ.pop('PICO', '')
+        os.environ.pop('PRECISION', '')
+        os.environ.pop('RECOMBINATION', '')
+        os.environ.pop('WMAP', '')
         if '+planck' in spec:
             clikdir = join_path('data', 'clik')
             try:
@@ -62,6 +68,10 @@ class Cosmomc(Package):
             except:
                 pass
             os.symlink(join_path(os.environ['CLIK_DATA'], 'plc_2.0'), clikdir)
+        else:
+            os.environ.pop('CLIK_DATA', '')
+            os.environ.pop('CLIK_PATH', '')
+            os.environ.pop('CLIK_PLUGIN', '')
 
         # Build
         if '+mpi' in spec:
