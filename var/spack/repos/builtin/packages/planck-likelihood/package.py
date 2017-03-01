@@ -36,6 +36,7 @@ class PlanckLikelihood(Package):
 
     version('2.00', '7a081679ff249dc4f94fb7177e16e818')
 
+    patch('fortran.patch')
     patch('make.patch')
 
     resource(
