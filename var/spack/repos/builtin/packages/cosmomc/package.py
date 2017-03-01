@@ -24,6 +24,7 @@
 ##############################################################################
 
 from spack import *
+import fnmatch
 import os
 import shutil
 
@@ -139,12 +140,40 @@ class Cosmomc(Package):
                 shutil.copy(entry, root)
             else:
                 shutil.copytree(entry, join_path(root, entry))
+        for dirpath, dirnames, filenames in os.walk(prefix):
+            for filename in fnmatch.filter(filenames, '*~'):
+                os.remove(os.path.join(dirpath, filename))
 
     @run_after('install')
     def check_install(self):
         prefix = self.prefix
         spec = self.spec
-        cosmomc = Executable(join_path(prefix.bin, 'cosmomc'))
+
+        os.environ.pop('LINKMPI', '')
+        os.environ.pop('NERSC_HOST', '')
+        os.environ.pop('NONCLIKLIKE', '')
+        os.environ.pop('PICO', '')
+        os.environ.pop('PRECISION', '')
+        os.environ.pop('RECOMBINATION', '')
+        os.environ.pop('WMAP', '')
+
+        os.environ.pop('COSMOMC_LOCATION', '')
+        os.environ.pop('PLC_LOCATION', '')
+
+        os.environ.pop('CLIKPATH', '')
+        os.environ.pop('PLANCKLIKE', '')
+
+        # os.environ.pop('CLIK_DATA', '')
+        # os.environ.pop('CLIK_PATH', '')
+        # os.environ.pop('CLIK_PLUGIN', '')
+
+        exe = join_path(prefix.bin, 'cosmomc')
+        args = []
+        if '+mpi' in spec:
+            # Add mpirun prefix
+            args = ['-np', '1', exe]
+            exe = join_path(spec['mpi'].prefix.bin, 'mpiexec')
+        cosmomc = Executable(exe)
         shutil.rmtree('spack-check', ignore_errors=True)
         with working_dir('spack-check', create=True):
             for entry in [
@@ -155,7 +184,9 @@ class Cosmomc(Package):
                 'planck_covmats',
             ]:
                 os.symlink(join_path(prefix.share, 'cosmomc', entry), entry)
-            cosmomc(join_path(prefix.share, 'cosmomc', 'test.ini'))
+            inifile = join_path(prefix.share, 'cosmomc', 'test.ini')
+            cosmomc(*(args + [inifile]))
             if '+planck' in spec:
-                cosmomc(join_path(prefix.share, 'cosmomc', 'test_planck.ini'))
+                inifile = join_path(prefix.share, 'cosmomc', 'test_planck.ini')
+                cosmomc(*(args + [inifile]))
         shutil.rmtree('spack-check')
