@@ -55,28 +55,29 @@ class Cosmomc(Package):
     parallel = False
 
     def install(self, spec, prefix):
-        # Prepare
+        # Clean up environment to avoid configure problems
+        os.environ.pop('LINKMPI', '')
         os.environ.pop('NERSC_HOST', '')
         os.environ.pop('NONCLIKLIKE', '')
         os.environ.pop('PICO', '')
         os.environ.pop('PRECISION', '')
         os.environ.pop('RECOMBINATION', '')
         os.environ.pop('WMAP', '')
+
+        # Set up Planck data if requested
+        clikdir = join_path('data', 'clik')
+        try:
+            os.remove(clikdir)
+        except OSError:
+            pass
         if '+planck' in spec:
-            clikdir = join_path('data', 'clik')
-            shutil.rmtree(clikdir, ignore_errors=True)
             os.symlink(join_path(os.environ['CLIK_DATA'], 'plc_2.0'), clikdir)
         else:
             os.environ.pop('CLIK_DATA', '')
             os.environ.pop('CLIK_PATH', '')
             os.environ.pop('CLIK_PLUGIN', '')
 
-        # Build
-        if '+mpi' in spec:
-            wantmpi = 'BUILD=MPI'
-        else:
-            wantmpi = 'BUILD=NOMPI'
-
+        # Choose compiler
         # Note: Instead of checking the compiler vendor, we should
         # rewrite the Makefile to use Spack's options all the time
         if spec.compiler.name == 'gcc':
@@ -85,12 +86,22 @@ class Cosmomc(Package):
             choosecomp = 'ifortErr=0'       # choose ifort
         else:
             raise InstallError("Only GCC and Intel compilers are supported")
+
+        # Configure MPI
+        if '+mpi' in spec:
+            wantmpi = 'BUILD=MPI'
+            mpif90 = 'MPIF90C=%s' % spec['mpi'].mpifc
+        else:
+            wantmpi = 'BUILD=NOMPI'
+            mpif90 = 'MPIF90C='
         
+        # Choose BLAS and LAPACK
         lapack = ("LAPACKL=%s %s" %
                   (spec['lapack'].lapack_libs.ld_flags,
                    spec['blas'].blas_libs.ld_flags))
 
-        make(wantmpi, choosecomp, lapack)
+        # Build
+        make(choosecomp, wantmpi, mpif90, lapack)
 
         # Install
         mkdirp(prefix.bin)
