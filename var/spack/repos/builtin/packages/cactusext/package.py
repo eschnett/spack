@@ -40,6 +40,7 @@ class Cactusext(Package):
     deps["lmod"] = []
     deps["lua"] = []
     deps["mpi"] = []
+    deps["opencoarrays"] = []
     deps["openssl"] = []
     deps["papi"] = []
     deps["petsc"] = ["+boost", "+hdf5", "+mpi"]
