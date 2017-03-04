@@ -77,7 +77,7 @@ class Cactusext(Package):
     deps["gettext"] = ["~libxml2"]
     deps["jemalloc"] = []
     deps["julia"] = ["+hdf5", "+mpi"]   # "+plots", "+python", "@master"
-    # deps["libsigsegv"] = []
+    deps["libsigsegv"] = []
     # deps["llvm"] = []
     deps["rust"] = []
     deps["tar"] = []
@@ -86,21 +86,20 @@ class Cactusext(Package):
     deps["simulationio"] = []
     deps["simulationio+julia"] = []
     deps["sqlite"] = []
+    deps["xz"] = []
 
     whens["gettext"] = ["+julia"]
     whens["git"] = ["+julia"]
     whens["jemalloc"] = ["+funhpc"]
 
     # # Versions
-    # # TODO: Remove this once the latest HDF5 version is again the default
-    # deps["hdf5"].append("@1.10.0-patch1")
     # TODO: Remove this once Spack chooses the latest 2.7 version by default
     deps["python"].append("@2.7.13")
-    # TODO: Remove this once Spack chooses the latest correct version by default
-    deps["openssl"].append("@:1.0")
+    # # TODO: Remove this once Spack chooses the latest correct version by default
+    # deps["openssl"].append("@:1.0")
 
     # Compilers
-    cactusext_compiler = "gcc@6.3.0-spack"
+    cactusext_compiler = "gcc@spack-6.3.0"
     darwin_compiler = "clang@8.0.0-apple"
     bison_compiler = cactusext_compiler
     if sys.platform == "darwin":
@@ -112,11 +111,7 @@ class Cactusext(Package):
     if sys.platform == "darwin":
         gettext_compiler = darwin_compiler
     git_compiler = cactusext_compiler
-    # if sys.platform == "darwin":
-    #     git_compiler = darwin_compiler
     jemalloc_compiler = cactusext_compiler
-    # if sys.platform == "darwin":
-    #     jemalloc_compiler = darwin_compiler
     pkg_config_compiler = cactusext_compiler
     if sys.platform == "darwin":
         pkg_config_compiler = darwin_compiler
@@ -151,39 +146,16 @@ class Cactusext(Package):
     deps["simulationio"].append("%"+cactusext_compiler)
 
     # These are apparently not deduced -- why?
-    # deps["libsigsegv"].append("%"+cactusext_compiler)
     deps["bzip2"].append("%"+cactusext_compiler)
+    deps["libsigsegv"].append("%"+cactusext_compiler)
     deps["sqlite"].append("%"+cactusext_compiler)
+    deps["xz"].append("%"+cactusext_compiler)
 
     deps["bison"].append("%"+bison_compiler)
     deps["cmake"].append("%"+cmake_compiler)
     deps["gettext"].append("%"+gettext_compiler)
-    deps["git"].append("%"+git_compiler)
-    # git_deps = ["autoconf", "curl", "expat", "openssl", "zlib"]
-    # deps["git"].extend(["^"+dep+" %"+cactusext_compiler for dep in git_deps])
-    deps["jemalloc"].append("%"+jemalloc_compiler)
     deps["pkg-config"].append("%"+pkg_config_compiler)
     deps["python"].append("%"+python_compiler)
-    # python_deps = ["bzip2", "ncurses", "readline", "openssl", "sqlite", "zlib"]
-    # deps["python"].extend(
-    #     ["^"+dep+" %"+cactusext_compiler for dep in python_deps])
-
-    # Options
-    # if sys.platform == "darwin":
-    #     deps["llvm"].append("~compiler-rt ~libcxx ~lldb +shared_libs")
-    # if (os.path.isfile("/usr/include/pmi.h") or
-    #     os.path.isfile("/usr/slurm/include/pmi.h") or
-    #     os.path.isfile("/usr/include/pmi2.h") or
-    #     os.path.isfile("/usr/slurm/include/pmi2.h")):
-    #     deps["openmpi"].append("+pmi")
-    # try:
-    #     ibv_devices = which("ibv_devices")
-    #     ibv_devices(output=str, error=str)
-    #     deps["openmpi"].append("+verbs")
-    # except:
-    #     pass
-    # TODO: Mumps doesn't build everywhere; enable it once it works
-    # deps["petsc"].append("~mumps")
 
     # Set dependencies
     for pkg, opts in sorted(deps.iteritems()):
@@ -191,7 +163,6 @@ class Cactusext(Package):
             when = " ".join(whens[pkg])
         except:
             when = None
-        # print pkg + " " + " ".join(opts), ("when=" + when if when else "")
         depends_on(pkg + " " + " ".join(opts), when=when)
 
     def install(self, spec, prefix):
