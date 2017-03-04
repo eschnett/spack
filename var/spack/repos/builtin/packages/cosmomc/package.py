@@ -111,8 +111,7 @@ class Cosmomc(Package):
         
         # Choose BLAS and LAPACK
         lapack = ("LAPACKL=%s" %
-                  (spec['lapack'].lapack_libs +
-                   spec['blas'].blas_libs).ld_flags)
+                  (spec['lapack'].libs + spec['blas'].libs).ld_flags)
 
         # Build
         make(choosecomp, wantmpi, mpif90, lapack)
@@ -122,33 +121,35 @@ class Cosmomc(Package):
         install('cosmomc', prefix.bin)
         root = join_path(prefix.share, 'cosmomc')
         mkdirp(root)
-        for entry in ['batch1',
-                      'batch2',
-                      'batch3',
-                      'camb',
-                      'chains',
-                      'clik_latex.paramnames',
-                      'clik_units.paramnames',
-                      'cosmomc.cbp',
-                      'data',
-                      'distgeneric.ini',
-                      'distparams.ini',
-                      'disttest.ini',
-                      'docs',
-                      'job_script',
-                      'job_script_MOAB',
-                      'job_script_SLURM',
-                      'paramnames',
-                      'params_generic.ini',
-                      'planck_covmats',
-                      'python',
-                      'scripts',
-                      # don't copy 'source'
-                      'test.ini',
-                      'test_pico.ini',
-                      'test_planck.ini',
-                      'tests',
-        ]:
+        entries = [
+            'batch1',
+            'batch2',
+            'batch3',
+            'camb',
+            'chains',
+            'clik_latex.paramnames',
+            'clik_units.paramnames',
+            'cosmomc.cbp',
+            'data',
+            'distgeneric.ini',
+            'distparams.ini',
+            'disttest.ini',
+            'docs',
+            'job_script',
+            'job_script_MOAB',
+            'job_script_SLURM',
+            'paramnames',
+            'params_generic.ini',
+            'planck_covmats',
+            'python',
+            'scripts',
+            # don't copy 'source'
+            'test.ini',
+            'test_pico.ini',
+            'test_planck.ini',
+            'tests',
+        ]
+        for entry in entries:
             if os.path.isfile(entry):
                 install(entry, root)
             else:
