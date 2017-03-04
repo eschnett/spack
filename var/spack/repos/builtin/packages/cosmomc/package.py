@@ -26,7 +26,6 @@
 from spack import *
 import fnmatch
 import os
-import shutil
 
 
 class Cosmomc(Package):
@@ -39,8 +38,14 @@ class Cosmomc(Package):
     homepage = "http://cosmologist.info/cosmomc/"
     url      = "https://github.com/cmbant/CosmoMC/archive/Nov2016.tar.gz"
 
-    version('Nov2016',  '98620cb746352f68fb0c1196e9a070ac', preferred=True)
-    version('June2016', '92dc651d1407cca6ea9228992165f5cb')
+    version('2016.11', '98620cb746352f68fb0c1196e9a070ac')
+    version('2016.06', '92dc651d1407cca6ea9228992165f5cb')
+
+    def url_for_version(self, version):
+        names = {'2016.11': "Nov2016",
+                 '2016.06': "June2016"}
+        return ("https://github.com/cmbant/CosmoMC/archive/%s.tar.gz" %
+                names[str(version)])
 
     variant('mpi', default=True, description='Enable MPI support')
     variant('planck', default=False,
@@ -82,8 +87,16 @@ class Cosmomc(Package):
         # Note: Instead of checking the compiler vendor, we should
         # rewrite the Makefile to use Spack's options all the time
         if spec.compiler.name == 'gcc':
+            if not spec.compiler.version.satisfies(ver('6:')):
+                raise InstallError(
+                    "When using GCC, "
+                    "CosmoMC requires version gcc@6: for building")
             choosecomp = 'ifortErr=1'       # choose gfortran
         elif spec.compiler.name == 'intel':
+            if not spec.compiler.version.satisfies(ver('14:')):
+                raise InstallError(
+                    "When using the Intel compiler, "
+                    "CosmoMC requires version intel@14: for building")
             choosecomp = 'ifortErr=0'       # choose ifort
         else:
             raise InstallError("Only GCC and Intel compilers are supported")
@@ -97,16 +110,16 @@ class Cosmomc(Package):
             mpif90 = 'MPIF90C='
         
         # Choose BLAS and LAPACK
-        lapack = ("LAPACKL=%s %s" %
-                  (spec['lapack'].lapack_libs.ld_flags,
-                   spec['blas'].blas_libs.ld_flags))
+        lapack = ("LAPACKL=%s" %
+                  (spec['lapack'].lapack_libs +
+                   spec['blas'].blas_libs).ld_flags)
 
         # Build
         make(choosecomp, wantmpi, mpif90, lapack)
 
         # Install
         mkdirp(prefix.bin)
-        shutil.copy(join_path('cosmomc'), prefix.bin)
+        install('cosmomc', prefix.bin)
         root = join_path(prefix.share, 'cosmomc')
         mkdirp(root)
         for entry in ['batch1',
@@ -137,13 +150,14 @@ class Cosmomc(Package):
                       'tests',
         ]:
             if os.path.isfile(entry):
-                shutil.copy(entry, root)
+                install(entry, root)
             else:
-                shutil.copytree(entry, join_path(root, entry))
+                install_tree(entry, join_path(root, entry))
         for dirpath, dirnames, filenames in os.walk(prefix):
             for filename in fnmatch.filter(filenames, '*~'):
                 os.remove(os.path.join(dirpath, filename))
 
+    @on_package_attributes(run_tests=True)
     @run_after('install')
     def check_install(self):
         prefix = self.prefix
@@ -163,10 +177,6 @@ class Cosmomc(Package):
         os.environ.pop('CLIKPATH', '')
         os.environ.pop('PLANCKLIKE', '')
 
-        # os.environ.pop('CLIK_DATA', '')
-        # os.environ.pop('CLIK_PATH', '')
-        # os.environ.pop('CLIK_PLUGIN', '')
-
         exe = join_path(prefix.bin, 'cosmomc')
         args = []
         if '+mpi' in spec:
@@ -174,7 +184,6 @@ class Cosmomc(Package):
             args = ['-np', '1', exe]
             exe = join_path(spec['mpi'].prefix.bin, 'mpiexec')
         cosmomc = Executable(exe)
-        shutil.rmtree('spack-check', ignore_errors=True)
         with working_dir('spack-check', create=True):
             for entry in [
                 'camb',
@@ -189,4 +198,3 @@ class Cosmomc(Package):
             if '+planck' in spec:
                 inifile = join_path(prefix.share, 'cosmomc', 'test_planck.ini')
                 cosmomc(*(args + [inifile]))
-        shutil.rmtree('spack-check')
