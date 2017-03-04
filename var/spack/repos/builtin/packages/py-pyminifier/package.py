@@ -25,15 +25,12 @@
 from spack import *
 
 
-class PyJedi(PythonPackage):
-    """An autocompletion tool for Python that can be used for text editors."""
+class PyPyminifier(PythonPackage):
+    """Pyminifier is a Python code minifier, obfuscator, and compressor."""
 
-    homepage = "https://github.com/davidhalter/jedi"
-    url      = "https://pypi.io/packages/source/j/jedi/jedi-0.9.0.tar.gz"
+    homepage = "http://liftoff.github.io/pyminifier/"
+    url      = "https://pypi.io/packages/source/p/pyminifier/pyminifier-2.1.tar.gz"
 
-    # unfortunately pypi.io only offers a .whl
-    version('0.10.0', '89ed853d4a283bfa0fdbcf688b4d35fe',
-                url='https://github.com/davidhalter/jedi/archive/v0.10.0.tar.gz')
-    version('0.9.0', '2fee93d273622527ef8c97ac736e92bd')
+    version('2.1', 'c1a6b92e69f664005f7adf188c514de7')
 
     depends_on('py-setuptools', type='build')

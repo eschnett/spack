@@ -177,11 +177,6 @@ class Gcc(AutotoolsPackage):
             for line in lines:
                 out.write(line + "\n")
                 if line.startswith("*link:"):
-                    if sys.platform == 'darwin':
-                        out.write("-rpath %s/lib -rpath %s/lib64 "
-                                  r"-headerpad_max_install_names \n" %
-                                  (self.prefix, self.prefix))
-                    else:
-                        out.write(r"-rpath %s/lib:%s/lib64 \n" %
-                                  (self.prefix, self.prefix))
+                    out.write("-rpath %s/lib:%s/lib64 \\\n" %
+                              (self.prefix, self.prefix))
         set_install_permissions(specs_file)

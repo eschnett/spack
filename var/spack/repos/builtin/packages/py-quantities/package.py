@@ -25,15 +25,13 @@
 from spack import *
 
 
-class PyJedi(PythonPackage):
-    """An autocompletion tool for Python that can be used for text editors."""
+class PyQuantities(PythonPackage):
+    """Support for physical quantities with units, based on numpy"""
 
-    homepage = "https://github.com/davidhalter/jedi"
-    url      = "https://pypi.io/packages/source/j/jedi/jedi-0.9.0.tar.gz"
+    homepage = "http://python-quantities.readthedocs.org"
+    url      = "https://pypi.io/packages/source/q/quantities/quantities-0.11.1.zip"
 
-    # unfortunately pypi.io only offers a .whl
-    version('0.10.0', '89ed853d4a283bfa0fdbcf688b4d35fe',
-                url='https://github.com/davidhalter/jedi/archive/v0.10.0.tar.gz')
-    version('0.9.0', '2fee93d273622527ef8c97ac736e92bd')
+    version('0.11.1', 'f4c6287bfd2e93322b25a7c1311a0243')
 
-    depends_on('py-setuptools', type='build')
+    depends_on('python@2.6.0:')
+    depends_on('py-numpy@1.4.0:', type=('build', 'run'))

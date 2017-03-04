@@ -25,15 +25,12 @@
 from spack import *
 
 
-class PyJedi(PythonPackage):
-    """An autocompletion tool for Python that can be used for text editors."""
+class PyPyserial(Package):
+    """Python Serial Port Extension"""
 
-    homepage = "https://github.com/davidhalter/jedi"
-    url      = "https://pypi.io/packages/source/j/jedi/jedi-0.9.0.tar.gz"
+    homepage = "https://github.com/pyserial/pyserial"
+    url      = "https://pypi.io/packages/source/p/pyserial/pyserial-3.1.1.tar.gz"
 
-    # unfortunately pypi.io only offers a .whl
-    version('0.10.0', '89ed853d4a283bfa0fdbcf688b4d35fe',
-                url='https://github.com/davidhalter/jedi/archive/v0.10.0.tar.gz')
-    version('0.9.0', '2fee93d273622527ef8c97ac736e92bd')
+    version('3.1.1', '2f72100de3e410b36d575e12e82e9d27')
 
     depends_on('py-setuptools', type='build')

@@ -25,15 +25,17 @@
 from spack import *
 
 
-class PyJedi(PythonPackage):
-    """An autocompletion tool for Python that can be used for text editors."""
+class PyPyfftw(PythonPackage):
+    """A pythonic wrapper around FFTW, the FFT library,
+    presenting a unified interface for all the supported transforms."""
 
-    homepage = "https://github.com/davidhalter/jedi"
-    url      = "https://pypi.io/packages/source/j/jedi/jedi-0.9.0.tar.gz"
+    homepage = "http://hgomersall.github.com/pyFFTW"
+    url      = "https://pypi.io/packages/source/p/pyFFTW/pyFFTW-0.10.4.tar.gz"
 
-    # unfortunately pypi.io only offers a .whl
-    version('0.10.0', '89ed853d4a283bfa0fdbcf688b4d35fe',
-                url='https://github.com/davidhalter/jedi/archive/v0.10.0.tar.gz')
-    version('0.9.0', '2fee93d273622527ef8c97ac736e92bd')
+    version('0.10.4', '7fb59450308881bb48d9f178947d950e')
 
-    depends_on('py-setuptools', type='build')
+    depends_on('fftw')
+    depends_on('py-setuptools',    type='build')
+    depends_on('py-cython',        type='build')
+    depends_on('py-numpy@1.6:',    type=('build', 'run'))
+    depends_on('py-scipy@0.12.0:', type=('build', 'run'))

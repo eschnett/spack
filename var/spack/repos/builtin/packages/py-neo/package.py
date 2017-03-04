@@ -25,15 +25,16 @@
 from spack import *
 
 
-class PyJedi(PythonPackage):
-    """An autocompletion tool for Python that can be used for text editors."""
+class PyNeo(PythonPackage):
+    """Neo is a package for representing electrophysiology data in Python, 
+    together with support for reading a wide range of neurophysiology 
+    file formats"""
 
-    homepage = "https://github.com/davidhalter/jedi"
-    url      = "https://pypi.io/packages/source/j/jedi/jedi-0.9.0.tar.gz"
+    homepage = "http://neuralensemble.org/neo"
+    url      = "https://pypi.io/packages/source/n/neo/neo-0.4.1.tar.gz"
 
-    # unfortunately pypi.io only offers a .whl
-    version('0.10.0', '89ed853d4a283bfa0fdbcf688b4d35fe',
-                url='https://github.com/davidhalter/jedi/archive/v0.10.0.tar.gz')
-    version('0.9.0', '2fee93d273622527ef8c97ac736e92bd')
+    version('0.4.1', 'f706df3a1bce835cb490b812ac198a6e')
 
-    depends_on('py-setuptools', type='build')
+    depends_on('py-setuptools',        type='build')
+    depends_on('py-numpy@1.7.1:',      type=('build', 'run'))
+    depends_on('py-quantities@0.9.0:', type=('build', 'run'))
