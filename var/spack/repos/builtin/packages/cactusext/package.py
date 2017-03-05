@@ -2,6 +2,9 @@ from spack import *
 import os
 import sys
 
+# Comet: Don't use too many processes while building. OpenBLAS is
+# particularly troublesome as it uses many threads for its self-tests.
+
 class Cactusext(Package):
     """Cactus is an open source problem solving environment designed for
     scientists and engineers. Its modular structure easily enables
@@ -16,7 +19,10 @@ class Cactusext(Package):
 
     version("master", "ee69b350db517b309683603bc6bbab14")
 
+    # Cannot install Charm++; it installs many weirdly-named include
+    # headers that break other packages
     variant("charm", default=False, description="Enable Charm++")
+    variant("cuda", default=False, description="Enable CUDA")
     variant("funhpc", default=False, description="Enable FunHPC")
     variant("julia", default=False, description="Enable Julia")
     # Cannot combine LLVM and GCC since both provide libgomp
@@ -31,6 +37,7 @@ class Cactusext(Package):
     # Actual dependencies
     # deps["blas"] = []
     deps["boost"] = ["+mpi"]
+    deps["cuda"] = []
     deps["fftw"] = ["+mpi", "+openmp"]
     deps["gsl"] = []
     deps["hdf5"] = ["+mpi"]
@@ -49,11 +56,12 @@ class Cactusext(Package):
     # deps["tau"] = []   # ["+scorep"]
     deps["tmux"] = []
     deps["zlib"] = []
-    # TODO: Add CUDA
 
     whens["charm"] = ["+charm"]
+    whens["cuda"] = ["+cuda"]
     whens["funhpc"] = ["+funhpc"]
     whens["julia"] = ["+julia"]
+
     # whens["llvm"] = ["+llvm"]
     whens["rust"] = ["+rust"]
     whens["simulationio"] = ["+simulationio"]
