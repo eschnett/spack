@@ -7,12 +7,10 @@ class Simulationio(CMakePackage):
     homepage = "https://github.com/eschnett/SimulationIO"
     url= "https://github.com/eschnett/SimulationIO/archive/version/0.1.0.tar.gz"
 
-    # version('0.1.0', '00f7dabc08ed1ab77858785ce0809f50')
+    version('1.0.0', '5cbf1d0084eb436d861ffcdd297eaa08')
+    version('0.1.0', '00f7dabc08ed1ab77858785ce0809f50')
     version('master',
             git='https://github.com/eschnett/SimulationIO.git', branch='master')
-    version('cmake',
-            git='https://github.com/eschnett/SimulationIO.git',
-            branch='eschnett/cmake')
 
     variant('julia', default=False)
     variant('python', default=True)
