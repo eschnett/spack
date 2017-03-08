@@ -5,6 +5,9 @@ import sys
 # Comet: Don't use too many processes while building. OpenBLAS is
 # particularly troublesome as it uses many threads for its self-tests.
 
+# Cori: Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
+# actually not needed at all
+
 class Cactusext(Package):
     """Cactus is an open source problem solving environment designed for
     scientists and engineers. Its modular structure easily enables
@@ -26,7 +29,7 @@ class Cactusext(Package):
     variant("funhpc", default=False, description="Enable FunHPC")
     variant("julia", default=False, description="Enable Julia")
     # Cannot combine LLVM and GCC since both provide libgomp
-    # variant("llvm", default=False, description="Enable LLVM")
+    variant("llvm", default=False, description="Enable LLVM")
     # variant("scalasca", default=False, description="Enable Scalasca")
     variant("rust", default=False, description="Enable Rust")
     variant("simulationio", default=False, description="Enable SimulationIO")
@@ -44,6 +47,7 @@ class Cactusext(Package):
     deps["hdf5-blosc"] = []
     deps["hwloc"] = []
     # deps["lapack"] = []
+    deps["libxsmm"] = []
     deps["lmod"] = []
     deps["lua"] = []
     deps["mpi"] = []
@@ -51,6 +55,7 @@ class Cactusext(Package):
     deps["openssl"] = []
     deps["papi"] = []
     deps["petsc"] = ["+boost", "+hdf5", "+mpi"]
+    deps["py-yt"] = []
     # deps["scalasca"] = []   # depends on scorep
     # deps["scorep"] = []   # requires a case sensitive file system
     # deps["tau"] = []   # ["+scorep"]
@@ -62,7 +67,7 @@ class Cactusext(Package):
     whens["funhpc"] = ["+funhpc"]
     whens["julia"] = ["+julia"]
 
-    # whens["llvm"] = ["+llvm"]
+    whens["llvm"] = ["+llvm"]
     whens["rust"] = ["+rust"]
     whens["simulationio"] = ["+simulationio"]
     whens["simulationio+julia"] = ["+simulationio+julia"]
@@ -80,21 +85,27 @@ class Cactusext(Package):
     if sys.platform != "darwin":
         deps["charm"].append("+papi")
     deps["cmake"] = []
+    deps["freetype"] = []
     deps["funhpc"] = []
-    deps["git"] = []
     deps["gettext"] = ["~libxml2"]
+    deps["git"] = []
     deps["jemalloc"] = []
+    deps["jpeg"] = []
     deps["julia"] = ["+hdf5", "+mpi"]   # "+plots", "+python", "@master"
+    deps["libpng"] = []
     deps["libsigsegv"] = []
-    # deps["llvm"] = []
-    deps["rust"] = []
-    deps["tar"] = []
+    deps["llvm"] = []
     deps["pkg-config"] = []
+    deps["py-matplotlib"] = []
     deps["python"] = []
+    deps["qhull"] = []
+    deps["rust"] = []
     deps["simulationio"] = []
     deps["simulationio+julia"] = []
     deps["sqlite"] = []
-    deps["xz"] = []
+    deps["tar"] = []
+    deps["tk"] = []
+    deps["xz"] = [] = []
 
     whens["gettext"] = ["+julia"]
     whens["git"] = ["+julia"]
@@ -110,37 +121,45 @@ class Cactusext(Package):
     cactusext_compiler = "gcc@spack-6.3.0"
     darwin_compiler = "clang@8.0.0-apple"
     bison_compiler = cactusext_compiler
-    if sys.platform == "darwin":
-        bison_compiler = darwin_compiler
     cmake_compiler = cactusext_compiler
-    if sys.platform == "darwin":
-        cmake_compiler = darwin_compiler
     gettext_compiler = cactusext_compiler
-    if sys.platform == "darwin":
-        gettext_compiler = darwin_compiler
-    git_compiler = cactusext_compiler
-    jemalloc_compiler = cactusext_compiler
+    py_matplotlib_compiler = cactusext_compiler
     pkg_config_compiler = cactusext_compiler
-    if sys.platform == "darwin":
-        pkg_config_compiler = darwin_compiler
     python_compiler = cactusext_compiler
     if sys.platform == "darwin":
+        bison_compiler = darwin_compiler
+        cmake_compiler = darwin_compiler
+        gettext_compiler = darwin_compiler
+        py_matplotlib_compiler = darwin_compiler
+        pkg_config_compiler = darwin_compiler
         python_compiler = darwin_compiler
 
+    deps["bison"].append("%"+bison_compiler)
+    deps["cmake"].append("%"+cmake_compiler)
+    deps["gettext"].append("%"+gettext_compiler)
+    deps["pkg-config"].append("%"+pkg_config_compiler)
+    deps["py-matplotlib"].append("%"+py_matplotlib_compiler)
+    deps["python"].append("%"+python_compiler)
+
     deps["fftw"].append("%"+cactusext_compiler)
+    deps["freetype"].append("%"+cactusext_compiler)
     deps["gsl"].append("%"+cactusext_compiler)
     deps["hdf5"].append("%"+cactusext_compiler)
     deps["hdf5-blosc"].append("%"+cactusext_compiler)
     deps["hwloc"].append("%"+cactusext_compiler)
+    deps["jpeg"].append("%"+cactusext_compiler)
+    deps["libpng"].append("%"+cactusext_compiler)
     deps["lmod"].append("%"+cactusext_compiler)
     deps["lua"].append("%"+cactusext_compiler)
     deps["openssl"].append("%"+cactusext_compiler)
     deps["papi"].append("%"+cactusext_compiler)
     deps["petsc"].append("%"+cactusext_compiler)
+    deps["qhull"].append("%"+cactusext_compiler)
     # deps["scalasca"].append("%"+cactusext_compiler)
     # deps["scorep"].append("%"+cactusext_compiler)
     # deps["tau"].append("%"+cactusext_compiler)
     deps["tar"].append("%"+cactusext_compiler)
+    deps["tk"].append("%"+cactusext_compiler)
     deps["zlib"].append("%"+cactusext_compiler)
 
     deps["openblas"].append("%"+cactusext_compiler)
@@ -149,7 +168,7 @@ class Cactusext(Package):
     deps["charm"].append("%"+cactusext_compiler)
     deps["funhpc"].append("%"+cactusext_compiler)
     deps["julia"].append("%"+cactusext_compiler)
-    # deps["llvm"].append("%"+cactusext_compiler)
+    deps["llvm"].append("%"+cactusext_compiler)
     deps["rust"].append("%"+cactusext_compiler)
     deps["simulationio"].append("%"+cactusext_compiler)
 
@@ -158,12 +177,6 @@ class Cactusext(Package):
     deps["libsigsegv"].append("%"+cactusext_compiler)
     deps["sqlite"].append("%"+cactusext_compiler)
     deps["xz"].append("%"+cactusext_compiler)
-
-    deps["bison"].append("%"+bison_compiler)
-    deps["cmake"].append("%"+cmake_compiler)
-    deps["gettext"].append("%"+gettext_compiler)
-    deps["pkg-config"].append("%"+pkg_config_compiler)
-    deps["python"].append("%"+python_compiler)
 
     # Set dependencies
     for pkg, opts in sorted(deps.iteritems()):
