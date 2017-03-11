@@ -25,25 +25,16 @@
 from spack import *
 
 
-class Elfutils(AutotoolsPackage):
-    """elfutils is a collection of various binary tools such as
-    eu-objdump, eu-readelf, and other utilities that allow you to
-    inspect and manipulate ELF files. Refer to Table 5.Tools Included
-    in elfutils for Red Hat Developer for a complete list of binary
-    tools that are distributed with the Red Hat Developer Toolset
-    version of elfutils."""
+class PyJoblib(PythonPackage):
+    """Python function as pipeline jobs"""
 
-    homepage = "https://fedorahosted.org/elfutils/"
+    homepage = "http://packages.python.org/joblib/"
+    url      = "https://pypi.io/packages/source/j/joblib/joblib-0.10.3.tar.gz"
 
-    depends_on('libtool', type='build')
-    depends_on('automake', type='build')
-    depends_on('autoconf', type='build')
+    version('0.10.3', '455401ccfaf399538d8e5333086df2d3')
+    version('0.10.2', 'ebb42af4342c2445b175f86bd478d869')
+    version('0.10.0', '61e40322c4fed5c22905f67d7d1aa557')
 
-    version('0.163',
-            git='git://git.fedorahosted.org/git/elfutils.git',
-            tag='elfutils-0.163')
-
-    provides('elf@1')
-
-    def configure_args(self):
-        return ['--enable-maintainer-mode']
+    depends_on('py-setuptools', type='build')
+    # for testing
+    # depends_on('py-nose', type=('build', 'run'))

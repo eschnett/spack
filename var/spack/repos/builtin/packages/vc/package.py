@@ -25,25 +25,21 @@
 from spack import *
 
 
-class Elfutils(AutotoolsPackage):
-    """elfutils is a collection of various binary tools such as
-    eu-objdump, eu-readelf, and other utilities that allow you to
-    inspect and manipulate ELF files. Refer to Table 5.Tools Included
-    in elfutils for Red Hat Developer for a complete list of binary
-    tools that are distributed with the Red Hat Developer Toolset
-    version of elfutils."""
+class Vc(CMakePackage):
+    """SIMD Vector Classes for C++"""
 
-    homepage = "https://fedorahosted.org/elfutils/"
+    homepage = "https://github.com/VcDevel/Vc"
+    url      = "https://github.com/VcDevel/Vc/archive/1.3.0.tar.gz"
 
-    depends_on('libtool', type='build')
-    depends_on('automake', type='build')
-    depends_on('autoconf', type='build')
+    version('1.3.0', '77efc1c16691c7925d4b58f9b30cf03b')
+    version('1.2.0', 'a5236df286b845d2fee5ef1e4d27549f')
+    version('1.1.0', 'e354c1e3ea1d674b6f2af9c6fd230d81')
 
-    version('0.163',
-            git='git://git.fedorahosted.org/git/elfutils.git',
-            tag='elfutils-0.163')
+    variant('debug', default=False)
 
-    provides('elf@1')
-
-    def configure_args(self):
-        return ['--enable-maintainer-mode']
+    def build_type(self):
+        spec = self.spec
+        if '+debug' in spec:
+            return 'Debug'
+        else:
+            return 'Release'

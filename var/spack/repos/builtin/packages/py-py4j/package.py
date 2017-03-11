@@ -25,25 +25,14 @@
 from spack import *
 
 
-class Elfutils(AutotoolsPackage):
-    """elfutils is a collection of various binary tools such as
-    eu-objdump, eu-readelf, and other utilities that allow you to
-    inspect and manipulate ELF files. Refer to Table 5.Tools Included
-    in elfutils for Red Hat Developer for a complete list of binary
-    tools that are distributed with the Red Hat Developer Toolset
-    version of elfutils."""
+class PyPy4j(PythonPackage):
+    """Enables Python programs to dynamically access arbitrary Java
+    objects."""
 
-    homepage = "https://fedorahosted.org/elfutils/"
+    homepage = "https://www.py4j.org/"
+    url = "https://pypi.io/packages/source/p/py4j/py4j-0.10.4.tar.gz"
 
-    depends_on('libtool', type='build')
-    depends_on('automake', type='build')
-    depends_on('autoconf', type='build')
+    version('0.10.4', 'de1ce072fb8d5bff8aba537b1700ace4')
+    version('0.10.3', '6c86aebb4f1cdd4bf192b16c8a8fe8e4')
 
-    version('0.163',
-            git='git://git.fedorahosted.org/git/elfutils.git',
-            tag='elfutils-0.163')
-
-    provides('elf@1')
-
-    def configure_args(self):
-        return ['--enable-maintainer-mode']
+    depends_on('py-setuptools', type='build')

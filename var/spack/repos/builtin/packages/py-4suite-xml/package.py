@@ -25,25 +25,13 @@
 from spack import *
 
 
-class Elfutils(AutotoolsPackage):
-    """elfutils is a collection of various binary tools such as
-    eu-objdump, eu-readelf, and other utilities that allow you to
-    inspect and manipulate ELF files. Refer to Table 5.Tools Included
-    in elfutils for Red Hat Developer for a complete list of binary
-    tools that are distributed with the Red Hat Developer Toolset
-    version of elfutils."""
+class Py4suiteXml(PythonPackage):
+    """XML tools and libraries for Python: Domlette, XPath, XSLT, XPointer,
+    XLink, XUpdate"""
 
-    homepage = "https://fedorahosted.org/elfutils/"
+    homepage = "http://4suite.org/"
+    url      = "https://pypi.io/packages/source/4/4Suite-XML/4Suite-XML-1.0.2.tar.gz"
 
-    depends_on('libtool', type='build')
-    depends_on('automake', type='build')
-    depends_on('autoconf', type='build')
+    version('1.0.2', '3ca3db95cb0263ad80beba034d1ff6ea')
 
-    version('0.163',
-            git='git://git.fedorahosted.org/git/elfutils.git',
-            tag='elfutils-0.163')
-
-    provides('elf@1')
-
-    def configure_args(self):
-        return ['--enable-maintainer-mode']
+    depends_on('python@2.2.1:')

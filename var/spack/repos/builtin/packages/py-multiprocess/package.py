@@ -25,25 +25,16 @@
 from spack import *
 
 
-class Elfutils(AutotoolsPackage):
-    """elfutils is a collection of various binary tools such as
-    eu-objdump, eu-readelf, and other utilities that allow you to
-    inspect and manipulate ELF files. Refer to Table 5.Tools Included
-    in elfutils for Red Hat Developer for a complete list of binary
-    tools that are distributed with the Red Hat Developer Toolset
-    version of elfutils."""
+class PyMultiprocess(PythonPackage):
+    """Better multiprocessing and multithreading in Python"""
 
-    homepage = "https://fedorahosted.org/elfutils/"
+    homepage = "https://github.com/uqfoundation/multiprocess"
+    url = "https://pypi.io/packages/source/m/multiprocess/multiprocess-0.70.5.zip"
 
-    depends_on('libtool', type='build')
-    depends_on('automake', type='build')
-    depends_on('autoconf', type='build')
+    version('0.70.5', 'bfe394368b1d98192f1f62cc0060be20')
+    version('0.70.4', '443336d84c574106da6c67d4574b7614')
 
-    version('0.163',
-            git='git://git.fedorahosted.org/git/elfutils.git',
-            tag='elfutils-0.163')
+    depends_on('python@2.6:2.8,3.1:')
 
-    provides('elf@1')
-
-    def configure_args(self):
-        return ['--enable-maintainer-mode']
+    depends_on('py-setuptools@0.6:', type='build')
+    depends_on('py-dill@0.2.6:', type=('build', 'run'))

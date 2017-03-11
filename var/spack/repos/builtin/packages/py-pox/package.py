@@ -25,25 +25,16 @@
 from spack import *
 
 
-class Elfutils(AutotoolsPackage):
-    """elfutils is a collection of various binary tools such as
-    eu-objdump, eu-readelf, and other utilities that allow you to
-    inspect and manipulate ELF files. Refer to Table 5.Tools Included
-    in elfutils for Red Hat Developer for a complete list of binary
-    tools that are distributed with the Red Hat Developer Toolset
-    version of elfutils."""
+class PyPox(PythonPackage):
+    """Utilities for filesystem exploration and automated builds."""
 
-    homepage = "https://fedorahosted.org/elfutils/"
+    homepage = "https://github.com/uqfoundation/pox"
+    url      = "https://pypi.io/packages/source/p/pox/pox-0.2.3.zip"
 
-    depends_on('libtool', type='build')
-    depends_on('automake', type='build')
-    depends_on('autoconf', type='build')
+    version('0.2.3', 'fcdfd9a9ab0f72367258b675554f6a83')
+    version('0.2.2', 'e1e2ce99a63d7226ea3c1a2ce389610d')
+    version('0.2.1', '517dc13c2bc2429d36a0c636f3ce42db')
 
-    version('0.163',
-            git='git://git.fedorahosted.org/git/elfutils.git',
-            tag='elfutils-0.163')
+    depends_on('python@2.5:2.8,3.1:')
 
-    provides('elf@1')
-
-    def configure_args(self):
-        return ['--enable-maintainer-mode']
+    depends_on('py-setuptools@0.6:', type='build')

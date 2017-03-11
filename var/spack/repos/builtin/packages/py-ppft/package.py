@@ -25,25 +25,18 @@
 from spack import *
 
 
-class Elfutils(AutotoolsPackage):
-    """elfutils is a collection of various binary tools such as
-    eu-objdump, eu-readelf, and other utilities that allow you to
-    inspect and manipulate ELF files. Refer to Table 5.Tools Included
-    in elfutils for Red Hat Developer for a complete list of binary
-    tools that are distributed with the Red Hat Developer Toolset
-    version of elfutils."""
+class PyPpft(PythonPackage):
+    """Distributed and parallel python """
 
-    homepage = "https://fedorahosted.org/elfutils/"
+    homepage = "https://github.com/uqfoundation/ppft"
+    url      = "https://pypi.org/packages/source/p/ppft/ppft-1.6.4.7.1.zip"
 
-    depends_on('libtool', type='build')
-    depends_on('automake', type='build')
-    depends_on('autoconf', type='build')
+    version('1.6.4.7.1',  '2b196a03bfbc102773f849c6b21e617b')
+    version('1.6.4.6',   'e533432bfba4b5a523a07d58011df209')
+    version('1.6.4.5',   'd2b1f9f07eae22b31bfe90f544dd3044')
 
-    version('0.163',
-            git='git://git.fedorahosted.org/git/elfutils.git',
-            tag='elfutils-0.163')
+    depends_on('python@2.5:2.8,3.1:')
 
-    provides('elf@1')
-
-    def configure_args(self):
-        return ['--enable-maintainer-mode']
+    depends_on('py-setuptools@0.6:', type='build')
+    depends_on('py-six@1.7.3:', type=('build', 'run'))
+    depends_on('py-dill@0.2.6:', type=('build', 'run'))

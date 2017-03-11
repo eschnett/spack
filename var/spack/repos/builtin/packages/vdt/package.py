@@ -25,25 +25,14 @@
 from spack import *
 
 
-class Elfutils(AutotoolsPackage):
-    """elfutils is a collection of various binary tools such as
-    eu-objdump, eu-readelf, and other utilities that allow you to
-    inspect and manipulate ELF files. Refer to Table 5.Tools Included
-    in elfutils for Red Hat Developer for a complete list of binary
-    tools that are distributed with the Red Hat Developer Toolset
-    version of elfutils."""
+class Vdt(CMakePackage):
+    """Vectorised math. A collection of fast and inline implementations of
+    mathematical functions."""
 
-    homepage = "https://fedorahosted.org/elfutils/"
+    homepage = "https://github.com/dpiparo/vdt"
+    url      = "https://github.com/dpiparo/vdt/archive/v0.3.9.tar.gz"
 
-    depends_on('libtool', type='build')
-    depends_on('automake', type='build')
-    depends_on('autoconf', type='build')
-
-    version('0.163',
-            git='git://git.fedorahosted.org/git/elfutils.git',
-            tag='elfutils-0.163')
-
-    provides('elf@1')
-
-    def configure_args(self):
-        return ['--enable-maintainer-mode']
+    version('0.3.9', '80a2d73a82f7ef8257a8206ca22dd145')
+    version('0.3.8', '25b07c72510aaa95fffc11e33579061c')
+    version('0.3.7', 'd2621d4c489894fd1fe8e056d9a0a67c')
+    version('0.3.6', '6eaff3bbbd5175332ccbd66cd71a741d')
