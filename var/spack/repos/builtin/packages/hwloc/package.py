@@ -57,4 +57,5 @@ class Hwloc(AutotoolsPackage):
     def configure_args(self):
         # Disable OpenCL, since hwloc might pick up an OpenCL library
         # at build time that is then not found at run time
+        # (Alternatively, we could require OpenCL as dependency.)
         return ["--disable-opencl"]
