@@ -47,7 +47,7 @@ class Cactusext(Package):
     deps["hdf5-blosc"] = []
     deps["hwloc"] = []
     # deps["lapack"] = []
-    deps["libxsmm"] = []
+    deps["libxsmm+header-only"] = []
     deps["lmod"] = []
     deps["lua"] = []
     deps["mpi"] = []
