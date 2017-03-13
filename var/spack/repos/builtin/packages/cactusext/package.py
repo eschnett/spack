@@ -97,6 +97,8 @@ class Cactusext(Package):
     deps["llvm"] = []
     deps["pkg-config"] = []
     deps["py-matplotlib"] = []
+    deps["py-scipy"] = []
+    deps["py-setuptools"] = []
     deps["python"] = []
     deps["qhull"] = []
     deps["rust"] = []
@@ -123,14 +125,12 @@ class Cactusext(Package):
     bison_compiler = cactusext_compiler
     cmake_compiler = cactusext_compiler
     gettext_compiler = cactusext_compiler
-    py_matplotlib_compiler = cactusext_compiler
     pkg_config_compiler = cactusext_compiler
     python_compiler = cactusext_compiler
     if sys.platform == "darwin":
         bison_compiler = darwin_compiler
         cmake_compiler = darwin_compiler
         gettext_compiler = darwin_compiler
-        py_matplotlib_compiler = darwin_compiler
         pkg_config_compiler = darwin_compiler
         python_compiler = darwin_compiler
 
@@ -138,7 +138,9 @@ class Cactusext(Package):
     deps["cmake"].append("%"+cmake_compiler)
     deps["gettext"].append("%"+gettext_compiler)
     deps["pkg-config"].append("%"+pkg_config_compiler)
-    deps["py-matplotlib"].append("%"+py_matplotlib_compiler)
+    deps["py-matplotlib"].append("%"+python_compiler)
+    deps["py-scipy"].append("%"+python_compiler)
+    deps["py-setuptools"].append("%"+python_compiler)
     deps["python"].append("%"+python_compiler)
 
     deps["fftw"].append("%"+cactusext_compiler)
