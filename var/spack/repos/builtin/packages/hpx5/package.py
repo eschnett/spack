@@ -39,6 +39,7 @@ class Hpx5(Package):
     homepage = "http://hpx.crest.iu.edu"
     url      = "http://hpx.crest.iu.edu/release/hpx-3.1.0.tar.gz"
 
+    version('4.0.0', 'b40dc03449ae1039cbb48ee149952b22')
     version('3.1.0', '9e90b8ac46788c009079632828c77628')
     version('2.0.0', '3d2ff3aab6c46481f9ec65c5b2bfe7a6')
     version('1.3.0', '2260ecc7f850e71a4d365a43017d8cee')
