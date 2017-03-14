@@ -92,10 +92,6 @@ class Gcc(AutotoolsPackage):
         filter_file(r"'@.*@'", "'@[[:alnum:]]*@'", 'libjava/configure',
                     string=True)
 
-        # Make libgcc_s relocatable
-        filter_file(r"@shlib_slibdir@", "@rpath", 
-                    'libgcc/config/t-slibgcc-darwin', string=True)
-
         # TODO: java requires zip -- add this as dependency
         enabled_languages = set(('c', 'c++', 'fortran', 'java', 'objc'))
 
