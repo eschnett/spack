@@ -50,13 +50,25 @@ class Hwloc(AutotoolsPackage):
     version('1.11.1', 'feb4e416a1b25963ed565d8b42252fdc')
     version('1.9',    '1f9f9155682fe8946a97c08896109508')
 
-    depends_on('libpciaccess')
+    variant('cuda', default=False)
+    variant('libxml2', default=True)
+    variant('pci', default=True)
+
+    depends_on('cuda', when='+cuda')
+    depends_on('libpciaccess', when='+pci')
+    depends_on('libxml2', when='+libxml2')
 
     def url_for_version(self, version):
         return "http://www.open-mpi.org/software/hwloc/v%s/downloads/hwloc-%s.tar.gz" % (version.up_to(2), version)
 
     def configure_args(self):
-        # Disable OpenCL, since hwloc might pick up an OpenCL library
-        # at build time that is then not found at run time
-        # (Alternatively, we could require OpenCL as dependency.)
-        return ["--disable-opencl"]
+        args = [
+            "--enable-cuda" if '+cuda' in spec else "--disable-cuda",
+            "--enable-libxml2" if '+libxml2' in spec else "--disable-libxml2",
+            "--enable-pci" if '+pci' in spec else "--disable-pci",
+            # Disable OpenCL, since hwloc might pick up an OpenCL
+            # library at build time that is then not found at run time
+            # (Alternatively, we could require OpenCL as dependency.)
+            "--disable-opencl",
+        ]
+        return args
