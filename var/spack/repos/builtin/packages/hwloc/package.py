@@ -62,6 +62,7 @@ class Hwloc(AutotoolsPackage):
         return "http://www.open-mpi.org/software/hwloc/v%s/downloads/hwloc-%s.tar.gz" % (version.up_to(2), version)
 
     def configure_args(self):
+        spec = self.spec
         args = [
             "--enable-cuda" if '+cuda' in spec else "--disable-cuda",
             "--enable-libxml2" if '+libxml2' in spec else "--disable-libxml2",
