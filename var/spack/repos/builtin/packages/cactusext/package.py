@@ -26,13 +26,11 @@ class Cactusext(Package):
     # headers that break other packages
     variant("charm", default=False, description="Enable Charm++")
     variant("cuda", default=False, description="Enable CUDA")
-    variant("funhpc", default=False, description="Enable FunHPC")
     variant("julia", default=False, description="Enable Julia")
     # Cannot combine LLVM and GCC since both provide libgomp
     variant("llvm", default=False, description="Enable LLVM")
     # variant("scalasca", default=False, description="Enable Scalasca")
     variant("rust", default=False, description="Enable Rust")
-    variant("simulationio", default=False, description="Enable SimulationIO")
 
     deps = {}
     whens = {}
@@ -42,12 +40,15 @@ class Cactusext(Package):
     deps["boost"] = ["+mpi"]
     deps["cuda"] = []
     deps["fftw"] = ["+mpi", "+openmp"]
+    deps["funhpc"] = []
+    deps["gasnet"] = ["+mpi"]
     deps["gsl"] = []
     deps["hdf5"] = ["+mpi"]
     deps["hdf5-blosc"] = []
+    deps["hpx5"] = ["+cxx11", "+metis", "+mpi"]
     deps["hwloc"] = []
     # deps["lapack"] = []
-    deps["libxsmm+header-only"] = []
+    deps["libxsmm"] = ["+header-only"]
     deps["lmod"] = []
     deps["lua"] = []
     deps["mpi"] = []
@@ -56,21 +57,45 @@ class Cactusext(Package):
     deps["papi"] = []
     deps["petsc"] = ["+boost", "+hdf5", "+mpi"]
     deps["py-yt"] = []
+    deps["rsync"] = []
     # deps["scalasca"] = []   # depends on scorep
     # deps["scorep"] = []   # requires a case sensitive file system
     # deps["tau"] = []   # ["+scorep"]
+    deps["simulationio"] = []
+    deps["simulationio +julia"] = []
     deps["tmux"] = []
     deps["zlib"] = []
 
+    # Possible other packages:
+    # - adios
+    # - boxlib
+    # - ccache
+    # - gasnet
+    # - gnuplot
+    # - hpl
+    # - libmng, libpng
+    # - likwid
+    # - magma
+    # - mbedtls
+    # - mpich
+    # - mvapich2
+    # - ninja
+    # - paraview
+    # - py-flake8
+    # - py-ipython
+    # - py-jupyter-notebook
+    # - rose
+    # - samrai
+    # - silo
+    # - tbb
+    # - valgrind
+
     whens["charm"] = ["+charm"]
     whens["cuda"] = ["+cuda"]
-    whens["funhpc"] = ["+funhpc"]
     whens["julia"] = ["+julia"]
-
     whens["llvm"] = ["+llvm"]
     whens["rust"] = ["+rust"]
-    whens["simulationio"] = ["+simulationio"]
-    whens["simulationio+julia"] = ["+simulationio+julia"]
+    whens["simulationio +julia"] = ["+julia"]
 
     # Configure dependencies for convenience
 
@@ -86,7 +111,6 @@ class Cactusext(Package):
         deps["charm"].append("+papi")
     deps["cmake"] = []
     deps["freetype"] = []
-    deps["funhpc"] = []
     deps["gettext"] = ["~libxml2"]
     deps["git"] = []
     deps["jemalloc"] = []
@@ -97,13 +121,12 @@ class Cactusext(Package):
     deps["llvm"] = []
     deps["pkg-config"] = []
     deps["py-matplotlib"] = []
-    deps["py-scipy"] = []
-    deps["py-setuptools"] = []
+    # deps["py-numpy"] = []
+    # deps["py-scipy"] = []
+    # deps["py-setuptools"] = []
     deps["python"] = []
     deps["qhull"] = []
     deps["rust"] = []
-    deps["simulationio"] = []
-    deps["simulationio+julia"] = []
     deps["sqlite"] = []
     deps["tar"] = []
     deps["tk"] = []
@@ -111,7 +134,6 @@ class Cactusext(Package):
 
     whens["gettext"] = ["+julia"]
     whens["git"] = ["+julia"]
-    whens["jemalloc"] = ["+funhpc"]
 
     # # Versions
     # TODO: Remove this once Spack chooses the latest 2.7 version by default
@@ -120,7 +142,7 @@ class Cactusext(Package):
     # deps["openssl"].append("@:1.0")
 
     # Compilers
-    cactusext_compiler = "gcc@spack-6.3.0"
+    cactusext_compiler = "gcc@6.3.0-spack"
     darwin_compiler = "clang@8.0.0-apple"
     bison_compiler = cactusext_compiler
     cmake_compiler = cactusext_compiler
@@ -139,8 +161,8 @@ class Cactusext(Package):
     deps["gettext"].append("%"+gettext_compiler)
     deps["pkg-config"].append("%"+pkg_config_compiler)
     deps["py-matplotlib"].append("%"+python_compiler)
-    deps["py-scipy"].append("%"+python_compiler)
-    deps["py-setuptools"].append("%"+python_compiler)
+    # deps["py-scipy"].append("%"+python_compiler)
+    # deps["py-setuptools"].append("%"+python_compiler)
     deps["python"].append("%"+python_compiler)
 
     deps["fftw"].append("%"+cactusext_compiler)
@@ -157,6 +179,7 @@ class Cactusext(Package):
     deps["papi"].append("%"+cactusext_compiler)
     deps["petsc"].append("%"+cactusext_compiler)
     deps["qhull"].append("%"+cactusext_compiler)
+    # deps["py-numpy"].append("%"+cactusext_compiler)
     # deps["scalasca"].append("%"+cactusext_compiler)
     # deps["scorep"].append("%"+cactusext_compiler)
     # deps["tau"].append("%"+cactusext_compiler)
