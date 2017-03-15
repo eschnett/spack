@@ -47,6 +47,7 @@ class Cactusext(Package):
     deps["hdf5-blosc"] = []
     deps["hpx5"] = ["+cxx11", "+metis", "+mpi"]
     deps["hwloc"] = []
+    deps["hwloc +cuda"] = []
     # deps["lapack"] = []
     deps["libxsmm"] = ["+header-only"]
     deps["lmod"] = []
@@ -92,6 +93,7 @@ class Cactusext(Package):
 
     whens["charm"] = ["+charm"]
     whens["cuda"] = ["+cuda"]
+    whens["hwloc +cuda"] = ["+cuda"]
     whens["julia"] = ["+julia"]
     whens["llvm"] = ["+llvm"]
     whens["rust"] = ["+rust"]
