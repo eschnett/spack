@@ -23,6 +23,7 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 ##############################################################################
 from spack import *
+import sys
 
 
 class Hwloc(AutotoolsPackage):
@@ -52,11 +53,12 @@ class Hwloc(AutotoolsPackage):
 
     variant('cuda', default=False)
     variant('libxml2', default=True)
-    variant('pci', default=True)
+    variant('pci', default=(sys.platform != 'darwin'))
 
     depends_on('cuda', when='+cuda')
     depends_on('libpciaccess', when='+pci')
     depends_on('libxml2', when='+libxml2')
+    depends_on('pkg-config', type='build')
 
     def url_for_version(self, version):
         return "http://www.open-mpi.org/software/hwloc/v%s/downloads/hwloc-%s.tar.gz" % (version.up_to(2), version)
