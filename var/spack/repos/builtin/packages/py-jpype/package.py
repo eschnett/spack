@@ -25,29 +25,20 @@
 from spack import *
 
 
-class Pcre(AutotoolsPackage):
-    """The PCRE package contains Perl Compatible Regular Expression
-    libraries. These are useful for implementing regular expression
-    pattern matching using the same syntax and semantics as Perl 5."""
+class PyJpype(PythonPackage):
+    """JPype is an effort to allow python programs full access to java class
+    libraries."""
 
-    homepage = "http://www.pcre.org"
-    url      = "https://ftp.pcre.org/pub/pcre/pcre-8.40.tar.bz2"
+    homepage = "https://github.com/originell/jpype"
+    url      = "https://pypi.io/packages/source/J/JPype1/JPype1-0.6.2.tar.gz"
 
-    version('8.40', '41a842bf7dcecd6634219336e2167d1d')
-    version('8.39', 'e3fca7650a0556a2647821679d81f585')
-    version('8.38', '00aabbfe56d5a48b270f999b508c5ad2')
+    version('0.6.2', '16e5ee92b29563dcc63bbc75556810c1')
+    version('0.6.1', '468ca2d4b2cff7802138789e951d5d58')
+    version('0.6.0', 'f0cbbe1d0c4b563f7e435d2bffc31736')
 
-    patch('intel.patch', when='@8.38')
+    depends_on('python@2.6:')
 
-    variant('utf', default=True,
-            description='Enable support for UTF-8/16/32, '
-            'incompatible with EBCDIC.')
-
-    def configure_args(self):
-        args = []
-
-        if '+utf' in self.spec:
-            args.append('--enable-utf')
-            args.append('--enable-unicode-properties')
-
-        return args
+    depends_on('py-setuptools', type='build')
+    depends_on('jdk', type=('build', 'run'))
+    # extra requirements
+    # depends_on('py-numpy@1.6:', type=('build', 'run'))
