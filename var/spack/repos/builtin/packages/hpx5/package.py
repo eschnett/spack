@@ -24,7 +24,6 @@
 ##############################################################################
 
 from spack import *
-import os
 
 
 class Hpx5(AutotoolsPackage):
@@ -85,11 +84,10 @@ class Hpx5(AutotoolsPackage):
         #     "libffi-%s" % spec['libffi'].version.dotted(),
         #     "include")
         args = [
-            '--prefix=%s' % self.prefix,
             '--enable-agas',          # make this a variant?
             '--enable-jemalloc',      # make this a variant?
             '--enable-percolation',   # make this a variant?
-            # '--enable-rebalancing',   # this doesn't seem to build
+            # '--enable-rebalancing',   # this seems broken
             '--with-hwloc=hwloc',
             '--with-jemalloc=jemalloc',
             # '--with-libffi=libffi',
@@ -100,6 +98,8 @@ class Hpx5(AutotoolsPackage):
 
         if '+cuda' in spec:
             args += ['--enable-cuda']
+        else:
+            args += ['--disable-cuda']
 
         if '+cxx11' in spec:
             args += ['--enable-hpx++']
@@ -122,6 +122,8 @@ class Hpx5(AutotoolsPackage):
                 args += ['--with-mpi=mvapich2-cxx']
             else:
                 args += ['--with-mpi=system']
+        else:
+            args += ['--disable-mpi']
 
         # METIS does not support pkg-config; HPX will pick it up automatically
         # if '+metis' in spec:
@@ -133,6 +135,8 @@ class Hpx5(AutotoolsPackage):
                 args += ['--with-opencl=pocl']
             else:
                 args += ['--with-opencl=system']
+        else:
+            args += ['--disable-opencl']
 
         if '+photon' in spec:
             args += ['--enable-photon']
