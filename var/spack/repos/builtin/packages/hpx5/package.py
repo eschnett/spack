@@ -57,6 +57,8 @@ class Hpx5(AutotoolsPackage):
     variant('photon', default=False, description='Enable Photon support')
     variant('pic', default=True, description='Produce position-independent code')
 
+    depends_on("autoconf", type='build')
+    depends_on("automake", type='build')
     depends_on("cuda", when='+cuda')
     depends_on("hwloc")
     depends_on("jemalloc")
@@ -70,10 +72,11 @@ class Hpx5(AutotoolsPackage):
     depends_on("pkg-config", type='build')
 
     @property
-    def build_directory(self):
+    def configure_directory(self):
         return join_path(self.stage.source_path, "hpx")
 
     def configure_args(self):
+        spec = self.spec
         args = [
             '--prefix=%s' % self.prefix,
             '--enable-agas',          # make this a variant?
