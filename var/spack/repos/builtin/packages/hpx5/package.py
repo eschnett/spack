@@ -51,6 +51,7 @@ class Hpx5(AutotoolsPackage):
     variant('cuda', default=False, description='Enable CUDA support')
     variant('cxx11', default=False, description='Enable C++11 hpx++ interface')
     variant('debug', default=False, description='Build debug version of HPX-5')
+    variant('instrumentation', default=False, description='Enable instrumentation (may affect performance)')
     variant('metis', default=False, description='Enable METIS support')
     variant('mpi', default=False, description='Enable MPI support')
     variant('opencl', default=False, description='Enable OpenCL support')
@@ -65,15 +66,16 @@ class Hpx5(AutotoolsPackage):
     depends_on("libffi")
     depends_on("libtool", type='build')
     # depends_on("lz4")   # hpx5 always builds its own lz4
+    depends_on("m4", type='build')
     depends_on("metis", when='+metis')
     depends_on("mpi", when='+mpi')
     depends_on("mpi", when='+photon')
     depends_on("opencl", when='+opencl')
+    # depends_on("papi")
     depends_on("pkg-config", type='build')
 
-    @property
-    def configure_directory(self):
-        return join_path(self.stage.source_path, "hpx")
+    configure_directory = "hpx"
+    build_directory = "spack-build"
 
     def configure_args(self):
         spec = self.spec
@@ -82,10 +84,11 @@ class Hpx5(AutotoolsPackage):
             '--enable-agas',          # make this a variant?
             '--enable-jemalloc',      # make this a variant?
             '--enable-percolation',   # make this a variant?
-            # '--enable-rebalancing',   # this seems broken
+            # '--enable-rebalancing',   # this doesn't seem to build
             '--with-hwloc=hwloc',
             '--with-jemalloc=jemalloc',
             '--with-libffi=libffi',
+            # '--with-papi=papi',   # currently disabled in HPX
         ]
 
         if '+cuda' in spec:
@@ -96,6 +99,9 @@ class Hpx5(AutotoolsPackage):
 
         if '+debug' in spec:
             args += ['--enable-debug']
+
+        if '+instrumentation' in spec:
+            args += ['--enable-instrumentation']
 
         if '+mpi' in spec or '+photon' in spec:
             # photon requires mpi
