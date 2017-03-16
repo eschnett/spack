@@ -72,7 +72,6 @@ class Cactusext(Package):
     # - adios
     # - boxlib
     # - ccache
-    # - gasnet
     # - gnuplot
     # - hpl
     # - libmng, libpng
