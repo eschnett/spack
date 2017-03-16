@@ -79,6 +79,11 @@ class Hpx5(AutotoolsPackage):
 
     def configure_args(self):
         spec = self.spec
+        # libffi_include_dir = join_path(
+        #     spec['libffi'].prefix,
+        #     "lib",
+        #     "libffi-%s" % spec['libffi'].version.dotted(),
+        #     "include")
         args = [
             '--prefix=%s' % self.prefix,
             '--enable-agas',          # make this a variant?
@@ -87,8 +92,10 @@ class Hpx5(AutotoolsPackage):
             # '--enable-rebalancing',   # this doesn't seem to build
             '--with-hwloc=hwloc',
             '--with-jemalloc=jemalloc',
-            '--with-libffi=libffi',
+            # '--with-libffi=libffi',
+            '--with-libffi=system',   # doesn't take a packge name as argument
             # '--with-papi=papi',   # currently disabled in HPX
+            # 'LIBFFI_CFLAGS=-I%s' % libffi_include_dir,
         ]
 
         if '+cuda' in spec:
