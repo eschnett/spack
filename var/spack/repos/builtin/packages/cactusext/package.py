@@ -46,6 +46,7 @@ class Cactusext(Package):
     deps["hdf5"] = ["+mpi"]
     deps["hdf5-blosc"] = []
     deps["hpx5"] = ["+cxx11", "+metis", "+mpi"]
+    deps["hpx5 +cuda"] = []
     deps["hwloc"] = []
     deps["hwloc +cuda"] = []
     # deps["lapack"] = []
@@ -93,6 +94,7 @@ class Cactusext(Package):
 
     whens["charm"] = ["+charm"]
     whens["cuda"] = ["+cuda"]
+    whens["hpx5 +cuda"] = ["+cuda"]
     whens["hwloc +cuda"] = ["+cuda"]
     whens["julia"] = ["+julia"]
     whens["llvm"] = ["+llvm"]
