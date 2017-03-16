@@ -53,10 +53,11 @@ class Hwloc(AutotoolsPackage):
 
     variant('cuda', default=False, description="Support CUDA devices")
     variant('libxml2', default=True, description="Build with libxml2")
-    variant('pci', default=True, description="Support analyzing devices on PCI bus")
+    variant('pci', default=(sys.platform != 'darwin'),
+            description="Support analyzing devices on PCI bus")
 
     depends_on('cuda', when='+cuda')
-    depends_on('libpciaccess', when=(sys.platform != 'darwin'))   # and '+pci'?
+    depends_on('libpciaccess', when='+pci')
     depends_on('libxml2', when='+libxml2')
     depends_on('pkg-config', type='build')
 
