@@ -117,7 +117,7 @@ class Cactusext(Package):
     deps["git"] = []
     deps["jemalloc"] = []
     deps["jpeg"] = []
-    deps["julia"] = ["+hdf5", "+mpi"]   # "+plots", "+python", "@master"
+    deps["julia"] = ["+hdf5", "+mpi", "+simd"]   # "+plots", "+python", "@master"
     deps["libpng"] = []
     deps["libsigsegv"] = []
     deps["llvm"] = []
