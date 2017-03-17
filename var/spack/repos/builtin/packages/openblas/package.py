@@ -130,7 +130,6 @@ class Openblas(MakefilePackage):
         ]
         return make_args + self.make_defs
 
-    @on_package_attributes(run_tests=True)
     @run_after('install')
     def check_install(self):
         spec = self.spec
