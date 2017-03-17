@@ -34,6 +34,13 @@ class Julia(Package):
     url      = ("https://github.com/JuliaLang/julia/releases/download/"
                 "v0.4.3/julia-0.4.3-full.tar.gz")
 
+    # # We need to update the url every few weeks/months
+    # resource(name="cacert",
+    #          url="https://curl.haxx.se/ca/cacert-2017-01-18.pem",
+    #          md5="38cd779c9429ab6e2e5ae3437b763238",
+    #          expand=False,
+    #          destination="cacert.pem")
+
     version('master',
             git='https://github.com/JuliaLang/julia.git', branch='master')
     version('release-0.5',
@@ -60,7 +67,7 @@ class Julia(Package):
     patch('gc.patch', when='@0.4:0.4.5')
     patch('openblas.patch', when='@0.4:0.4.5')
 
-    variant('binutils', default=sys.platform != 'darwin',
+    variant('binutils', default=(sys.platform != 'darwin'),
             description="Build via binutils")
 
     # Build-time dependencies:
@@ -151,11 +158,14 @@ class Julia(Package):
         make("install")
 
         # Julia's package manager needs a certificate
+        cacert_dir = join_path(prefix, "etc", "curl")
+        mkdirp(cacert_dir)
+        cacert_file = join_path(cacert_dir, "cacert.pem")
         curl = which("curl")
-        cacert_file = join_path(prefix, "etc", "curl", "cacert.pem")
         curl("--create-dirs",
              "--output", cacert_file,
              "https://curl.haxx.se/ca/cacert.pem")
+        # install("cacert.pem", cacert_file)
 
         # Put Julia's compiler cache into a private directory
         cachedir = join_path(prefix, "var", "julia", "cache")
