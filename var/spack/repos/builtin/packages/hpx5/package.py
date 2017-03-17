@@ -59,10 +59,11 @@ class Hpx5(AutotoolsPackage):
 
     depends_on("autoconf", type='build')
     depends_on("automake", type='build')
-    depends_on("cuda", when='+cuda')
     depends_on("hwloc")
+    depends_on("hwloc +cuda", when='+cuda')
+    # Note: We could disable CUDA support via "hwloc ~cuda"
     depends_on("jemalloc")
-    depends_on("libffi")
+    # depends_on("libffi")
     depends_on("libtool", type='build')
     # depends_on("lz4")   # hpx5 always builds its own lz4
     depends_on("m4", type='build')
@@ -90,16 +91,14 @@ class Hpx5(AutotoolsPackage):
             # '--enable-rebalancing',   # this seems broken
             '--with-hwloc=hwloc',
             '--with-jemalloc=jemalloc',
+            # doesn't take a package name as argument
             # '--with-libffi=libffi',
-            '--with-libffi=system',   # doesn't take a packge name as argument
+            # libffi installs its headers strangely, leading to problems
+            # '--with-libffi=system',
+            '--with-libffi=contrib',
             # '--with-papi=papi',   # currently disabled in HPX
             # 'LIBFFI_CFLAGS=-I%s' % libffi_include_dir,
         ]
-
-        if '+cuda' in spec:
-            args += ['--enable-cuda']
-        else:
-            args += ['--disable-cuda']
 
         if '+cxx11' in spec:
             args += ['--enable-hpx++']
@@ -122,8 +121,6 @@ class Hpx5(AutotoolsPackage):
                 args += ['--with-mpi=mvapich2-cxx']
             else:
                 args += ['--with-mpi=system']
-        else:
-            args += ['--disable-mpi']
 
         # METIS does not support pkg-config; HPX will pick it up automatically
         # if '+metis' in spec:
@@ -135,8 +132,6 @@ class Hpx5(AutotoolsPackage):
                 args += ['--with-opencl=pocl']
             else:
                 args += ['--with-opencl=system']
-        else:
-            args += ['--disable-opencl']
 
         if '+photon' in spec:
             args += ['--enable-photon']
