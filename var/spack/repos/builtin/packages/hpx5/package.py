@@ -91,13 +91,10 @@ class Hpx5(AutotoolsPackage):
             # '--enable-rebalancing',   # this seems broken
             '--with-hwloc=hwloc',
             '--with-jemalloc=jemalloc',
-            # doesn't take a package name as argument
-            # '--with-libffi=libffi',
-            # libffi installs its headers strangely, leading to problems
-            # '--with-libffi=system',
+            # Spack's libffi installs its headers strangely,
+            # leading to problems
             '--with-libffi=contrib',
             # '--with-papi=papi',   # currently disabled in HPX
-            # 'LIBFFI_CFLAGS=-I%s' % libffi_include_dir,
         ]
 
         if '+cxx11' in spec:
