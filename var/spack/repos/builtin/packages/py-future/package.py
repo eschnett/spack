@@ -25,37 +25,15 @@
 from spack import *
 
 
-class Mesa(AutotoolsPackage):
-    """Mesa is an open-source implementation of the OpenGL
-    specification - a system for rendering interactive 3D graphics."""
+class PyFuture(PythonPackage):
+    """Clean single-source support for Python 3 and 2"""
 
-    homepage = "http://www.mesa3d.org"
-    url      = "http://ftp.iij.ad.jp/pub/X11/x.org/pub/mesa/12.0.3/mesa-12.0.3.tar.gz"
+    homepage = "https://python-future.org/"
+    url = "https://pypi.io/packages/source/f/future/future-0.16.0.tar.gz"
 
-    version('12.0.3', '60c5f9897ddc38b46f8144c7366e84ad')
+    version('0.16.0', '3e8e88a2bda48d54b1da7634d04760d7')
+    version('0.15.2', 'a68eb3c90b3b76714c5ceb8c09ea3a06')
 
-    # General dependencies
-    depends_on('python@2.6.4:')
-    depends_on('py-mako@0.3.4:', type=('build', 'run'))
-    depends_on('flex@2.5.35:', type='build')
-    depends_on('bison@2.4.1:', type='build')
-
-    # For DRI and hardware acceleration
-    depends_on('libpthread-stubs')
-    depends_on('libdrm')
-    depends_on('openssl')
-    depends_on('libxcb@1.9.3:')
-    depends_on('libxshmfence@1.1:')
-    depends_on('libx11')
-    depends_on('libxext')
-    depends_on('libxdamage')
-    depends_on('libxfixes')
-
-    depends_on('glproto@1.4.14:', type='build')
-    depends_on('dri2proto@2.6:', type='build')
-    depends_on('dri3proto@1.0:', type='build')
-    depends_on('presentproto@1.0:', type='build')
-    depends_on('pkg-config@0.9.0:', type='build')
-
-    # TODO: Add package for systemd, provides libudev
-    # Using the system package manager to install systemd didn't work for me
+    depends_on('py-setuptools', type='build')
+    # depends_on('py-importlib', type=('build', 'run'), when='^python@2.6')
+    # depends_on('py-argparse', type=('build', 'run'), when='^python@2.6')

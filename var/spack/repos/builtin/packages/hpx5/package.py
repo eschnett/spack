@@ -82,11 +82,6 @@ class Hpx5(AutotoolsPackage):
 
     def configure_args(self):
         spec = self.spec
-        # libffi_include_dir = join_path(
-        #     spec['libffi'].prefix,
-        #     "lib",
-        #     "libffi-%s" % spec['libffi'].version.dotted(),
-        #     "include")
         args = [
             '--enable-agas',          # make this a variant?
             '--enable-jemalloc',      # make this a variant?
