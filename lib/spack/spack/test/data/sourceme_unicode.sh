@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 ##############################################################################
 # Copyright (c) 2013-2016, Lawrence Livermore National Security, LLC.
 # Produced at the Lawrence Livermore National Laboratory.
@@ -22,15 +24,11 @@
 # License along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 ##############################################################################
-from spack import *
 
-
-class Mawk(AutotoolsPackage):
-    """mawk is an interpreter for the AWK Programming Language."""
-
-    homepage = "http://invisible-island.net/mawk/mawk.html"
-    url      = "http://invisible-mirror.net/archives/mawk/mawk-1.3.4.tgz"
-
-    version('1.3.4', 'b1d27324ae80302452d0fa0c98447b65')
-
-    provides('awk')
+# Set an environment variable with some unicode in it to ensure that
+# Spack can decode it.
+#
+# This has caused squashed commits on develop to break, as some
+# committers use unicode in their messages, and Travis sets the
+# current commit message in an environment variable.
+export UNICODE_VAR='don\xe2\x80\x99t'
