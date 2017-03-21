@@ -22,8 +22,6 @@
 # License along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 ##############################################################################
-import os
-import shutil
 import sys
 
 from spack import *
@@ -316,40 +314,40 @@ class Llvm(Package):
         build_type = 'RelWithDebInfo' if '+debug' in spec else 'Release'
         cmake_args.extend([
             '..',
-            '-DCMAKE_BUILD_TYPE=' + build_type,
+            '-DCMAKE_BUILD_TYPE=%s' % build_type,
             '-DLLVM_REQUIRES_RTTI:BOOL=ON',
             '-DCLANG_DEFAULT_OPENMP_RUNTIME:STRING=libomp',
             '-DPYTHON_EXECUTABLE:PATH=%s/bin/python' % spec['python'].prefix])
 
         if '+gold' in spec:
-            cmake_args.append('-DLLVM_BINUTILS_INCDIR=' +
-                              os.path.join(spec['binutils'].prefix, 'include'))
+            cmake_args.append(
+                '-DLLVM_BINUTILS_INCDIR=%s' % spec['binutils'].prefix.include)
         if '+polly' in spec:
-            cmake_args.append('-DLINK_POLLY_INTO_TOOLS:Bool=ON')
+            cmake_args.append('-DLINK_POLLY_INTO_TOOLS:BOOL=ON')
         else:
-            cmake_args.append('-DLLVM_EXTERNAL_POLLY_BUILD:Bool=OFF')
+            cmake_args.append('-DLLVM_EXTERNAL_POLLY_BUILD:BOOL=OFF')
 
         if '+clang' not in spec:
-            cmake_args.append('-DLLVM_EXTERNAL_CLANG_BUILD:Bool=OFF')
+            cmake_args.append('-DLLVM_EXTERNAL_CLANG_BUILD:BOOL=OFF')
 
         if '+lldb' not in spec:
-            cmake_args.append('-DLLVM_EXTERNAL_LLDB_BUILD:Bool=OFF')
+            cmake_args.append('-DLLVM_EXTERNAL_LLDB_BUILD:BOOL=OFF')
 
         if '+internal_unwind' not in spec:
-            cmake_args.append('-DLLVM_EXTERNAL_LIBUNWIND_BUILD:Bool=OFF')
+            cmake_args.append('-DLLVM_EXTERNAL_LIBUNWIND_BUILD:BOOL=OFF')
 
         if '+libcxx' not in spec:
-            cmake_args.append('-DLLVM_EXTERNAL_LIBCXX_BUILD:Bool=OFF')
-            cmake_args.append('-DLLVM_EXTERNAL_LIBCXXABI_BUILD:Bool=OFF')
+            cmake_args.append('-DLLVM_EXTERNAL_LIBCXX_BUILD:BOOL=OFF')
+            cmake_args.append('-DLLVM_EXTERNAL_LIBCXXABI_BUILD:BOOL=OFF')
 
         if '+compiler-rt' not in spec:
-            cmake_args.append('-DLLVM_EXTERNAL_COMPILER_RT_BUILD:Bool=OFF')
+            cmake_args.append('-DLLVM_EXTERNAL_COMPILER_RT_BUILD:BOOL=OFF')
 
         if '+shared_libs' in spec:
-            cmake_args.append('-DBUILD_SHARED_LIBS:Bool=ON')
+            cmake_args.append('-DBUILD_SHARED_LIBS:BOOL=ON')
 
         if '+link_dylib' in spec:
-            cmake_args.append('-DLLVM_LINK_LLVM_DYLIB:Bool=ON')
+            cmake_args.append('-DLLVM_LINK_LLVM_DYLIB:BOOL=ON')
 
         if '+all_targets' not in spec:  # all is default on cmake
             targets = ['CppBackend', 'NVPTX', 'AMDGPU']
@@ -366,7 +364,7 @@ class Llvm(Package):
                 targets.append('PowerPC')
 
             cmake_args.append(
-                '-DLLVM_TARGETS_TO_BUILD:Bool=' + ';'.join(targets))
+                '-DLLVM_TARGETS_TO_BUILD:String=' + ';'.join(targets))
 
         if '+clang' not in spec:
             if '+clang_extra' in spec:
