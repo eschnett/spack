@@ -364,7 +364,7 @@ class Llvm(Package):
                 targets.append('PowerPC')
 
             cmake_args.append(
-                '-DLLVM_TARGETS_TO_BUILD:String=' + ';'.join(targets))
+                '-DLLVM_TARGETS_TO_BUILD:STRING=' + ';'.join(targets))
 
         if '+clang' not in spec:
             if '+clang_extra' in spec:
