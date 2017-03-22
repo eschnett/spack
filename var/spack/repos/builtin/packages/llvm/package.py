@@ -378,3 +378,4 @@ class Llvm(Package):
             cmake(*cmake_args)
             make()
             make("install")
+            install_tree("bin", join_path(prefix, "libexec", "llvm"))
