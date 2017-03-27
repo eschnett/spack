@@ -50,7 +50,8 @@ class Pocl(CMakePackage):
     patch("vecmathlib.patch", when="@:0.13")
 
     # Note: We should describe correctly which pocl versions provide
-    # what OpenCL version
+    # which version of the  OpenCL standard
+    # OpenCL standard versions are: 1.0, 1.1, 1.2, 2.0, 2.1, 2.2
     provides('opencl@:2.0')
 
     depends_on("cmake @2.8.12:", type="build")
