@@ -43,6 +43,7 @@ class Cactusext(Package):
     deps["funhpc"] = []
     deps["gasnet"] = ["+mpi"]
     deps["gsl"] = []
+    deps["googletest"] = []
     deps["hdf5"] = ["+mpi"]
     deps["hdf5-blosc"] = []
     deps["hpx5"] = ["+cxx11", "+metis", "+mpi"]
