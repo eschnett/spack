@@ -33,8 +33,6 @@ class Googletest(CMakePackage):
     version('1.8.0', 'd2edffbe844902d942c31db70c7cfec2')
     version('1.7.0', '5eaf03ed925a47b37c8e1d559eb19bc4')
 
-    depends_on("cmake", type='build')
-
     def cmake_args(self):
         spec = self.spec
         if '@1.8.0:' in spec:
@@ -45,19 +43,15 @@ class Googletest(CMakePackage):
             options = []
         return options
 
+    @when('@:1.7.0')
     def install(self, spec, prefix):
         """Make the install targets"""
         with working_dir(self.build_directory):
-            if '@1.8.0:' in spec:
-                # New style
-                make('install')
-            else:
-                # Old style
-                # Google Test doesn't have a make install
-                # We have to do our own install here.
-                install_tree(join_path(self.stage.source_path, 'include'),
-                             prefix.include)
+            # Google Test doesn't have a make install
+            # We have to do our own install here.
+            install_tree(join_path(self.stage.source_path, 'include'),
+                         prefix.include)
 
-                mkdirp(prefix.lib)
-                install('libgtest.a', prefix.lib)
-                install('libgtest_main.a', prefix.lib)
+            mkdirp(prefix.lib)
+            install('libgtest.a', prefix.lib)
+            install('libgtest_main.a', prefix.lib)
