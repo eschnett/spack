@@ -23,7 +23,6 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 ##############################################################################
 
-
 from spack import *
 
 
@@ -39,9 +38,6 @@ class Funhpc(CMakePackage):
     version('0.1.0', '00f7dabc08ed1ab77858785ce0809f50')
     version('develop',
             git='https://github.com/eschnett/FunHPC.cxx', branch='master')
-    version('extgtest',
-            git='https://github.com/eschnett/FunHPC.cxx',
-            branch='eschnett/extgtest')
 
     variant('pic', default=True,
             description="Produce position-independent code")
@@ -55,7 +51,7 @@ class Funhpc(CMakePackage):
 
     def cmake_args(self):
         spec = self.spec
-        options = []
+        options = ["-DGTEST_ROOT=%s" % prefix['gtest']]
         if '+pic' in spec:
             options.extend(["-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=true"])
         return options
