@@ -39,11 +39,15 @@ class Funhpc(CMakePackage):
     version('0.1.0', '00f7dabc08ed1ab77858785ce0809f50')
     version('develop',
             git='https://github.com/eschnett/FunHPC.cxx', branch='master')
+    version('extgtest',
+            git='https://github.com/eschnett/FunHPC.cxx',
+            branch='eschnett/extgtest')
 
     variant('pic', default=True,
             description="Produce position-independent code")
 
     depends_on('cereal')
+    depends_on('googletest')
     depends_on('hwloc')
     depends_on('jemalloc')
     depends_on('mpi')
