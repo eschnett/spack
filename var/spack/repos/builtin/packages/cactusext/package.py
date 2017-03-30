@@ -147,7 +147,7 @@ class Cactusext(Package):
 
     # Compilers
     cactusext_compiler = "gcc@6.3.0-spack"
-    darwin_compiler = "clang@8.0.0-apple"
+    darwin_compiler = "clang@8.1.0-apple"
     bison_compiler = cactusext_compiler
     cmake_compiler = cactusext_compiler
     gettext_compiler = cactusext_compiler
