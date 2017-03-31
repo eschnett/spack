@@ -136,8 +136,8 @@ class Cactusext(Package):
     deps["tk"] = []
     deps["xz"] = [] = []
 
-    whens["gettext"] = ["+julia"]
-    whens["git"] = ["+julia"]
+    # whens["gettext"] = ["+julia"]
+    # whens["git"] = ["+julia"]
 
     # # Versions
     # TODO: Remove this once Spack chooses the latest 2.7 version by default
