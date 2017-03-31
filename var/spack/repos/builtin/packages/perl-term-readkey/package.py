@@ -22,23 +22,20 @@
 # License along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 ##############################################################################
-import spack.cmd.configure as cfg
-
 from spack import *
 
-description = 'stops at build stage when installing a package, if possible'
 
-build_system_to_phase = {
-    CMakePackage: 'build',
-    AutotoolsPackage: 'build',
-    PythonPackage: 'build',
-    PerlPackage: 'build'
-}
+class PerlTermReadkey(PerlPackage):
+    """Term::ReadKey is a compiled perl module dedicated to providing simple
+    control over terminal driver modes (cbreak, raw, cooked, etc.,) support
+    for non-blocking reads, if the architecture allows, and some generalized
+    handy functions for working with terminals. One of the main goals is to
+    have the functions as portable as possible, so you can just plug in
+    "use Term::ReadKey" on any architecture and have a good likelihood of it
+    working."""
 
+    homepage = "http://search.cpan.org/perldoc/Term::ReadKey"
+    url = "http://www.cpan.org/authors/id/J/JS/JSTOWE/TermReadKey-2.37.tar.gz"
+    list_url = "http://www.cpan.org/authors/id/J/JS/JSTOWE"
 
-def setup_parser(subparser):
-    cfg.setup_parser(subparser)
-
-
-def build(parser, args):
-    cfg._stop_at_phase_during_install(args, build, build_system_to_phase)
+    version('2.37', 'e8ea15c16333ac4f8d146d702e83cc0c')

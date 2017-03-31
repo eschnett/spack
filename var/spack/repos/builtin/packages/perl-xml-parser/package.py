@@ -22,23 +22,16 @@
 # License along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 ##############################################################################
-import spack.cmd.configure as cfg
-
+#
 from spack import *
 
-description = 'stops at build stage when installing a package, if possible'
 
-build_system_to_phase = {
-    CMakePackage: 'build',
-    AutotoolsPackage: 'build',
-    PythonPackage: 'build',
-    PerlPackage: 'build'
-}
+class PerlXmlParser(PerlPackage):
+    """XML::Parser - A perl module for parsing XML documents"""
 
+    homepage = "http://search.cpan.org/perldoc/XML::Parser"
+    url      = "http://search.cpan.org/CPAN/authors/id/T/TO/TODDR/XML-Parser-2.44.tar.gz"
 
-def setup_parser(subparser):
-    cfg.setup_parser(subparser)
+    version('2.44', 'af4813fe3952362451201ced6fbce379')
 
-
-def build(parser, args):
-    cfg._stop_at_phase_during_install(args, build, build_system_to_phase)
+    depends_on('expat')
