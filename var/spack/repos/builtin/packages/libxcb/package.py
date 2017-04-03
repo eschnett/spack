@@ -35,8 +35,8 @@ class Libxcb(AutotoolsPackage):
     url      = "https://xcb.freedesktop.org/dist/libxcb-1.11.tar.gz"
 
     version('1.12', '95eee7c28798e16ba5443f188b27a476')
-    version('1.11', '1698dd837d7e6e94d029dbe8b3a82deb')
     version('1.11.1', '118623c15a96b08622603a71d8789bf3')
+    version('1.11', '1698dd837d7e6e94d029dbe8b3a82deb')
 
     depends_on('libpthread-stubs')
     depends_on('libxau@0.99.2:')
