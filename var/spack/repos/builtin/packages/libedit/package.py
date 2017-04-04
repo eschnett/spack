@@ -41,7 +41,13 @@ class Libedit(AutotoolsPackage):
 
     version('0.56.0', 'c57a0690e62ef523c083598730272cfd',
             url="http://thrysoee.dk/editline/libedit-20170329-3.1.tar.gz")
+    version('0.55.0', '0467d27684c453a351fbcefebbcb16a3',
+            url="http://thrysoee.dk/editline/libedit-20160903-3.1.tar.gz")
     version('0.53.0', '43cdb5df3061d78b5e9d59109871b4f6',
             url="http://thrysoee.dk/editline/libedit-20150325-3.1.tar.gz")
 
     depends_on('ncurses')
+
+    def url_for_version(self, version):
+        url = "http://thrysoee.dk/editline/libedit-{0}-{1}.tar.gz"
+        return url.format(version[-1], version.up_to(-1))
