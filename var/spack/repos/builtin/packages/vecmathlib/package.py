@@ -32,8 +32,15 @@ class Vecmathlib(CMakePackage):
     homepage = "https://github.com/eschnett/VecMathLib"
     url      = "https://github.com/eschnett/VecMathLib/archive/version/0.1.0.tar.gz"
 
+    version('0.2.0', '0aba1033e9b7e0275ac4d153baea740a')
     version('0.1.0', 'af15162606d4c233b97b9156b2327c20')
 
     def cmake_args(self):
         args = []
+        if self.compiler.name == 'clang':
+            args += ["-DCMAKE_CXX_FLAGS=-march=native"]
+        elif self.compiler.name == 'gcc':
+            args += ["-DCMAKE_CXX_FLAGS=-march=native"]
+        if self.compiler.name == 'intel':
+            args += ["-DCMAKE_CXX_FLAGS=-xHost"]
         return args
