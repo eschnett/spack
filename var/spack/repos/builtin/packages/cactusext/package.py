@@ -123,6 +123,8 @@ class Cactusext(Package):
     deps["libpng"] = []
     deps["libsigsegv"] = []
     deps["llvm"] = []
+    if sys.platform == "darwin":
+        deps["llvm"] += ["~lldb"]
     deps["pkg-config"] = []
     deps["py-matplotlib"] = []
     # deps["py-numpy"] = []
