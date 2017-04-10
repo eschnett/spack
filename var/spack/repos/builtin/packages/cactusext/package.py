@@ -42,6 +42,7 @@ class Cactusext(Package):
     deps["fftw"] = ["+mpi", "+openmp"]
     deps["funhpc"] = []
     deps["gasnet"] = ["+mpi"]
+    deps["gdb"] = []
     deps["gsl"] = []
     deps["googletest"] = []
     deps["hdf5"] = ["+mpi"]
@@ -67,6 +68,7 @@ class Cactusext(Package):
     deps["simulationio"] = []
     deps["simulationio +julia"] = []
     deps["tmux"] = []
+    deps["vecmathlib"] = []
     deps["zlib"] = []
 
     # Possible other packages:
