@@ -8,6 +8,13 @@ import sys
 # Cori: Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
 # actually not needed at all
 
+# Stampede: Build on compute node
+#     funhpc: cmake error: parse error in cache file: mpi not detected properly (Error;getting;SCIF;driver;version;)
+#     (need to load a particular module?)
+#     idea: disable scif btl in mca: "btl ^scif"
+#     btl = ^scif
+#     export OMPI_MCA_btl='^scif'
+
 class Cactusext(Package):
     """Cactus is an open source problem solving environment designed for
     scientists and engineers. Its modular structure easily enables
