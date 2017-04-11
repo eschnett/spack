@@ -46,10 +46,9 @@ class PkgConfig(AutotoolsPackage):
 
     @when('platform=cray')
     def setup_dependent_environment(self, spack_env, run_env, dependent_spec):
-        # A Spack-built pkg-config on a Cray requires adding
-        # /usr/local and /usr/lib64 to PKG_CONFIG_PATH to access cray
-        # '.pc' files. Make sure these are added at the end, so that
-        # pkg-config files of Spack-built packages take precedence.
+        """spack built pkg-config on cray's requires adding /usr/local/
+        and /usr/lib64/  to PKG_CONFIG_PATH in order to access cray '.pc'
+        files."""
         spack_env.append_path('PKG_CONFIG_PATH', '/usr/lib64/pkgconfig')
         spack_env.append_path('PKG_CONFIG_PATH', '/usr/local/lib64/pkgconfig')
 

@@ -28,26 +28,17 @@ from spack import *
 class Libedit(AutotoolsPackage):
     """An autotools compatible port of the NetBSD editline library"""
     homepage = "http://thrysoee.dk/editline/"
-    url      = "http://thrysoee.dk/editline/libedit-20150325-3.1.tar.gz"
+    url      = "http://thrysoee.dk/editline/libedit-20170329-3.1.tar.gz"
 
-    # Note: The "3.1" in the file name is NOT the version of this
-    # library, but rather (probably) the shared library compatibility
-    # version number, which is irrelevant for Spack. (That is, you
-    # would expect a file named "lib/libedit.so.3.1" or
-    # "lib/libedit.3.1.dylib" to be installed.)
-
-    # The real version numbers are listed only in the change log,
-    # using the format "0:56:0".
-
-    version('0.56.0', 'c57a0690e62ef523c083598730272cfd',
-            url="http://thrysoee.dk/editline/libedit-20170329-3.1.tar.gz")
-    version('0.55.0', '0467d27684c453a351fbcefebbcb16a3',
-            url="http://thrysoee.dk/editline/libedit-20160903-3.1.tar.gz")
-    version('0.53.0', '43cdb5df3061d78b5e9d59109871b4f6',
-            url="http://thrysoee.dk/editline/libedit-20150325-3.1.tar.gz")
+    version('3.1-20170329', 'c57a0690e62ef523c083598730272cfd')
+    version('3.1-20160903', '0467d27684c453a351fbcefebbcb16a3')
+    version('3.1-20150325', '43cdb5df3061d78b5e9d59109871b4f6')
 
     depends_on('ncurses')
 
     def url_for_version(self, version):
         url = "http://thrysoee.dk/editline/libedit-{0}-{1}.tar.gz"
         return url.format(version[-1], version.up_to(-1))
+
+    def configure_args(self):
+        return ['LIBS=-lncursesw']
