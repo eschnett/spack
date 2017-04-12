@@ -50,7 +50,7 @@ class Ncurses(AutotoolsPackage):
 
     def configure_args(self):
         opts = [
-            'AWK=mawk',
+            # 'AWK=mawk',
             'CFLAGS={0}'.format(self.compiler.pic_flag),
             'CXXFLAGS={0}'.format(self.compiler.pic_flag),
             '--with-shared',
