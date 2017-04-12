@@ -55,7 +55,7 @@ class Ncurses(AutotoolsPackage):
             'CXXFLAGS={0}'.format(self.compiler.pic_flag),
             '--with-shared',
             '--with-cxx-shared',
-            '--enable-widec',
+            # '--enable-widec',
             '--enable-overwrite',
             '--without-ada',
             '--enable-pc-files',

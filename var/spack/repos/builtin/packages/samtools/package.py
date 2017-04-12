@@ -46,7 +46,7 @@ class Samtools(Package):
     def install(self, spec, prefix):
         if self.spec.version >= Version('1.3.1'):
             configure('--prefix={0}'.format(prefix), '--with-ncurses',
-                      'CURSES_LIB=-lncursesw')
+                      'CURSES_LIB=-lncurses')
             make()
             make('install')
         else:

@@ -67,14 +67,14 @@ class Lua(Package):
              'MYLDFLAGS=-L%s -L%s' % (
                  spec['readline'].prefix.lib,
                  spec['ncurses'].prefix.lib),
-             'MYLIBS=-lncursesw',
+             'MYLIBS=-lncurses',
              'CC=%s -std=gnu99' % spack_cc,
              target)
         make('INSTALL_TOP=%s' % prefix,
              'MYLDFLAGS=-L%s -L%s' % (
                  spec['readline'].prefix.lib,
                  spec['ncurses'].prefix.lib),
-             'MYLIBS=-lncursesw',
+             'MYLIBS=-lncurses',
              'CC=%s -std=gnu99' % spack_cc,
              'install')
 

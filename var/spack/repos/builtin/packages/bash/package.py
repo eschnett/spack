@@ -41,7 +41,7 @@ class Bash(AutotoolsPackage):
         spec = self.spec
 
         return [
-            'LIBS=-lncursesw',
+            'LIBS=-lncurses',
             '--with-curses',
             '--enable-readline',
             '--with-installed-readline={0}'.format(spec['readline'].prefix),

@@ -41,4 +41,4 @@ class Libedit(AutotoolsPackage):
         return url.format(version[-1], version.up_to(-1))
 
     def configure_args(self):
-        return ['LIBS=-lncursesw']
+        return ['LIBS=-lncurses']
