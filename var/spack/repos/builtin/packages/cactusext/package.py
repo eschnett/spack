@@ -124,7 +124,7 @@ class Cactusext(Package):
         deps["charm"].append("+papi")
     deps["cmake"] = []
     deps["freetype"] = []
-    deps["gettext"] = ["~libxml2"]
+    deps["gettext"] = ["~curses", "~libxml2"]
     deps["git"] = []
     deps["jemalloc"] = []
     deps["jpeg"] = []
