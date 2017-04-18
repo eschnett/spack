@@ -10,6 +10,11 @@ import sys
 
 # Stampede: Build on compute node
 # spack install cactusext %gcc@6.3.0-spack ^hdf5 ldflags='-L/work/00507/eschnett/lib' ^c-blosc ~avx2
+# spack install cactusext %gcc@6.3.0-spack ^c-blosc ~avx2
+
+# Stampede-KNL: Build on compute node
+# spack install cactusext %gcc@6.3.0-spack ^c-blosc ~avx2
+# Q: is the variant ~avx2 still necessary?
 
 class Cactusext(Package):
     """Cactus is an open source problem solving environment designed for
@@ -34,6 +39,7 @@ class Cactusext(Package):
     variant("llvm", default=False, description="Enable LLVM")
     # variant("scalasca", default=False, description="Enable Scalasca")
     variant("rust", default=False, description="Enable Rust")
+    variant("valgrind", default=False, description="Enable Valgrind")
 
     deps = {}
     whens = {}
@@ -71,6 +77,7 @@ class Cactusext(Package):
     deps["simulationio"] = []
     deps["simulationio +julia"] = []
     deps["tmux"] = []
+    deps["valgrind"] = []
     deps["vecmathlib"] = []
     deps["zlib"] = []
 
@@ -105,12 +112,15 @@ class Cactusext(Package):
     whens["llvm"] = ["+llvm"]
     whens["rust"] = ["+rust"]
     whens["simulationio +julia"] = ["+julia"]
+    whens["valgrind"] = ["+valgrind"]
 
     # Configure dependencies for convenience
 
     # Virtual packages
     deps["openblas"] = []
     deps["openmpi"] = []
+    if sys.platform.startswith("linux"):
+        deps["openmpi"] += ["+rdma"]
 
     # Initialize dependencies that are mentioned below
     deps["bison"] = []
