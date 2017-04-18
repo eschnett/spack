@@ -88,6 +88,7 @@ class Openmpi(AutotoolsPackage):
             description='Build support for the Intel PSM2 library')
     variant('pmi', default=False,
             description='Build support for PMI-based launchers')
+    variant('rdma', default=False, description='Build with rdma-core')
     variant('verbs', default=_verbs_dir() is not None,
             description='Build support for OpenFabrics verbs')
     variant('mxm', default=False, description='Build Mellanox Messaging support')
@@ -114,6 +115,7 @@ class Openmpi(AutotoolsPackage):
     depends_on('hwloc')
     depends_on('hwloc +cuda', when='+cuda')
     depends_on('jdk', when='+java')
+    depends_on('rdma-core', when='+rdma')
     depends_on('sqlite', when='+sqlite3')
 
     def url_for_version(self, version):
@@ -209,7 +211,10 @@ class Openmpi(AutotoolsPackage):
                 config_args.append('--without-mxm')
 
         # OpenFabrics verbs support
-        if '+verbs' in spec:
+        if '+rdma' in spec:
+            config_args.append('--with-{0}={1}'.
+                               format(self.verbs, spec['rdma-core'].prefix))
+        elif '+verbs' in spec:
             path = _verbs_dir()
             if path is not None and path not in ('/usr', '/usr/local'):
                 config_args.append('--with-{0}={1}'.format(self.verbs, path))
