@@ -82,7 +82,7 @@ class Hdf5(AutotoolsPackage):
         
         - "hl": high-level interface
         - "cxx": C++ APIs
-        - "fortran": fortran APIs
+        - "fortran": Fortran APIs
         
         :return: list of matching libraries
         """
@@ -143,7 +143,7 @@ class Hdf5(AutotoolsPackage):
     def fortran_check(self):
         spec = self.spec
         if '+fortran' in spec and not self.compiler.fc:
-            msg = 'cannot build a fortran variant without a fortran compiler'
+            msg = 'cannot build a Fortran variant without a Fortran compiler'
             raise RuntimeError(msg)
 
     def configure_args(self):
