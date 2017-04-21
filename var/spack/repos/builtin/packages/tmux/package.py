@@ -35,6 +35,7 @@ class Tmux(Package):
     homepage = "http://tmux.github.io"
     url = "https://github.com/tmux/tmux/releases/download/2.2/tmux-2.2.tar.gz"
 
+    version('2.4', '6165d3aca811a3225ef8afbd1afcf1c5')
     version('2.3', 'fcfd1611d705d8b31df3c26ebc93bd3e')
     version('2.2', 'bd95ee7205e489c62c616bb7af040099')
     version('2.1', '74a2855695bccb51b6e301383ad4818c')
