@@ -9,7 +9,9 @@ import sys
 # actually not needed at all
 
 # Stampede: Build on compute node
-# spack install cactusext %gcc@6.3.0-spack ^hdf5 ldflags='-L/work/00507/eschnett/lib' ^c-blosc ~avx2
+# module unload intel
+# module unload mvapich2
+# # spack install cactusext %gcc@6.3.0-spack ^hdf5 ldflags='-L/work/00507/eschnett/lib' ^c-blosc ~avx2
 # spack install cactusext %gcc@6.3.0-spack ^c-blosc ~avx2
 
 # Stampede-KNL: Build on compute node
@@ -60,6 +62,7 @@ class Cactusext(Package):
     deps["hpx5 +cuda"] = []
     deps["hwloc"] = []
     deps["hwloc +cuda"] = []
+    # TODO: kokkos
     # deps["lapack"] = []
     deps["libxsmm"] = ["+header-only"]
     deps["lmod"] = []
