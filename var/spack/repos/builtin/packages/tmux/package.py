@@ -26,10 +26,11 @@ from spack import *
 
 
 class Tmux(Package):
-    """tmux is a terminal multiplexer. What is a terminal multiplexer? It lets
-       you switch easily between several programs in one terminal, detach them
-       (they keep running in the background) and reattach them to a different
-       terminal. And do a lot more.
+    """Tmux is a terminal multiplexer.
+
+    What is a terminal multiplexer? It lets you switch easily between several
+    programs in one terminal, detach them (they keep running in the
+    background) and reattach them to a different terminal. And do a lot more.
     """
 
     homepage = "http://tmux.github.io"
