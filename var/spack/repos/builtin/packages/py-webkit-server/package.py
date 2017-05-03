@@ -25,25 +25,11 @@
 from spack import *
 
 
-class PyPy2cairo(WafPackage):
-    """Pycairo is a set of Python bindings for the cairo graphics library."""
+class PyWebkitServer(PythonPackage):
+    """a Webkit-based, headless web client"""
 
-    homepage = "https://www.cairographics.org/pycairo/"
-    url      = "https://cairographics.org/releases/py2cairo-1.10.0.tar.bz2"
+    homepage = "https://github.com/niklasb/webkit-server"
+    url      = "https://pypi.io/packages/source/w/webkit-server/webkit-server-1.0.tar.gz"
 
-    version('1.10.0', '20337132c4ab06c1146ad384d55372c5')
-
-    extends('python')
-
-    depends_on('python', type=('build', 'run'))
-    depends_on('cairo@1.10.0:')
-    depends_on('pixman')
-    depends_on('pkg-config', type='build')
-
-    # TODO: Add a 'test' deptype
-    # depends_on('py-pytest', type='test')
-
-    def installtest(self):
-        with working_dir('test'):
-            pytest = which('py.test')
-            pytest()
+    version('develop', git="https://github.com/niklasb/webkit-server", branch="master")
+    version('1.0', '8463245c2b4f0264d934c0ae20bd4654')

@@ -25,25 +25,19 @@
 from spack import *
 
 
-class PyPy2cairo(WafPackage):
-    """Pycairo is a set of Python bindings for the cairo graphics library."""
+class Libconfig(AutotoolsPackage):
+    """C/C++ Configuration File Library"""
 
-    homepage = "https://www.cairographics.org/pycairo/"
-    url      = "https://cairographics.org/releases/py2cairo-1.10.0.tar.bz2"
+    homepage = "http://www.hyperrealm.com/libconfig/"
+    url      = "https://github.com/hyperrealm/libconfig/archive/v1.6.tar.gz"
 
-    version('1.10.0', '20337132c4ab06c1146ad384d55372c5')
+    force_autoreconf = True
+    # there is currently a build error with version 1.6, see:
+    # https://github.com/hyperrealm/libconfig/issues/47
+    # version('1.6', '2ccd24b6a2ee39f7ff8a3badfafb6539')
+    version('1.5', 'e92a91c2ddf3bf77bea0f5ed7f09e492', preferred=True)
 
-    extends('python')
-
-    depends_on('python', type=('build', 'run'))
-    depends_on('cairo@1.10.0:')
-    depends_on('pixman')
-    depends_on('pkg-config', type='build')
-
-    # TODO: Add a 'test' deptype
-    # depends_on('py-pytest', type='test')
-
-    def installtest(self):
-        with working_dir('test'):
-            pytest = which('py.test')
-            pytest()
+    depends_on('m4', type=('build'))
+    depends_on('autoconf', type=('build'))
+    depends_on('automake', type=('build'))
+    depends_on('libtool', type=('build'))

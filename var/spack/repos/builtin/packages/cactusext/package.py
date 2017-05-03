@@ -123,7 +123,7 @@ class Cactusext(Package):
     deps["openblas"] = []
     deps["openmpi"] = []
     if sys.platform.startswith("linux"):
-        deps["openmpi"] += ["+rdma"]
+        deps["openmpi"] += ["fabrics=+verbs +rdma"]
 
     # Initialize dependencies that are mentioned below
     deps["bison"] = []

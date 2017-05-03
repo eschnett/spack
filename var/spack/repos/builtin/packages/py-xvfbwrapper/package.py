@@ -25,25 +25,13 @@
 from spack import *
 
 
-class PyPy2cairo(WafPackage):
-    """Pycairo is a set of Python bindings for the cairo graphics library."""
+class PyXvfbwrapper(PythonPackage):
+    """run headless display inside X virtual framebuffer (Xvfb)"""
 
-    homepage = "https://www.cairographics.org/pycairo/"
-    url      = "https://cairographics.org/releases/py2cairo-1.10.0.tar.bz2"
+    homepage = "https://pypi.python.org/pypi/xvfbwrapper/0.2.9"
+    url      = "https://pypi.io/packages/source/x/xvfbwrapper/xvfbwrapper-0.2.9.tar.gz"
 
-    version('1.10.0', '20337132c4ab06c1146ad384d55372c5')
+    version('0.2.9', '3f3cbed698606f4b14e76ccc7b5dd366')
 
-    extends('python')
-
-    depends_on('python', type=('build', 'run'))
-    depends_on('cairo@1.10.0:')
-    depends_on('pixman')
-    depends_on('pkg-config', type='build')
-
-    # TODO: Add a 'test' deptype
-    # depends_on('py-pytest', type='test')
-
-    def installtest(self):
-        with working_dir('test'):
-            pytest = which('py.test')
-            pytest()
+    depends_on('py-setuptools', type='build')
+    # Eventually add xvfb!

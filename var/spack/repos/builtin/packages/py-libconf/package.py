@@ -25,25 +25,12 @@
 from spack import *
 
 
-class PyPy2cairo(WafPackage):
-    """Pycairo is a set of Python bindings for the cairo graphics library."""
+class PyLibconf(PythonPackage):
+    """A pure-Python libconfig reader/writer with permissive license"""
 
-    homepage = "https://www.cairographics.org/pycairo/"
-    url      = "https://cairographics.org/releases/py2cairo-1.10.0.tar.bz2"
+    homepage = "https://pypi.python.org/pypi/libconf"
+    url      = "https://pypi.io/packages/source/l/libconf/libconf-1.0.1.tar.gz"
 
-    version('1.10.0', '20337132c4ab06c1146ad384d55372c5')
+    version('1.0.1', 'd37d355b3248f99802c46669ba38e406')
 
-    extends('python')
-
-    depends_on('python', type=('build', 'run'))
-    depends_on('cairo@1.10.0:')
-    depends_on('pixman')
-    depends_on('pkg-config', type='build')
-
-    # TODO: Add a 'test' deptype
-    # depends_on('py-pytest', type='test')
-
-    def installtest(self):
-        with working_dir('test'):
-            pytest = which('py.test')
-            pytest()
+    depends_on('py-setuptools', type='build')

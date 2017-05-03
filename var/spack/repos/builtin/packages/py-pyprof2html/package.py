@@ -25,25 +25,15 @@
 from spack import *
 
 
-class PyPy2cairo(WafPackage):
-    """Pycairo is a set of Python bindings for the cairo graphics library."""
+class PyPyprof2html(PythonPackage):
+    """Python cProfile and hotshot profile's data to HTML Converter"""
 
-    homepage = "https://www.cairographics.org/pycairo/"
-    url      = "https://cairographics.org/releases/py2cairo-1.10.0.tar.bz2"
+    homepage = "https://pypi.python.org/pypi/pyprof2html/"
+    url      = "https://pypi.io/packages/source/p/pyprof2html/pyprof2html-0.3.1.tar.gz"
 
-    version('1.10.0', '20337132c4ab06c1146ad384d55372c5')
+    version('0.3.1', 'aa65a1635aac95e0487d7749a6351c43')
 
-    extends('python')
+    patch('version_0.3.1.patch', when="@0.3.1")
 
-    depends_on('python', type=('build', 'run'))
-    depends_on('cairo@1.10.0:')
-    depends_on('pixman')
-    depends_on('pkg-config', type='build')
-
-    # TODO: Add a 'test' deptype
-    # depends_on('py-pytest', type='test')
-
-    def installtest(self):
-        with working_dir('test'):
-            pytest = which('py.test')
-            pytest()
+    depends_on('py-setuptools', type='build')
+    depends_on('py-jinja2', type=('build', 'run'))
