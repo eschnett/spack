@@ -197,8 +197,8 @@ class Openmpi(AutotoolsPackage):
             # for Open-MPI 2.0:, C++ bindings are disabled by default.
             config_args.extend(['--enable-mpi-cxx'])
 
-        if "+rdma" in spec and not "fabrics=+verbs" in spec:
-            raise InstallError("variant '+rdma' requires variant 'fabrics=+verbs'")
+        #TODO if "+rdma" in spec and not "fabrics=+verbs" in spec:
+        #TODO     raise InstallError("variant '+rdma' requires variant 'fabrics=+verbs'")
 
         # Fabrics and schedulers
         config_args.extend(self.with_or_without('fabrics'))
