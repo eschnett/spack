@@ -11,11 +11,11 @@ import sys
 # Stampede: Build on compute node
 # module unload intel
 # module unload mvapich2
-# # spack install cactusext %gcc@6.3.0-spack ^hdf5 ldflags='-L/work/00507/eschnett/lib' ^c-blosc ~avx2
-# spack install cactusext %gcc@6.3.0-spack ^c-blosc ~avx2
+# # spack install cactusext %gcc@7.1.0-spack ^hdf5 ldflags='-L/work/00507/eschnett/lib' ^c-blosc ~avx2
+# spack install cactusext %gcc@7.1.0-spack ^c-blosc ~avx2
 
 # Stampede-KNL: Build on compute node
-# spack install cactusext %gcc@6.3.0-spack ^c-blosc ~avx2
+# spack install cactusext %gcc@7.1.0-spack ^c-blosc ~avx2
 # Q: is the variant ~avx2 still necessary?
 
 class Cactusext(Package):
@@ -154,7 +154,7 @@ class Cactusext(Package):
     deps["sqlite"] = []
     deps["tar"] = []
     deps["tk"] = []
-    deps["xz"] = [] = []
+    deps["xz"] = []
 
     # whens["gettext"] = ["+julia"]
     # whens["git"] = ["+julia"]
@@ -166,7 +166,7 @@ class Cactusext(Package):
     # deps["openssl"].append("@:1.0")
 
     # Compilers
-    cactusext_compiler = "gcc@6.3.0-spack"
+    cactusext_compiler = "gcc@7.1.0-spack"
     darwin_compiler = "clang@8.1.0-apple"
     bison_compiler = cactusext_compiler
     cmake_compiler = cactusext_compiler
