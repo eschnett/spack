@@ -102,7 +102,7 @@ class Gcc(AutotoolsPackage):
            not (spec.satisfies('@:4.9.3') and 'ppc64le' in spec.architecture):
             enabled_languages.add('go')
 
-        if spec.satisfies(":@6"):
+        if spec.satisfies("@:6"):
             # GCC 7 does not support Java any more
             enabled_languages.add('java')
 
