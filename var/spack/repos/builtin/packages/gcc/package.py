@@ -39,6 +39,7 @@ class Gcc(AutotoolsPackage):
     list_url = 'http://ftp.gnu.org/gnu/gcc/'
     list_depth = 1
 
+    version('7.1.0', '6bf56a2bca9dac9dbbf8e8d1036964a8')
     version('6.3.0', '677a7623c7ef6ab99881bc4e048debb6')
     version('6.2.0', '9768625159663b300ae4de2f4745fcc4')
     version('6.1.0', '8fb6cb98b8459f5863328380fbf06bd1')
@@ -95,12 +96,15 @@ class Gcc(AutotoolsPackage):
         spec = self.spec
         prefix = self.spec.prefix
 
-        # TODO: java requires zip -- add this as dependency
-        enabled_languages = set(('c', 'c++', 'fortran', 'java', 'objc'))
+        enabled_languages = set(('c', 'c++', 'fortran', 'objc'))
 
         if spec.satisfies("@4.7.1:") and sys.platform != 'darwin' and \
            not (spec.satisfies('@:4.9.3') and 'ppc64le' in spec.architecture):
             enabled_languages.add('go')
+
+        if spec.satisfies(":@6"):
+            # GCC 7 does not support Java any more
+            enabled_languages.add('java')
 
         # Fix a standard header file for OS X Yosemite that
         # is GCC incompatible by replacing non-GCC compliant macros
@@ -130,10 +134,12 @@ class Gcc(AutotoolsPackage):
         if spec.satisfies('+binutils'):
             static_bootstrap_flags = "-static-libstdc++ -static-libgcc"
             binutils_options = [
-                "--with-sysroot=/", "--with-stage1-ldflags=%s %s" %
-                (self.rpath_args, static_bootstrap_flags),
+                "--with-sysroot=/",
+                "--with-stage1-ldflags=%s %s" %
+                    (self.rpath_args, static_bootstrap_flags),
                 "--with-boot-ldflags=%s %s" %
-                (self.rpath_args, static_bootstrap_flags), "--with-gnu-ld",
+                    (self.rpath_args, static_bootstrap_flags),
+                "--with-gnu-ld",
                 "--with-ld=%s/bin/ld" % spec['binutils'].prefix,
                 "--with-gnu-as",
                 "--with-as=%s/bin/as" % spec['binutils'].prefix
