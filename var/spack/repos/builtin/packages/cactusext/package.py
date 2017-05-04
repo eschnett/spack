@@ -58,6 +58,7 @@ class Cactusext(Package):
     deps["googletest"] = []
     deps["hdf5"] = ["+mpi"]
     deps["hdf5-blosc"] = []
+    deps["highfive"] = ["+mpi"]
     deps["hpx5"] = ["+cxx11", "+metis", "+mpi"]
     deps["hpx5 +cuda"] = []
     deps["hwloc"] = []
