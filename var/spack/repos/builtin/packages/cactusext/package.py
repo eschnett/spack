@@ -2,21 +2,26 @@ from spack import *
 import os
 import sys
 
+# Blue Waters:
+# $ spack install -j16 gcc ~binutils %gcc@6.2.0
+# $ spack install -j16 cactusext +cuda +julia +valgrind %gcc@7.1.0-spack ^gdbm@1.12
+
 # Comet: Don't use too many processes while building. OpenBLAS is
 # particularly troublesome as it uses many threads for its self-tests.
 
 # Cori: Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
 # actually not needed at all
 
-# Stampede: Build on compute node
+# Stampede: Build on compute node [broken]
 # module unload intel
 # module unload mvapich2
 # # spack install cactusext %gcc@7.1.0-spack ^hdf5 ldflags='-L/work/00507/eschnett/lib' ^c-blosc ~avx2
 # spack install cactusext %gcc@7.1.0-spack ^c-blosc ~avx2
 
-# Stampede-KNL: Build on compute node
-# spack install cactusext %gcc@7.1.0-spack ^c-blosc ~avx2
-# Q: is the variant ~avx2 still necessary?
+# Stampede-KNL [on head node]:
+# module unload intel impi
+# spack install -j8 gcc %gcc@4.8.5
+# spack install -j8 cactusext +julia +valgrind %gcc@7.1.0-spack
 
 class Cactusext(Package):
     """Cactus is an open source problem solving environment designed for
@@ -36,6 +41,7 @@ class Cactusext(Package):
     # headers that break other packages
     variant("charm", default=False, description="Enable Charm++")
     variant("cuda", default=False, description="Enable CUDA")
+    variant("extra", default=True, description="Enable non-Cactus extrax")
     variant("julia", default=False, description="Enable Julia")
     # Cannot combine LLVM and GCC since both provide libgomp
     variant("llvm", default=False, description="Enable LLVM")
@@ -110,10 +116,18 @@ class Cactusext(Package):
 
     whens["charm"] = ["+charm"]
     whens["cuda"] = ["+cuda"]
+    whens["gasnet"] = ["+extra"]
+    whens["gdb"] = ["+extra"]
+    whens["highfive"] = ["+extra"]
     whens["hpx5 +cuda"] = ["+cuda"]
+    whens["hpx5"] = ["+extra"]
     whens["hwloc +cuda"] = ["+cuda"]
     whens["julia"] = ["+julia"]
+    whens["libxsmm"] = ["+extra"]
     whens["llvm"] = ["+llvm"]
+    whens["lua"] = ["+extra"]
+    whens["opencoarrays"] = ["+extra"]
+    whens["py-yt"] = ["+extra"]
     whens["rust"] = ["+rust"]
     whens["simulationio +julia"] = ["+julia"]
     whens["valgrind"] = ["+valgrind"]
@@ -123,8 +137,8 @@ class Cactusext(Package):
     # Virtual packages
     deps["openblas"] = []
     deps["openmpi"] = []
-    if sys.platform.startswith("linux"):
-        deps["openmpi"] += ["fabrics=verbs +rdma"]
+    # if sys.platform.startswith("linux"):
+    #     deps["openmpi"] += ["fabrics=verbs +rdma"]
 
     # Initialize dependencies that are mentioned below
     deps["bison"] = []
