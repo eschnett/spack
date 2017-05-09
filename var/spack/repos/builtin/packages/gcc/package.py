@@ -32,7 +32,8 @@ from os.path import isfile
 
 class Gcc(AutotoolsPackage):
     """The GNU Compiler Collection includes front ends for C, C++,
-       Objective-C, Fortran, and Java."""
+       Objective-C, Fortran, Ada, and Go, as well as libraries for
+       these languages (libstdc++, ...)."""
     homepage = "https://gcc.gnu.org"
 
     url = "http://ftp.gnu.org/gnu/gcc/gcc-4.9.2/gcc-4.9.2.tar.bz2"
@@ -58,7 +59,7 @@ class Gcc(AutotoolsPackage):
     version('4.5.4', '27e459c2566b8209ab064570e1b378f7')
 
     variant('binutils',
-            default=sys.platform != 'darwin',
+            default=False and sys.platform != 'darwin',
             description="Build via binutils")
     variant('piclibs',
             default=False,
@@ -67,9 +68,9 @@ class Gcc(AutotoolsPackage):
     depends_on("mpfr")
     depends_on("gmp")
     depends_on("mpc", when='@4.5:')
-    depends_on("isl", when='@5.0:')
+    depends_on("isl", when='@5:')
     depends_on("binutils~libiberty", when='+binutils')
-    depends_on("zip", type='build')
+    depends_on("zip", type='build', when='@:6')
 
     # TODO: integrate these libraries.
     # depends_on("ppl")
@@ -155,7 +156,7 @@ class Gcc(AutotoolsPackage):
             options.append('--with-isl={0}'.format(spec['isl'].prefix))
 
         # macOS
-        if sys.platform == 'darwin':
+        if True or sys.platform == 'darwin':
             options.append('--with-build-config=bootstrap-debug')
 
         return options
@@ -164,7 +165,7 @@ class Gcc(AutotoolsPackage):
 
     @property
     def build_targets(self):
-        if sys.platform == 'darwin':
+        if True or sys.platform == 'darwin':
             return ['bootstrap']
         return []
 
