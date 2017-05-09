@@ -35,14 +35,20 @@ class Hpctoolkit(Package):
 
     homepage = "http://hpctoolkit.org"
 
+    version('2016.12',
+            url='https://github.com/HPCToolkit/hpctoolkit/archive/release-2016.12.tar.gz',
+            md5='e44e548560ea92afdb244c223b7655b6')
+    # Version 5.4 is old (from December 2015) -- omit?
     # Note: No precise release tags/branches provided
-    version('5.4', git='https://github.com/HPCToolkit/hpctoolkit.git',
-            commit='d9ca2112762e5a06ea31b5295d793e4a83272d19')
+    # version('5.4', git='https://github.com/HPCToolkit/hpctoolkit.git',
+    #         commit='d9ca2112762e5a06ea31b5295d793e4a83272d19')
 
     variant('mpi', default=True, description='Enable MPI supoort')
     variant('papi', default=True, description='Enable PAPI counter support')
 
+    # This probably needs to be the same version as hpctoolkit
     depends_on('hpctoolkit-externals')
+
     depends_on('papi', when='+papi')
     depends_on('mpi', when='+mpi')
 

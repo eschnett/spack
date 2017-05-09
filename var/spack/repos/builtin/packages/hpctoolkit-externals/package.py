@@ -31,10 +31,25 @@ class HpctoolkitExternals(Package):
 
     homepage = "http://hpctoolkit.org"
 
+    version('2016.12',
+            url='https://github.com/HPCToolkit/hpctoolkit-externals/archive/release-2016.12.tar.gz',
+            md5='2d0794e5b05765c91325d9bbd2630067')
+    # Version 5.4 is old (from December 2015) -- omit?
     # Note: No precise release tags/branches provided
-    version('5.4',
-            git='https://github.com/HPCToolkit/hpctoolkit-externals.git',
-            commit='3d2953623357bb06e9a4b51eca90a4b039c2710e')
+    # version('5.4',
+    #         git='https://github.com/HPCToolkit/hpctoolkit-externals.git',
+    #         commit='3d2953623357bb06e9a4b51eca90a4b039c2710e')
+
+    # binutils is "heavily patched" -- needs to be built
+    # depends_on('binutils')
+    depends_on('boost')
+    depends_on('libdwarf')
+    depends_on('libelf')
+    depends_on('libmonitor')
+    depends_on('libunwind')
+    depends_on('libxml2')
+    depends_on('xerces-c')
+    depends_on('zlib')
 
     parallel = False
 
