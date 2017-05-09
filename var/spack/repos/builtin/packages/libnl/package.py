@@ -28,12 +28,15 @@ import sys
 
 
 class Libnl(AutotoolsPackage):
-    """FIXME: Put a proper description of your package here."""
+    """libnl - Netlink Protocol Library Suite"""
 
     homepage = "https://www.infradead.org/~tgr/libnl/"
-    url      = "https://www.infradead.org/~tgr/libnl/files/libnl-3.2.25.tar.gz"
+    url      = "https://github.com/thom311/libnl/releases/download/libnl3_3_0/libnl-3.3.0.tar.gz"
 
+    version('3.3.0', 'ab3ef137cad95bdda5ff0ffa5175dfa5')
     version('3.2.25', '03f74d0cd5037cadc8cdfa313bbd195c')
+
+    depends_on('bison', type='build')
 
     def configure_args(self):
         if not sys.platform.startswith('linux'):
