@@ -41,7 +41,7 @@ class Cactusext(Package):
     # headers that break other packages
     variant("charm", default=False, description="Enable Charm++")
     variant("cuda", default=False, description="Enable CUDA")
-    variant("extra", default=True, description="Enable non-Cactus extrax")
+    variant("extras", default=True, description="Enable non-Cactus extras")
     variant("julia", default=False, description="Enable Julia")
     # Cannot combine LLVM and GCC since both provide libgomp
     variant("llvm", default=False, description="Enable LLVM")
@@ -116,18 +116,18 @@ class Cactusext(Package):
 
     whens["charm"] = ["+charm"]
     whens["cuda"] = ["+cuda"]
-    whens["gasnet"] = ["+extra"]
-    whens["gdb"] = ["+extra"]
-    whens["highfive"] = ["+extra"]
+    whens["gasnet"] = ["+extras"]
+    whens["gdb"] = ["+extras"]
+    whens["highfive"] = ["+extras"]
     whens["hpx5 +cuda"] = ["+cuda"]
-    whens["hpx5"] = ["+extra"]
+    whens["hpx5"] = ["+extras"]
     whens["hwloc +cuda"] = ["+cuda"]
     whens["julia"] = ["+julia"]
-    whens["libxsmm"] = ["+extra"]
+    whens["libxsmm"] = ["+extras"]
     whens["llvm"] = ["+llvm"]
-    whens["lua"] = ["+extra"]
-    whens["opencoarrays"] = ["+extra"]
-    whens["py-yt"] = ["+extra"]
+    whens["lua"] = ["+extras"]
+    whens["opencoarrays"] = ["+extras"]
+    whens["py-yt"] = ["+extras"]
     whens["rust"] = ["+rust"]
     whens["simulationio +julia"] = ["+julia"]
     whens["valgrind"] = ["+valgrind"]
