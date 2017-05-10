@@ -143,21 +143,17 @@ class Cactusext(Package):
     # Initialize dependencies that are mentioned below
     deps["bison"] = []
     deps["bzip2"] = []
-    deps["charm"] = ["-netlrts", "+mpi", "+smp"]
-    if sys.platform != "darwin":
-        deps["charm"].append("+papi")
+    deps["charm"] = []
     deps["cmake"] = []
     deps["freetype"] = []
-    deps["gettext"] = ["~curses", "~libxml2"]
+    deps["gettext"] = []
     deps["git"] = []
     deps["jemalloc"] = []
     deps["jpeg"] = []
-    deps["julia"] = ["+hdf5", "+mpi", "+simd"]   # "+plots", "+python", "@master"
+    deps["julia"] = []
     deps["libpng"] = []
     deps["libsigsegv"] = []
     deps["llvm"] = []
-    if sys.platform == "darwin":
-        deps["llvm"] += ["~lldb"]
     deps["pkg-config"] = []
     deps["py-matplotlib"] = []
     # deps["py-numpy"] = []
@@ -171,14 +167,20 @@ class Cactusext(Package):
     deps["tk"] = []
     deps["xz"] = []
 
+    deps["charm"] += ["-netlrts", "+mpi", "+smp"]
+    if sys.platform != "darwin":
+        deps["charm"] += ["+papi"]
+    deps["gettext"] += ["~curses", "~libxml2"]
+    deps["julia"] += ["+hdf5", "+mpi", "+simd"]   # "+plots", "+python", "@master"
+    if sys.platform == "darwin":
+        deps["llvm"] += ["~lldb"]
+
     # whens["gettext"] = ["+julia"]
     # whens["git"] = ["+julia"]
 
     # # Versions
     # TODO: Remove this once Spack chooses the latest 2.7 version by default
-    deps["python"].append("@2.7.13")
-    # # TODO: Remove this once Spack chooses the latest correct version by default
-    # deps["openssl"].append("@:1.0")
+    deps["python"] += ["@2.7.13"]
 
     # Compilers
     cactusext_compiler = "gcc@7.1.0-spack"
@@ -194,7 +196,7 @@ class Cactusext(Package):
         gettext_compiler = darwin_compiler
         pkg_config_compiler = darwin_compiler
         python_compiler = darwin_compiler
-
+    
     deps["bison"].append("%"+bison_compiler)
     deps["cmake"].append("%"+cmake_compiler)
     deps["gettext"].append("%"+gettext_compiler)
@@ -203,7 +205,7 @@ class Cactusext(Package):
     # deps["py-scipy"].append("%"+python_compiler)
     # deps["py-setuptools"].append("%"+python_compiler)
     deps["python"].append("%"+python_compiler)
-
+    
     deps["fftw"].append("%"+cactusext_compiler)
     deps["freetype"].append("%"+cactusext_compiler)
     deps["gsl"].append("%"+cactusext_compiler)
@@ -225,17 +227,17 @@ class Cactusext(Package):
     deps["tar"].append("%"+cactusext_compiler)
     deps["tk"].append("%"+cactusext_compiler)
     deps["zlib"].append("%"+cactusext_compiler)
-
+    
     deps["openblas"].append("%"+cactusext_compiler)
     deps["openmpi"].append("%"+cactusext_compiler)
-
+    
     deps["charm"].append("%"+cactusext_compiler)
     deps["funhpc"].append("%"+cactusext_compiler)
     deps["julia"].append("%"+cactusext_compiler)
     deps["llvm"].append("%"+cactusext_compiler)
     deps["rust"].append("%"+cactusext_compiler)
     deps["simulationio"].append("%"+cactusext_compiler)
-
+    
     # These are apparently not deduced -- why?
     deps["bzip2"].append("%"+cactusext_compiler)
     deps["libsigsegv"].append("%"+cactusext_compiler)
