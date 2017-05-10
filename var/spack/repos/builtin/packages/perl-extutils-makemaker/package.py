@@ -25,35 +25,14 @@
 from spack import *
 
 
-class Boxlib(CMakePackage):
-    """BoxLib, a software framework for massively parallel
-       block-structured adaptive mesh refinement (AMR) codes."""
+class PerlExtutilsMakemaker(PerlPackage):
+    """ExtUtils::MakeMaker - Create a module Makefile. This utility is designed
+    to write a Makefile for an extension module from a Makefile.PL. It is based
+    on the Makefile.SH model provided by Andy Dougherty and the perl5-porters.
+    """
+    homepage = "https://github.com/Perl-Toolchain-Gang/ExtUtils-MakeMaker"
+    url      = "http://search.cpan.org/CPAN/authors/id/B/BI/BINGOS/ExtUtils-MakeMaker-7.24.tar.gz"
 
-    homepage = "https://ccse.lbl.gov/BoxLib/"
-    url = "https://github.com/BoxLib-Codes/BoxLib/archive/16.12.2.tar.gz"
+    version('7.24', '15c67ba2ea2c9e20a3d976b738adb113')
 
-    version('16.12.2', 'a28d92a5ff3fbbdbbd0a776a59f18526')
-
-    depends_on('mpi')
-
-    variant('dims',
-        default='3',
-        values=('1', '2', '3'),
-        multi=False,
-        description='Number of spatial dimensions'
-    )
-
-    def cmake_args(self):
-        spec = self.spec
-        options = []
-
-        options.extend([
-            '-DBL_SPACEDIM=%d' % int(spec.variants['dims'].value),
-            '-DENABLE_POSITION_INDEPENDENT_CODE=ON',
-            '-DENABLE_FBASELIB=ON',
-            '-DCMAKE_C_COMPILER=%s' % spec['mpi'].mpicc,
-            '-DCMAKE_CXX_COMPILER=%s' % spec['mpi'].mpicxx,
-            '-DCMAKE_Fortran_COMPILER=%s' % spec['mpi'].mpifc
-        ])
-
-        return options
+    depends_on('perl@5.6.0:', type=('build', 'run'))
