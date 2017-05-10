@@ -33,6 +33,8 @@ class PyIpython(PythonPackage):
     homepage = "https://pypi.python.org/pypi/ipython"
     url      = "https://pypi.io/packages/source/i/ipython/ipython-2.3.1.tar.gz"
 
+    version('6.0.0', '4169cfe24253c342d7a0b966f5c76281')
+    version('5.3.0', '26c175feb92f1c9033968432a93845ea')
     version('5.1.0', '47c8122420f65b58784cb4b9b4af35e3')
     version('3.1.0', 'a749d90c16068687b0ec45a27e72ef8f')
     version('2.3.1', '2b7085525dac11190bfb45bb8ec8dcbf')
