@@ -160,7 +160,7 @@ class Cactusext(Package):
     deps["py-ipython"] = []
     # deps["py-numpy"] = []
     # deps["py-scipy"] = []
-    # deps["py-setuptools"] = []
+    deps["py-setuptools"] = []
     deps["python"] = []
     deps["qhull"] = []
     deps["rust"] = []
@@ -185,6 +185,7 @@ class Cactusext(Package):
     deps["python"] += ["@2.7.13"]
     # py-ipython@6: requires python@3.3:
     deps["py-ipython"] = ["@:5.999.999"]
+    deps["py-setuptools"] = ["@:30.999.999,"]
 
     # Compilers
     cactusext_compiler = "gcc@7.1.0-spack"
