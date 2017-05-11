@@ -127,6 +127,7 @@ class Cactusext(Package):
     whens["llvm"] = ["+llvm"]
     whens["lua"] = ["+extras"]
     whens["opencoarrays"] = ["+extras"]
+    whens["py-ipython"] = ["+extras"]
     whens["py-yt"] = ["+extras"]
     whens["rust"] = ["+rust"]
     whens["simulationio +julia"] = ["+julia"]
@@ -156,6 +157,7 @@ class Cactusext(Package):
     deps["llvm"] = []
     deps["pkg-config"] = []
     deps["py-matplotlib"] = []
+    deps["py-ipython"] = []
     # deps["py-numpy"] = []
     # deps["py-scipy"] = []
     # deps["py-setuptools"] = []
@@ -178,9 +180,11 @@ class Cactusext(Package):
     # whens["gettext"] = ["+julia"]
     # whens["git"] = ["+julia"]
 
-    # # Versions
+    # Versions
     # TODO: Remove this once Spack chooses the latest 2.7 version by default
     deps["python"] += ["@2.7.13"]
+    # py-ipython@6: requires python@3.3:
+    deps["py-ipython"] = ["@:5.999.999"]
 
     # Compilers
     cactusext_compiler = "gcc@7.1.0-spack"
