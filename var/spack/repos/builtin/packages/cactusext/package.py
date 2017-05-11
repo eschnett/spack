@@ -66,7 +66,7 @@ class Cactusext(Package):
     deps["hdf5-blosc"] = []
     deps["highfive"] = ["+mpi"]
     deps["hpx5"] = ["+cxx11", "+metis", "+mpi"]
-    deps["hpx5 +cuda"] = []
+    deps["hpx5 +cuda"] = ["+cxx11", "+metis", "+mpi"]
     deps["hwloc"] = []
     deps["hwloc +cuda"] = []
     # TODO: kokkos
