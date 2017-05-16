@@ -3,7 +3,7 @@ import os
 import sys
 
 # Blue Waters:
-# $ spack install -j16 gcc ~binutils %gcc@6.2.0
+# $ spack install -j16 gcc %gcc@6.2.0
 # $ spack install -j16 cactusext +cuda +julia +valgrind %gcc@7.1.0-spack ^gdbm@1.12
 
 # Comet: Don't use too many processes while building. OpenBLAS is
@@ -11,6 +11,8 @@ import sys
 
 # Cori: Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
 # actually not needed at all
+# $ spack install -j16 gcc %gcc@6.3.0
+# $ spack install -j16 cactusext +cuda +julia +valgrind %gcc@7.1.0-spack
 
 # Stampede: Build on compute node [broken]
 # module unload intel
@@ -19,9 +21,9 @@ import sys
 # spack install cactusext %gcc@7.1.0-spack ^c-blosc ~avx2
 
 # Stampede-KNL [on head node]:
-# module unload intel impi
-# spack install -j8 gcc %gcc@4.8.5
-# spack install -j8 cactusext +julia +valgrind %gcc@7.1.0-spack
+# $ module unload intel impi
+# $ spack install -j8 gcc %gcc@4.8.5
+# $ spack install -j8 cactusext +julia +valgrind %gcc@7.1.0-spack
 
 class Cactusext(Package):
     """Cactus is an open source problem solving environment designed for
