@@ -25,20 +25,27 @@
 from spack import *
 
 
-class Harfbuzz(AutotoolsPackage):
-    """The Harfbuzz package contains an OpenType text shaping engine."""
-    homepage = "http://www.freedesktop.org/wiki/Software/HarfBuzz/"
-    url      = "http://www.freedesktop.org/software/harfbuzz/release/harfbuzz-0.9.37.tar.bz2"
+class OntAlbacore(Package):
+    """Albacore is a software project that provides an entry point to the Oxford
+    Nanopore basecalling algorithms. It can be run from the command line on
+    Windows and multiple Linux platforms. A selection of configuration files
+    allow basecalling DNA libraries made with our current range of sequencing
+    kits and Flow Cells."""
 
-    version('1.4.6', '21a78b81cd20cbffdb04b59ac7edfb410e42141869f637ae1d6778e74928d293')
-    version('0.9.37', 'bfe733250e34629a188d82e3b971bc1e')
+    homepage = "https://nanoporetech.com"
+    url = "https://mirror.oxfordnanoportal.com/software/analysis/ont_albacore-1.1.0-cp35-cp35m-manylinux1_x86_64.whl"
 
-    depends_on("pkg-config", type="build")
-    depends_on("glib")
-    depends_on("icu4c")
-    depends_on("freetype")
-    depends_on("cairo")
-    depends_on("zlib")
+    version('1.1.0', 'fab4502ea1bad99d813aa2629e03e83d', expand=False)
+    extends('python')
 
-    def patch(self):
-        change_sed_delimiter('@', ';', 'src/Makefile.in')
+    depends_on('python@3.5.0:3.5.999', type=('build', 'run'))
+    depends_on('py-setuptools',        type=('build', 'run'))
+    depends_on('py-numpy',             type=('build', 'run'))
+    depends_on('py-dateutil',          type=('build', 'run'))
+    depends_on('py-h5py',              type=('build', 'run'))
+    depends_on('py-ont-fast5-api',     type=('build', 'run'))
+    depends_on('py-pip',               type=('build'))
+
+    def install(self, spec, prefix):
+        pip = which('pip')
+        pip('install', self.stage.archive_file, '--prefix={0}'.format(prefix))

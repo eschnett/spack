@@ -25,20 +25,19 @@
 from spack import *
 
 
-class Harfbuzz(AutotoolsPackage):
-    """The Harfbuzz package contains an OpenType text shaping engine."""
-    homepage = "http://www.freedesktop.org/wiki/Software/HarfBuzz/"
-    url      = "http://www.freedesktop.org/software/harfbuzz/release/harfbuzz-0.9.37.tar.bz2"
+class PyOntFast5Api(PythonPackage):
+    """This project provides classes and utility functions for working with
+    read fast5 files. It provides an abstraction layer between the underlying
+    h5py library and the various concepts central to read fast5 files, such as
+    "reads", "analyses", "analysis summaries", and "analysis datasets".
+    Ideally all interaction with a read fast5 file should be possible via this
+    API, without having to directly invoke the h5py library."""
 
-    version('1.4.6', '21a78b81cd20cbffdb04b59ac7edfb410e42141869f637ae1d6778e74928d293')
-    version('0.9.37', 'bfe733250e34629a188d82e3b971bc1e')
+    homepage = "https://github.com/nanoporetech/ont_fast5_api"
+    url      = "https://pypi.io/packages/source/o/ont-fast5-api/ont-fast5-api-0.3.2.tar.gz"
 
-    depends_on("pkg-config", type="build")
-    depends_on("glib")
-    depends_on("icu4c")
-    depends_on("freetype")
-    depends_on("cairo")
-    depends_on("zlib")
+    version('0.3.2', '2ccfdbcd55239ffae712bb6e70ebfe8c')
 
-    def patch(self):
-        change_sed_delimiter('@', ';', 'src/Makefile.in')
+    depends_on('py-setuptools', type='build')
+    depends_on('py-h5py', type=('build', 'run'))
+    depends_on('py-numpy@1.8.1:', type=('build', 'run'))
