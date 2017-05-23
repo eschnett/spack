@@ -23,30 +23,14 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 ##############################################################################
 from spack import *
-import sys
 
 
-class Libdrm(Package):
-    """A userspace  library for  accessing the  DRM, direct
-    rendering  manager, on  Linux,  BSD and  other  operating
-    systems that support the  ioctl interface."""
+class RTrust(RPackage):
+    """Does local optimization using two derivatives and trust regions.
+       Guaranteed to converge to local minimum of objective function."""
 
-    homepage = "http://dri.freedesktop.org/libdrm/"
-    url      = "http://dri.freedesktop.org/libdrm/libdrm-2.4.59.tar.gz"
+    homepage = "http://www.stat.umn.edu/geyer/trust"
+    url      = "https://cran.r-project.org/src/contrib/trust_0.1-7.tar.gz"
+    list_url = "https://cran.r-project.org/src/contrib/Archive/trust"
 
-    version('2.4.70', 'a8c275bce5f3d71a5ca25e8fb60df084')
-    version('2.4.59', '105ac7af1afcd742d402ca7b4eb168b6')
-    version('2.4.33', '86e4e3debe7087d5404461e0032231c8')
-
-    depends_on('pkg-config@0.9.0:', type='build')
-    depends_on('libpciaccess@0.10:', when=(sys.platform != 'darwin'))
-    depends_on('libpthread-stubs')
-
-    def install(self, spec, prefix):
-        configure('--prefix={0}'.format(prefix),
-                  '--enable-static',
-                  'LIBS=-lrt')  # This fixes a bug with `make check`
-
-        make()
-        make('check')
-        make('install')
+    version('0.1-7', '7e218b3a6b33bd77bd7e86dc6360418d')

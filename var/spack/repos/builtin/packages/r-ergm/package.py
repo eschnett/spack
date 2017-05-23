@@ -23,30 +23,24 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 ##############################################################################
 from spack import *
-import sys
 
 
-class Libdrm(Package):
-    """A userspace  library for  accessing the  DRM, direct
-    rendering  manager, on  Linux,  BSD and  other  operating
-    systems that support the  ioctl interface."""
+class RErgm(RPackage):
+    """An integrated set of tools to analyze and simulate networks based
+       on exponential-family random graph models (ERGM). "ergm" is a
+       part of the "statnet" suite of packages for network analysis."""
 
-    homepage = "http://dri.freedesktop.org/libdrm/"
-    url      = "http://dri.freedesktop.org/libdrm/libdrm-2.4.59.tar.gz"
+    homepage = "http://statnet.org"
+    url      = "https://cran.r-project.org/src/contrib/ergm_3.7.1.tar.gz"
+    list_url = "https://cran.r-project.org/src/contrib/Archive/ergm"
 
-    version('2.4.70', 'a8c275bce5f3d71a5ca25e8fb60df084')
-    version('2.4.59', '105ac7af1afcd742d402ca7b4eb168b6')
-    version('2.4.33', '86e4e3debe7087d5404461e0032231c8')
+    version('3.7.1', '431ae430c76b2408988f469831d80126')
 
-    depends_on('pkg-config@0.9.0:', type='build')
-    depends_on('libpciaccess@0.10:', when=(sys.platform != 'darwin'))
-    depends_on('libpthread-stubs')
-
-    def install(self, spec, prefix):
-        configure('--prefix={0}'.format(prefix),
-                  '--enable-static',
-                  'LIBS=-lrt')  # This fixes a bug with `make check`
-
-        make()
-        make('check')
-        make('install')
+    depends_on('r-robustbase@0.9-10:', type=('build', 'run'))
+    depends_on('r-coda@0.18-1:', type=('build', 'run'))
+    depends_on('r-trust', type=('build', 'run'))
+    depends_on('r-matrix', type=('build', 'run'))
+    depends_on('r-lpsolve', type=('build', 'run'))
+    depends_on('r-mass', type=('build', 'run'))
+    depends_on('r-statnet-common@3.3:', type=('build', 'run'))
+    depends_on('r-network@1.13:', type=('build', 'run'))

@@ -23,30 +23,18 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 ##############################################################################
 from spack import *
-import sys
 
 
-class Libdrm(Package):
-    """A userspace  library for  accessing the  DRM, direct
-    rendering  manager, on  Linux,  BSD and  other  operating
-    systems that support the  ioctl interface."""
+class RCoda(RPackage):
+    """Provides functions for summarizing and plotting the output from
+       Markov Chain Monte Carlo (MCMC) simulations, as well as
+       diagnostic tests of convergence to the equilibrium distribution
+       of the Markov chain."""
 
-    homepage = "http://dri.freedesktop.org/libdrm/"
-    url      = "http://dri.freedesktop.org/libdrm/libdrm-2.4.59.tar.gz"
+    homepage = "https://cran.r-project.org/web/packages/coda/index.html"
+    url      = "https://cran.r-project.org/src/contrib/coda_0.19-1.tar.gz"
+    list_url = "https://cran.r-project.org/src/contrib/Archive/coda"
 
-    version('2.4.70', 'a8c275bce5f3d71a5ca25e8fb60df084')
-    version('2.4.59', '105ac7af1afcd742d402ca7b4eb168b6')
-    version('2.4.33', '86e4e3debe7087d5404461e0032231c8')
+    version('0.19-1', '0d2aca6a5a3bdae9542708817c1ec001')
 
-    depends_on('pkg-config@0.9.0:', type='build')
-    depends_on('libpciaccess@0.10:', when=(sys.platform != 'darwin'))
-    depends_on('libpthread-stubs')
-
-    def install(self, spec, prefix):
-        configure('--prefix={0}'.format(prefix),
-                  '--enable-static',
-                  'LIBS=-lrt')  # This fixes a bug with `make check`
-
-        make()
-        make('check')
-        make('install')
+    depends_on('r-lattice', type=('build', 'run'))
