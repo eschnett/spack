@@ -14,6 +14,11 @@ import sys
 # $ spack install -j16 gcc %gcc@6.3.0
 # $ spack install -j16 cactusext +cuda +julia +valgrind %gcc@7.1.0-spack
 
+# [WIP] Graham
+# $ module --force purge
+# $ spack install -j8 gcc %gcc@4.8.5
+# $ spack install -j8 cactusext +julia +valgrind %gcc@7.1.0-spack
+
 # Stampede: Build on compute node [broken]
 # module unload intel
 # module unload mvapich2
@@ -24,6 +29,12 @@ import sys
 # $ module unload intel impi
 # $ spack install -j8 gcc %gcc@4.8.5
 # $ spack install -j8 cactusext +julia +valgrind %gcc@7.1.0-spack
+
+# Stampede2 [on head node]:
+# $ module unload intel impi
+# $ module load gcc/7.1.0
+# $ spack install -j8 gcc %gcc@7.1.0
+# $ spack install -j8 cactusext +julia %gcc@7.1.0-spack ^openmpi fabrics=rdma
 
 class Cactusext(Package):
     """Cactus is an open source problem solving environment designed for
