@@ -92,6 +92,7 @@ class Cactusext(Package):
     deps["openssl"] = []
     deps["papi"] = []
     deps["petsc"] = ["+boost", "+hdf5", "+mpi"]
+    # deps["py-magic-wormhole"] = []
     deps["py-yt"] = []
     deps["rsync"] = []
     # deps["scalasca"] = []   # depends on scorep
