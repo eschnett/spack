@@ -6,6 +6,11 @@ import sys
 # $ spack install -j16 gcc %gcc@6.2.0
 # $ spack install -j16 cactusext +cuda +julia +valgrind %gcc@7.1.0-spack ^gdbm@1.12
 
+# [WIP] Cedar
+# $ module --force purge
+# $ spack install -j8 gcc %gcc@4.8.5
+# $ spack install -j8 cactusext +julia +valgrind %gcc@7.1.0-spack
+
 # Comet: Don't use too many processes while building. OpenBLAS is
 # particularly troublesome as it uses many threads for its self-tests.
 
@@ -14,7 +19,7 @@ import sys
 # $ spack install -j16 gcc %gcc@6.3.0
 # $ spack install -j16 cactusext +cuda +julia +valgrind %gcc@7.1.0-spack
 
-# [WIP] Graham
+# Graham
 # $ module --force purge
 # $ spack install -j8 gcc %gcc@4.8.5
 # $ spack install -j8 cactusext +julia +valgrind %gcc@7.1.0-spack
