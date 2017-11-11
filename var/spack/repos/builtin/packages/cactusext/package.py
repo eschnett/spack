@@ -11,20 +11,31 @@ import sys
 # $ spack install -j8 gcc %gcc@4.8.5
 # $ spack install -j8 cactusext +julia +valgrind %gcc@7.1.0-spack
 
-# Comet: Don't use too many processes while building. OpenBLAS is
+# Comet:
+# Don't use too many processes while building. OpenBLAS is
 # particularly troublesome as it uses many threads for its self-tests.
 
-# Cori: Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
+# Cori:
+# Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
 # actually not needed at all
 # $ spack install -j16 gcc %gcc@6.3.0
 # $ spack install -j16 cactusext +cuda +julia +valgrind %gcc@7.1.0-spack
+
+# Edison [WIP]
+# Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
+# actually not needed at all
+# $ spack install -j8 gcc %gcc@6.3.0
+# $ spack install -j8 cactusext %gcc@7.1.0-edison-spack
 
 # Graham
 # $ module --force purge
 # $ spack install -j8 gcc %gcc@4.8.5
 # $ spack install -j8 cactusext +julia +valgrind %gcc@7.1.0-spack
 
-# Stampede: Build on compute node [broken]
+# Redshift
+
+# Stampede:
+# Build on compute node [broken]
 # module unload intel
 # module unload mvapich2
 # # spack install cactusext %gcc@7.1.0-spack ^hdf5 ldflags='-L/work/00507/eschnett/lib' ^c-blosc ~avx2
@@ -83,6 +94,7 @@ class Cactusext(Package):
     deps["hdf5"] = ["+mpi"]
     deps["hdf5-blosc"] = []
     deps["highfive"] = ["+mpi"]
+    # deps["hpx"] = []
     deps["hpx5"] = ["+cxx11", "+metis", "+mpi"]
     deps["hpx5 +cuda"] = ["+cxx11", "+metis", "+mpi"]
     deps["hwloc"] = []
