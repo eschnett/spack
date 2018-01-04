@@ -172,6 +172,8 @@ class Openmpi(AutotoolsPackage):
     patch('llnl-platforms.patch', when="@1.6.5")
     patch('configure.patch', when="@1.10.1")
     patch('fix_multidef_pmi_class.patch', when="@2.0.0:2.0.1")
+    # TODO: use filter_file instead?
+    patch('syslog.patch', when="@3.0.0") # Darwin, High Sierra
 
     variant(
         'fabrics',

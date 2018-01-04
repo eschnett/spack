@@ -87,6 +87,7 @@ class Hdf5Blosc(Package):
                     "-c", "blosc_filter.c")
             libtool("--mode=link", "--tag=CC",
                     "cc", "-g", "-O",
+                    "-module",
                     "-rpath", prefix.lib,
                     "-o", "libblosc_filter.la",
                     "blosc_filter.lo",
@@ -102,6 +103,7 @@ class Hdf5Blosc(Package):
                         "-c", "blosc_plugin.c")
                 libtool("--mode=link", "--tag=CC",
                         "cc", "-g", "-O",
+                        "-module",
                         "-rpath", prefix.lib,
                         "-o", "libblosc_plugin.la",
                         "blosc_plugin.lo",

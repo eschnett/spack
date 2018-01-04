@@ -46,10 +46,13 @@ class Perl(Package):  # Perl doesn't use Autotools, it should subclass Package
     url = "http://www.cpan.org/src/5.0/perl-5.24.1.tar.gz"
 
     # Development releases
-    version('5.25.11', '37a398682c36cd85992b34b5c1c25dc1')
+    # version('5.27.1', '37a398682c36cd85992b34b5c1c25dc1')
 
     # Maintenance releases (recommended)
-    version('5.24.1', '765ef511b5b87a164e2531403ee16b3c', preferred=True)
+    version('5.26.1', 'a7e5c531ee1719c53ec086656582ea86', preferred=True)
+    # version('5.24.3', '765ef511b5b87a164e2531403ee16b3c')
+    version('5.24.1', '765ef511b5b87a164e2531403ee16b3c')
+    # version('5.22.4', 'aa4f236dc2fc6f88b871436b8d0fda95')
     version('5.22.3', 'aa4f236dc2fc6f88b871436b8d0fda95')
 
     # Misc releases that people need

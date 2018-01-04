@@ -31,6 +31,8 @@ class Simulationio(CMakePackage):
     homepage = "https://github.com/eschnett/SimulationIO"
     url      = "https://github.com/eschnett/SimulationIO/archive/version/0.1.0.tar.gz"
 
+    version('2.0.0', 'e831b10641a6091c12cd0cb3bc2b228d')
+    version('1.0.1', '5cbf1d0084eb436d861ffcdd297eaa08')
     version('1.0.0', '5cbf1d0084eb436d861ffcdd297eaa08')
     version('0.1.0', '00f7dabc08ed1ab77858785ce0809f50')
     version('develop',
@@ -42,7 +44,8 @@ class Simulationio(CMakePackage):
     variant('pic', default=True,
             description="Produce position-independent code")
 
-    depends_on('hdf5 +cxx @:1.10.0-patch1')
+    depends_on('hdf5 +cxx @:1.10.0-patch1', when='@:1.999.999')
+    depends_on('hdf5 +cxx @1.10.1:', when='@2.0.0:')
     depends_on('julia', when='+julia', type=('build', 'run'))
     depends_on('py-h5py', when='+python', type=('build', 'run'))
     depends_on('py-numpy', when='+python', type=('build', 'run'))

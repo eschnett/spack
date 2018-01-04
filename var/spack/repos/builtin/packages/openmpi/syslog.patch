@@ -1,0 +1,139 @@
+--- a/opal/mca/base/mca_base_open.c
++++ b/opal/mca/base/mca_base_open.c
+@@ -30,3 +30,12 @@
+ #ifdef HAVE_SYSLOG_H
+ #include <syslog.h>
++#else
++#define LOG_EMERG 0
++#define LOG_ALERT 1
++#define LOG_CRIT 2
++#define LOG_ERR 3
++#define LOG_WARNING 4
++#define LOG_NOTICE 5
++#define LOG_INFO 6
++#define LOG_DEBUG 7
+ #endif
+--- a/opal/mca/pmix/pmix2x/pmix/src/mca/base/pmix_mca_base_open.c
++++ b/opal/mca/pmix/pmix2x/pmix/src/mca/base/pmix_mca_base_open.c
+@@ -28,3 +28,12 @@
+ #ifdef HAVE_SYSLOG_H
+ #include <syslog.h>
++#else
++#define LOG_EMERG 0
++#define LOG_ALERT 1
++#define LOG_CRIT 2
++#define LOG_ERR 3
++#define LOG_WARNING 4
++#define LOG_NOTICE 5
++#define LOG_INFO 6
++#define LOG_DEBUG 7
+ #endif
+--- a/opal/mca/pmix/pmix2x/pmix/src/util/output.c
++++ b/opal/mca/pmix/pmix2x/pmix/src/util/output.c
+@@ -31,3 +31,12 @@
+ #ifdef HAVE_SYSLOG_H
+ #include <syslog.h>
++#else
++#define LOG_EMERG 0
++#define LOG_ALERT 1
++#define LOG_CRIT 2
++#define LOG_ERR 3
++#define LOG_WARNING 4
++#define LOG_NOTICE 5
++#define LOG_INFO 6
++#define LOG_DEBUG 7
+ #endif
+@@ -99,1 +99,1 @@
+-#if defined(HAVE_SYSLOG)
++#if defined(HAVE_SYSLOG) && defined(HAVE_SYSLOG_H)
+@@ -115,1 +115,1 @@
+-#if defined(HAVE_SYSLOG)
++#if defined(HAVE_SYSLOG) && defined(HAVE_SYSLOG_H)
+@@ -306,1 +306,1 @@
+-#if defined(HAVE_SYSLOG)
++#if defined(HAVE_SYSLOG) && defined(HAVE_SYSLOG_H)
+@@ -553,1 +553,1 @@
+-#if defined(HAVE_SYSLOG)
++#if defined(HAVE_SYSLOG) && defined(HAVE_SYSLOG_H)
+@@ -570,1 +570,1 @@
+-#if defined(HAVE_SYSLOG)
++#if defined(HAVE_SYSLOG) && defined(HAVE_SYSLOG_H)
+@@ -583,1 +583,1 @@
+-#if defined(HAVE_SYSLOG)
++#if defined(HAVE_SYSLOG) && defined(HAVE_SYSLOG_H)
+@@ -876,1 +876,1 @@
+-#if defined(HAVE_SYSLOG)
++#if defined(HAVE_SYSLOG) && defined(HAVE_SYSLOG_H)
+--- a/opal/util/output.c
++++ b/opal/util/output.c
+@@ -30,3 +30,12 @@
+ #ifdef HAVE_SYSLOG_H
+ #include <syslog.h>
++#else
++#define LOG_EMERG 0
++#define LOG_ALERT 1
++#define LOG_CRIT 2
++#define LOG_ERR 3
++#define LOG_WARNING 4
++#define LOG_NOTICE 5
++#define LOG_INFO 6
++#define LOG_DEBUG 7
+ #endif
+@@ -100,1 +100,1 @@
+-#if defined(HAVE_SYSLOG)
++#if defined(HAVE_SYSLOG) && defined(HAVE_SYSLOG_H)
+@@ -119,1 +119,1 @@
+-#if defined(HAVE_SYSLOG)
++#if defined(HAVE_SYSLOG) && defined(HAVE_SYSLOG_H)
+@@ -352,1 +352,1 @@
+-#if defined(HAVE_SYSLOG)
++#if defined(HAVE_SYSLOG) && defined(HAVE_SYSLOG_H)
+@@ -615,1 +615,1 @@
+-#if defined(HAVE_SYSLOG)
++#if defined(HAVE_SYSLOG) && defined(HAVE_SYSLOG_H)
+@@ -632,1 +632,1 @@
+-#if defined(HAVE_SYSLOG)
++#if defined(HAVE_SYSLOG) && defined(HAVE_SYSLOG_H)
+@@ -645,1 +645,1 @@
+-#if defined(HAVE_SYSLOG)
++#if defined(HAVE_SYSLOG) && defined(HAVE_SYSLOG_H)
+@@ -954,1 +954,1 @@
+-#if defined(HAVE_SYSLOG)
++#if defined(HAVE_SYSLOG) && defined(HAVE_SYSLOG_H)
+--- a/orte/mca/notifier/notifier.h
++++ b/orte/mca/notifier/notifier.h
+@@ -54,3 +54,12 @@
+ #ifdef HAVE_SYSLOG_H
+ #include <syslog.h>
++#else
++#define LOG_EMERG 0
++#define LOG_ALERT 1
++#define LOG_CRIT 2
++#define LOG_ERR 3
++#define LOG_WARNING 4
++#define LOG_NOTICE 5
++#define LOG_INFO 6
++#define LOG_DEBUG 7
+ #endif
+--- a/orte/mca/notifier/syslog/notifier_syslog_module.c
++++ b/orte/mca/notifier/syslog/notifier_syslog_module.c
+@@ -45,6 +45,7 @@
+     .report = myreport
+ };
+ 
++#ifdef HAVE_SYSLOG_H
+ 
+ static int init(void)
+ {
+@@ -129,3 +130,11 @@
+            orte_job_state_to_str(req->state),
+            (NULL == req->msg) ? "<N/A>" : req->msg);
+ }
++
++#else
++static int init(void) { return ORTE_SUCCESS; }
++static void finalize(void) {}
++static void mylog(orte_notifier_request_t *req) {}
++static void myevent(orte_notifier_request_t *req) {}
++static void myreport(orte_notifier_request_t *req) {}
++#endif
