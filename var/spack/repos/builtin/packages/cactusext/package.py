@@ -177,6 +177,7 @@ class Cactusext(Package):
     deps["bzip2"] = []
     deps["charm"] = []
     deps["cmake"] = []
+    deps["flex"] = ["@2.6.3"] # flex@2.6.4 and gcc@7.2.0 conflict (see flex)
     deps["freetype"] = []
     deps["gettext"] = []
     deps["git"] = []
@@ -219,7 +220,7 @@ class Cactusext(Package):
 
     # Versions
     # TODO: Remove this once Spack chooses the latest 2.7 version by default
-    deps["python"] += ["@2.7.13"]
+    deps["python"] += ["@2.7.14"]
     # py-ipython@6: requires python@3.3:
     deps["py-ipython"] = ["@:5.999.999"]
     # Why?
