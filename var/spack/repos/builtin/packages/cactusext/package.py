@@ -200,6 +200,7 @@ class Cactusext(Package):
     deps["qhull"] = []
     deps["rust"] = []
     deps["sqlite"] = []
+    deps["swig"] = []
     deps["tar"] = []
     deps["tk"] = []
     deps["xz"] = []
@@ -220,7 +221,8 @@ class Cactusext(Package):
 
     # Versions
     # TODO: Remove this once Spack chooses the latest 2.7 version by default
-    deps["python"] += ["@2.7.14"]
+    # deps["python"] += ["@2.7.14"]
+    deps["python"] += ["@2.7.13"]
     # py-ipython@6: requires python@3.3:
     deps["py-ipython"] = ["@:5.999.999"]
     # Why?
@@ -302,6 +304,7 @@ class Cactusext(Package):
     deps["bzip2"].append("%"+cactusext_compiler)
     deps["libsigsegv"].append("%"+cactusext_compiler)
     deps["sqlite"].append("%"+cactusext_compiler)
+    deps["swig"].append("%"+cactusext_compiler)
     deps["xz"].append("%"+cactusext_compiler)
 
     # Set dependencies
