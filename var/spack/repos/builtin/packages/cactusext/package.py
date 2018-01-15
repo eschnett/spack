@@ -91,7 +91,7 @@ class Cactusext(Package):
     deps["gdb"] = []
     deps["gsl"] = []
     deps["googletest"] = []
-    deps["hdf5"] = ["+fortran", "+cxx", "+hl", "+mpi"]
+    deps["hdf5"] = ["+fortran", "+cxx", "+hl", "+mpi", "+threadsafe"]
     #TODO deps["hdf5-blosc"] = []
     deps["highfive"] = ["+mpi"]
     # deps["hpx"] = []
