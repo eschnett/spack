@@ -3,8 +3,8 @@ import os
 import sys
 
 # Blue Waters:
-# $ spack install -j16 gcc %gcc@6.2.0
-# $ spack install -j16 cactusext +cuda +julia +valgrind %gcc@7.2.0-spack ^gdbm@1.12
+# $ spack install -j8 gcc %gcc@6.2.0
+# $ spack install -j8 cactusext +cuda +julia +valgrind %gcc@7.2.0-spack ^gdbm@1.12
 
 # [WIP] Cedar
 # $ module --force purge
@@ -18,8 +18,8 @@ import sys
 # Cori:
 # Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
 # actually not needed at all
-# $ spack install -j16 gcc %gcc@6.3.0
-# $ spack install -j16 cactusext +cuda +julia +valgrind %gcc@7.2.0-spack
+# $ spack install -j8 gcc %gcc@6.3.0
+# $ spack install -j8 cactusext +cuda +julia +valgrind %gcc@7.2.0-spack
 
 # Edison [WIP]
 # Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
@@ -31,6 +31,10 @@ import sys
 # $ module --force purge
 # $ spack install -j8 gcc %gcc@4.8.5
 # $ spack install -j8 cactusext +julia +valgrind %gcc@7.2.0-spack
+
+#  [BROKEN] Nvidia:
+# $ spack install -j4 gcc %gcc@6.3.0
+# $ spack install -j4 cactusext %gcc@7.2.0-spack
 
 # Redshift
 
