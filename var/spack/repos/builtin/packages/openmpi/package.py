@@ -23,6 +23,7 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 ##############################################################################
 
+import re
 import os
 
 from spack import *
@@ -50,6 +51,22 @@ def _verbs_dir():
         return None
     except ProcessError:
         return None
+
+
+def _pmi_dir():
+    """Look for default directory where the PMI package is
+    installed. Return None if not found.
+    """
+    # Could also use pkg-config instead
+    try:
+        path = env['CRAY_PMI_INCLUDE_OPTS']
+    except:
+        return None
+    path = re.sub(r'^-I', '', path)
+    path = re.sub(r'/include$', '', path)
+    if not os.path.isdir(path):
+        return None
+    return path
 
 
 def _mxm_dir():
@@ -182,7 +199,7 @@ class Openmpi(AutotoolsPackage):
         description=("List of fabrics that are enabled ('rdma' enables "
                      "'verbs', but implemented via the 'rdma-core' Spack "
                      "package)"),
-        values=('psm', 'psm2', 'pmi', 'rdma', 'verbs', 'mxm'),
+        values=('psm', 'psm2', 'pmi', 'pmix', 'rdma', 'verbs', 'mxm'),
         multi=True
     )
 
@@ -276,6 +293,17 @@ class Openmpi(AutotoolsPackage):
         if (path is not None) and (path not in ('/usr', '/usr/local')):
             line += '={0}'.format(path)
         return line
+
+    def with_or_without_pmi(self, activated):
+        opt = 'pmi'
+        # If the option has not been activated return --without-pmi
+        if not activated:
+            return '--without-{0}'.format(opt)
+        path = _pmi_dir()
+        if path is None:
+            return '--with-{0}'.format(opt)
+        else:
+            return '--with-{0}={1}'.format(opt, path)
 
     def with_or_without_mxm(self, activated):
         opt = 'mxm'
