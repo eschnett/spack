@@ -2,8 +2,9 @@ from spack import *
 import os
 import sys
 
-# Blue Waters:
-# $ spack install -j8 gcc %gcc@6.2.0
+# [WIP] Blue Waters:
+# Need pkgconfig work-around; see <https://github.com/spack/spack/issues/6861>
+# $ spack install -j8 gcc %gcc@6.3.0
 # $ spack install -j8 cactusext +cuda +julia +valgrind %gcc@7.2.0-spack ^gdbm@1.12
 
 # [WIP] Cedar
@@ -16,12 +17,15 @@ import sys
 # particularly troublesome as it uses many threads for its self-tests.
 
 # Cori:
+# Need pkgconfig work-around; see <https://github.com/spack/spack/issues/6861>
 # Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
 # actually not needed at all
-# $ spack install -j8 gcc %gcc@6.3.0
-# $ spack install -j8 cactusext +cuda +julia +valgrind %gcc@7.2.0-spack
+# $ spack install -j8 gcc %gcc@7.1.0
+# $ spack install -j8 cactusext +cuda +julia +valgrind ^cmake@3.9.4 %gcc@7.2.0-spack
+# $ spack install -j8 cactusext ^cmake@3.9.4 ^openmpi schedulers=slurm %gcc@7.2.0-spack
+# $ spack install -j8 cactusext ^cmake@3.9.4 ^openmpi schedulers=slurm fabrics=pmix %gcc@7.2.0-spack
 
-# Edison [WIP]
+# [WIP] Edison:
 # Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
 # actually not needed at all
 # $ spack install -j8 gcc %gcc@6.3.0
@@ -32,7 +36,7 @@ import sys
 # $ spack install -j8 gcc %gcc@4.8.5
 # $ spack install -j8 cactusext +julia +valgrind %gcc@7.2.0-spack
 
-#  [BROKEN] Nvidia:
+# [BROKEN] Nvidia:
 # $ spack install -j4 gcc %gcc@6.3.0
 # $ spack install -j4 cactusext %gcc@7.2.0-spack
 
