@@ -22,28 +22,19 @@
 # License along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 ##############################################################################
-from spack import *
+"""This file dispatches to the correct implementation of OrderedDict."""
 
+# TODO: this file can be removed when support for python 2.6 will be dropped
 
-class Libssh2(CMakePackage):
-    """libssh2 is a client-side C library implementing the SSH2 protocol"""
+# Removing this import will make python 2.6
+# fail on import of ordereddict
+from __future__ import absolute_import
 
-    homepage = "https://www.libssh2.org/"
-    url      = "https://www.libssh2.org/download/libssh2-1.7.0.tar.gz"
+import sys
 
-    version('1.8.0', '3d1147cae66e2959ea5441b183de1b1c')
-    version('1.7.0', 'b01662a210e94cccf2f76094db7dac5c')
-    version('1.4.3', '071004c60c5d6f90354ad1b701013a0b')  # CentOS7
-
-    variant('shared', default=True,
-            description="Build shared libraries")
-
-    depends_on('cmake@2.8.11:', type='build')
-    depends_on('openssl')
-    depends_on('zlib')
-    depends_on('xz')
-
-    def cmake_args(self):
-        spec = self.spec
-        return [
-            '-DBUILD_SHARED_LIBS=%s' % ('YES' if '+shared' in spec else 'NO')]
+if sys.version_info[:2] == (2, 6):
+    import ordereddict
+    OrderedDict = ordereddict.OrderedDict
+else:
+    import collections
+    OrderedDict = collections.OrderedDict
