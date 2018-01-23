@@ -3,9 +3,10 @@ import os
 import sys
 
 # [WIP] Blue Waters:
+# Need setup-env.sh work-around
 # Need pkgconfig work-around; see <https://github.com/spack/spack/issues/6861>
-# $ spack install -j8 gcc %gcc@6.3.0
-# $ spack install -j8 cactusext +cuda +julia +valgrind %gcc@7.2.0-spack ^gdbm@1.12
+# $ spack install -j8 gcc %gcc@6.3.0 ^gdbm@1.12
+# $ spack install -j8 cactusext +cuda +julia +valgrind %gcc@7.2.0-spack ^gdbm@1.12 ^openmpi fabrics=pmix
 
 # [WIP] Cedar
 # $ module --force purge
@@ -21,9 +22,9 @@ import sys
 # Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
 # actually not needed at all
 # $ spack install -j8 gcc %gcc@7.1.0
-# $ spack install -j8 cactusext +cuda +julia +valgrind ^cmake@3.9.4 %gcc@7.2.0-spack
-# $ spack install -j8 cactusext ^cmake@3.9.4 ^openmpi schedulers=slurm %gcc@7.2.0-spack
-# $ spack install -j8 cactusext ^cmake@3.9.4 ^openmpi schedulers=slurm fabrics=pmix %gcc@7.2.0-spack
+# $ spack install -j8 cactusext +cuda +julia +valgrind %gcc@7.2.0-spack ^cmake@3.9.4
+# $ spack install -j8 cactusext %gcc@7.2.0-spack ^cmake@3.9.4 ^openmpi schedulers=slurm
+# $ spack install -j8 cactusext %gcc@7.2.0-spack ^cmake@3.9.4 ^openmpi schedulers=slurm fabrics=pmix
 
 # [WIP] Edison:
 # Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
