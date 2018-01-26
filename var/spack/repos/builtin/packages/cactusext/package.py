@@ -6,7 +6,7 @@ import sys
 # Need setup-env.sh work-around
 # Need pkgconfig work-around; see <https://github.com/spack/spack/issues/6861>
 # $ spack install -j8 gcc %gcc@6.3.0 ^gdbm@1.12
-# $ spack install -j8 cactusext +cuda +julia +valgrind %gcc@7.2.0-spack ^gdbm@1.12 ^openmpi fabrics=pmix
+# $ spack install -j8 cactusext ~extras %gcc@7.2.0-spack ^gdbm@1.12 ^openmpi fabrics=pmix
 
 # [WIP] Cedar
 # $ module --force purge
@@ -39,7 +39,7 @@ import sys
 
 # [BROKEN] Nvidia:
 # $ spack install -j4 gcc %gcc@6.3.0
-# $ spack install -j4 cactusext %gcc@7.2.0-spack
+# $ spack install -j4 cactusext %gcc@7.2.0-spack ^openmpi fabrics=pmix
 
 # Redshift
 
