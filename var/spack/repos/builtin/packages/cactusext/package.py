@@ -38,10 +38,15 @@ import sys
 # $ spack install -j8 cactusext +julia +valgrind %gcc@7.2.0-spack
 
 # [BROKEN] Nvidia:
+# $ unset MKL
+# $ unset MKLROOT
 # $ spack install -j4 gcc %gcc@6.3.0
 # $ spack install -j4 cactusext %gcc@7.2.0-spack ^openmpi fabrics=pmix
 
 # Redshift
+# $ export PATH=/Users/eschnett/src/spack/bin:/Users/eschnett/bin:/usr/X11R6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+# $ spack install -j4 gcc %gcc@6.3.0
+# $ spack install -j4 cactusext %gcc@7.2.0-spack
 
 # Stampede:
 # Build on compute node [broken]
@@ -60,6 +65,10 @@ import sys
 # $ module load gcc/7.2.0
 # $ spack install -j8 gcc %gcc@7.2.0
 # $ spack install -j8 cactusext +julia %gcc@7.2.0-spack ^openmpi fabrics=rdma
+
+# Wheeler:
+# $ spack install -j4 gcc %gcc@5.3.0
+# $ spack install -j4 cactusext %gcc@7.2.0-spack
 
 class Cactusext(Package):
     """Cactus is an open source problem solving environment designed for
