@@ -6,12 +6,12 @@ import sys
 # Need setup-env.sh work-around
 # Need pkgconfig work-around; see <https://github.com/spack/spack/issues/6861>
 # $ spack install -j8 gcc %gcc@6.3.0 ^gdbm@1.12
-# $ spack install -j8 cactusext ~extras %gcc@7.2.0-spack ^gdbm@1.12 ^openmpi fabrics=pmix schedulers=alps
+# $ spack install -j8 cactusext ~extras %gcc@7.3.0-spack ^gdbm@1.12 ^openmpi fabrics=pmix schedulers=alps
 
 # [???] Cedar
 # $ module --force purge
 # $ spack install -j8 gcc %gcc@4.8.5
-# $ spack install -j8 cactusext +julia +valgrind %gcc@7.2.0-spack
+# $ spack install -j8 cactusext +julia +valgrind %gcc@7.3.0-spack
 
 # [???] Comet:
 # Don't use too many processes while building. OpenBLAS is
@@ -22,7 +22,7 @@ import sys
 # Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
 # actually not needed at all
 # $ spack install -j8 gcc %gcc@7.1.0
-# $ spack install -j8 cactusext %gcc@7.2.0-spack ^cmake@3.9.4 ^openmpi schedulers=slurm fabrics=pmix
+# $ spack install -j8 cactusext %gcc@7.3.0-spack ^cmake@3.9.4 ^openmpi schedulers=slurm fabrics=pmix
 
 # [WIP] Cori-KNL: Use Cori
 
@@ -30,42 +30,42 @@ import sys
 # Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
 # actually not needed at all
 # $ spack install -j8 gcc %gcc@6.3.0
-# $ spack install -j8 cactusext %gcc@7.2.0-edison-spack
+# $ spack install -j8 cactusext %gcc@7.3.0-edison-spack
 
 # Graham
 # $ module --force purge
 # $ spack install -j8 gcc %gcc@4.8.5
-# $ spack install -j8 cactusext +julia +valgrind %gcc@7.2.0-spack
+# $ spack install -j8 cactusext +julia +valgrind %gcc@7.3.0-spack
 
 # Nvidia:
 # $ unset MKL
 # $ unset MKLROOT
 # $ spack install -j4 gcc %gcc@6.3.0
-# $ spack install -j4 cactusext %gcc@7.2.0-spack ^openmpi fabrics=pmix
+# $ spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix
 
 # Redshift
 # $ export PATH=/Users/eschnett/src/spack/bin:/Users/eschnett/bin:/usr/X11R6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 # $ spack install -j4 gcc %gcc@6.3.0
-# $ spack install -j4 cactusext %gcc@7.2.0-spack
+# $ spack install -j4 cactusext %gcc@7.3.0-spack
 
 # [OLD] Stampede-KNL [on head node]:
 # $ module unload intel impi
 # $ spack install -j8 gcc %gcc@4.8.5
-# $ spack install -j8 cactusext +julia +valgrind %gcc@7.2.0-spack
+# $ spack install -j8 cactusext +julia +valgrind %gcc@7.3.0-spack
 
 # [WIP] Stampede2 [on head node]:
 # Need to manually add module "gcc/7.1.0" to Spack-generated compiler.yaml
 # $ module unload intel impi
 # $ module load gcc/7.1.0
 # $ spack install -j8 gcc %gcc@7.1.0
-# $ spack install -j8 cactusext %gcc@7.2.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm ^python +ucs4
+# $ spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm ^python +ucs4
 
 
 # [NEW] Stampede2 SKX
 
 # Wheeler:
 # $ spack install -j4 gcc %gcc@5.3.0
-# $ spack install -j4 cactusext %gcc@7.2.0-spack
+# $ spack install -j4 cactusext %gcc@7.3.0-spack
 
 class Cactusext(Package):
     """Cactus is an open source problem solving environment designed for
@@ -192,7 +192,7 @@ class Cactusext(Package):
     deps["bzip2"] = []
     deps["charm"] = []
     deps["cmake"] = []
-    deps["flex"] = ["@2.6.3"] # flex@2.6.4 and gcc@7.2.0 conflict (see flex)
+    deps["flex"] = ["@2.6.3"] # flex@2.6.4 and gcc@7.3.0 conflict (see flex)
     deps["freetype"] = []
     deps["gettext"] = []
     deps["git"] = []
@@ -244,7 +244,7 @@ class Cactusext(Package):
     deps["py-setuptools"] = ["@:30.999.999"]
 
     # Compilers
-    cactusext_compiler = "gcc@7.2.0-spack"
+    cactusext_compiler = "gcc@7.3.0-spack"
     darwin_compiler = "clang@9.0.0-apple"
     bison_compiler = cactusext_compiler
     cmake_compiler = cactusext_compiler
