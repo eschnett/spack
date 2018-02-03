@@ -2,29 +2,29 @@ from spack import *
 import os
 import sys
 
-# [WIP] Blue Waters:
+# Blue Waters:
 # Need setup-env.sh work-around
 # Need pkgconfig work-around; see <https://github.com/spack/spack/issues/6861>
 # $ spack install -j8 gcc %gcc@6.3.0 ^gdbm@1.12
-# $ spack install -j8 cactusext ~extras %gcc@7.2.0-spack ^gdbm@1.12 ^openmpi fabrics=pmix
+# $ spack install -j8 cactusext ~extras %gcc@7.2.0-spack ^gdbm@1.12 ^openmpi fabrics=pmix schedulers=alps
 
-# [WIP] Cedar
+# [???] Cedar
 # $ module --force purge
 # $ spack install -j8 gcc %gcc@4.8.5
 # $ spack install -j8 cactusext +julia +valgrind %gcc@7.2.0-spack
 
-# Comet:
+# [???] Comet:
 # Don't use too many processes while building. OpenBLAS is
 # particularly troublesome as it uses many threads for its self-tests.
 
-# Cori:
+# [WIP] Cori:
 # Need pkgconfig work-around; see <https://github.com/spack/spack/issues/6861>
 # Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
 # actually not needed at all
 # $ spack install -j8 gcc %gcc@7.1.0
-# $ spack install -j8 cactusext +cuda +julia +valgrind %gcc@7.2.0-spack ^cmake@3.9.4
-# $ spack install -j8 cactusext %gcc@7.2.0-spack ^cmake@3.9.4 ^openmpi schedulers=slurm
 # $ spack install -j8 cactusext %gcc@7.2.0-spack ^cmake@3.9.4 ^openmpi schedulers=slurm fabrics=pmix
+
+# [WIP] Cori-KNL: Use Cori
 
 # [WIP] Edison:
 # Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
@@ -37,7 +37,7 @@ import sys
 # $ spack install -j8 gcc %gcc@4.8.5
 # $ spack install -j8 cactusext +julia +valgrind %gcc@7.2.0-spack
 
-# [BROKEN] Nvidia:
+# Nvidia:
 # $ unset MKL
 # $ unset MKLROOT
 # $ spack install -j4 gcc %gcc@6.3.0
@@ -48,23 +48,20 @@ import sys
 # $ spack install -j4 gcc %gcc@6.3.0
 # $ spack install -j4 cactusext %gcc@7.2.0-spack
 
-# Stampede:
-# Build on compute node [broken]
-# module unload intel
-# module unload mvapich2
-# # spack install cactusext %gcc@7.2.0-spack ^hdf5 ldflags='-L/work/00507/eschnett/lib' ^c-blosc ~avx2
-# spack install cactusext %gcc@7.2.0-spack ^c-blosc ~avx2
-
-# Stampede-KNL [on head node]:
+# [OLD] Stampede-KNL [on head node]:
 # $ module unload intel impi
 # $ spack install -j8 gcc %gcc@4.8.5
 # $ spack install -j8 cactusext +julia +valgrind %gcc@7.2.0-spack
 
-# Stampede2 [on head node]:
+# [WIP] Stampede2 [on head node]:
+# Need to manually add module "gcc/7.1.0" to Spack-generated compiler.yaml
 # $ module unload intel impi
-# $ module load gcc/7.2.0
-# $ spack install -j8 gcc %gcc@7.2.0
-# $ spack install -j8 cactusext +julia %gcc@7.2.0-spack ^openmpi fabrics=rdma
+# $ module load gcc/7.1.0
+# $ spack install -j8 gcc %gcc@7.1.0
+# $ spack install -j8 cactusext %gcc@7.2.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm ^python +ucs4
+
+
+# [NEW] Stampede2 SKX
 
 # Wheeler:
 # $ spack install -j4 gcc %gcc@5.3.0
