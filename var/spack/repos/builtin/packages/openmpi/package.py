@@ -199,7 +199,7 @@ class Openmpi(AutotoolsPackage):
         description=("List of fabrics that are enabled ('rdma' enables "
                      "'verbs', but implemented via the 'rdma-core' Spack "
                      "package)"),
-        values=('psm', 'psm2', 'pmi', 'pmix', 'rdma', 'verbs', 'mxm'),
+        values=('mxm', 'psm', 'psm2', 'pmi', 'pmix', 'rdma', 'verbs', 'ugni'),
         multi=True
     )
 
