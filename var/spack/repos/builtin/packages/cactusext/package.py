@@ -2,19 +2,35 @@ from spack import *
 import os
 import sys
 
-# On Cray, enable ^openmpi fabrics=ugni
-# On Cray, enable ^openmpi fabrics=pmi
+"""
+curl -O https://curl.haxx.se/ca/cacert.pem
+export CURL_CA_BUNDLE="$(pwd)/cacert.pem"
+export PIP_CERT="$(pwd)/cacert.pem"
+export SSL_CERT_FILE="$(pwd)/cacert.pem"
+
+source share/spack/setup-env.sh
+
+./bin/install.sh
+"""
+
+
 
 # Blue Waters:
 # Need setup-env.sh work-around
 # Need pkgconfig work-around; see <https://github.com/spack/spack/issues/6861>
-# $ spack install -j8 gcc %gcc@6.3.0 ^gdbm@1.12
-# $ spack install -j8 cactusext ~extras %gcc@7.3.0-spack ^gdbm@1.12 ^openmpi fabrics=pmix schedulers=alps
+"""
+spack install -j8 gcc %gcc@6.3.0 ^gdbm@1.12
+spack install -j8 cactusext ~extras %gcc@7.3.0-spack ^gdbm@1.12 ^openmpi fabrics=pmi,pmix,ugni schedulers=alps
+"""
 
-# [???] Cedar
-# $ module --force purge
-# $ spack install -j8 gcc %gcc@4.8.5
-# $ spack install -j8 cactusext +julia +valgrind %gcc@7.3.0-spack
+# [WIP] Cedar
+# Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
+# actually not needed at all
+"""
+module --force purge
+spack install -j8 gcc %gcc@4.8.5
+spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
+"""
 
 # [???] Comet:
 # Don't use too many processes while building. OpenBLAS is
@@ -24,50 +40,69 @@ import sys
 # Need pkgconfig work-around; see <https://github.com/spack/spack/issues/6861>
 # Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
 # actually not needed at all
-# $ spack install -j8 gcc %gcc@7.1.0
-# $ spack install -j8 cactusext %gcc@7.3.0-spack ^cmake@3.9.4 ^openmpi schedulers=slurm fabrics=pmix
+"""
+spack install -j8 gcc %gcc@7.1.0
+spack install -j8 cactusext %gcc@7.3.0-spack ^cmake@3.9.4 ^openmpi schedulers=slurm fabrics=pmix
+spack install -j8 cactusext %gcc@7.3.0-spack ^cmake@3.9.4 ^openmpi schedulers=slurm fabrics=pmi,pmix,rdma,ugni
+"""
 
 # [WIP] Cori-KNL: Use Cori
 
 # [WIP] Edison:
 # Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
 # actually not needed at all
-# $ spack install -j8 gcc %gcc@6.3.0
-# $ spack install -j8 cactusext %gcc@7.3.0-edison-spack
+"""
+spack install -j8 gcc %gcc@6.3.0
+spack install -j8 cactusext %gcc@7.3.0-edison-spack
+"""
 
 # Graham
-# $ module --force purge
-# $ spack install -j8 gcc %gcc@4.8.5
-# $ spack install -j8 cactusext +julia +valgrind %gcc@7.3.0-spack
+"""
+module --force purge
+spack install -j8 gcc %gcc@4.8.5
+spack install -j8 cactusext +julia +valgrind %gcc@7.3.0-spack
+"""
 
 # Nvidia:
-# $ unset MKL
-# $ unset MKLROOT
-# $ spack install -j4 gcc %gcc@6.3.0
-# $ spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix schedulers=slurm
+"""
+unset MKL
+unset MKLROOT
+spack install -j4 gcc %gcc@6.3.0
+spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
+"""
 
 # Redshift
-# $ export PATH=/Users/eschnett/src/spack/bin:/Users/eschnett/bin:/usr/X11R6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
-# $ spack install -j4 gcc %clang@9.0.0-apple
-# $ spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix
+"""
+export PATH=/Users/eschnett/src/spack/bin:/Users/eschnett/bin:/usr/X11R6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+spack install -j4 gcc %clang@9.0.0-apple
+spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix
+"""
 
 # [OLD] Stampede-KNL [on head node]:
-# $ module unload intel impi
-# $ spack install -j8 gcc %gcc@4.8.5
-# $ spack install -j8 cactusext +julia +valgrind %gcc@7.3.0-spack
+"""
+module unload intel impi
+spack install -j8 gcc %gcc@4.8.5
+spack install -j8 cactusext +julia +valgrind %gcc@7.3.0-spack
+"""
 
 # [WIP] Stampede2 [on head node]:
 # Need to manually add module "gcc/7.1.0" to Spack-generated compiler.yaml
-# $ module unload intel impi
-# $ module load gcc/7.1.0
-# $ spack install -j8 gcc %gcc@7.1.0
-# $ spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm ^python +ucs4
+"""
+module unload intel impi
+module load gcc/7.1.0
+spack install -j8 gcc %gcc@7.1.0
+spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm ^python +ucs4
+"""
 
 # [NEW] Stampede2 SKX
 
 # [WIP] Wheeler:
-# $ spack install -j4 gcc %gcc@5.3.0
-# $ spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,verbs schedulers=slurm
+"""
+spack install -j4 gcc %gcc@5.3.0
+spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,verbs schedulers=slurm
+"""
+
+
 
 class Cactusext(Package):
     """Cactus is an open source problem solving environment designed for
