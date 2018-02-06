@@ -224,7 +224,7 @@ class Openmpi(AutotoolsPackage):
     provides('mpi@:3.0', when='@1.7.5:')
     provides('mpi@:3.1', when='@2.0.0:')
 
-    depends_on('hwloc')
+    depends_on('hwloc @:1.999.999')
     depends_on('hwloc +cuda', when='+cuda')
     depends_on('jdk', when='+java')
     depends_on('java', when='+java')
