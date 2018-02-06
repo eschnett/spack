@@ -31,6 +31,7 @@ class Funhpc(CMakePackage):
     homepage = "https://github.com/eschnett/FunHPC.cxx"
     url = "https://github.com/eschnett/FunHPC.cxx/archive/version/0.1.0.tar.gz"
 
+    version('1.4.0', 'bc75938899ef20287c617f5a965c148f')
     version('1.3.1', '935333f47790e2bc8558b43bd6a2033b')
     version('1.3.0', '71a1e57c4d882cdf001f29122edf7fc6')
     version('1.2.0', 'ba2bbeea3091e999b6b85eaeb1b67a83')
