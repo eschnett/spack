@@ -66,7 +66,7 @@ class Hpx5(AutotoolsPackage):
     depends_on("hwloc")
     depends_on("hwloc +cuda", when='+cuda')
     # Note: We could disable CUDA support via "hwloc ~cuda"
-    depends_on("jemalloc")
+    depends_on("jemalloc @:4.999.999")
     # depends_on("libffi")
     depends_on("libtool", type='build')
     # depends_on("lz4")   # hpx5 always builds its own lz4
