@@ -29,7 +29,7 @@ spack install -j8 cactusext ~extras %gcc@7.3.0-spack ^gdbm@1.12 ^openmpi fabrics
 """
 module --force purge
 spack install -j8 gcc %gcc@4.8.5
-spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
+spack install -j8 cactusext ~extras %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm ^simulationio ~python
 """
 
 # [???] Comet:
@@ -42,8 +42,7 @@ spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedule
 # actually not needed at all
 """
 spack install -j8 gcc %gcc@7.1.0
-spack install -j8 cactusext %gcc@7.3.0-spack ^cmake@3.9.4 ^openmpi schedulers=slurm fabrics=pmix
-spack install -j8 cactusext %gcc@7.3.0-spack ^cmake@3.9.4 ^openmpi schedulers=slurm fabrics=pmi,pmix,rdma,ugni
+spack install -j8 cactusext ~extras %gcc@7.3.0-spack ^cmake@3.9.4 ^openmpi schedulers=slurm fabrics=pmi,pmix,rdma,ugni
 """
 
 # [WIP] Cori-KNL: Use Cori
@@ -53,14 +52,14 @@ spack install -j8 cactusext %gcc@7.3.0-spack ^cmake@3.9.4 ^openmpi schedulers=sl
 # actually not needed at all
 """
 spack install -j8 gcc %gcc@6.3.0
-spack install -j8 cactusext %gcc@7.3.0-edison-spack
+spack install -j8 cactusext ~extras %gcc@7.3.0-edison-spack
 """
 
 # Graham
 """
 module --force purge
 spack install -j8 gcc %gcc@4.8.5
-spack install -j8 cactusext +julia +valgrind %gcc@7.3.0-spack
+spack install -j8 cactusext ~extras %gcc@7.3.0-spack
 """
 
 # Nvidia:
@@ -68,21 +67,21 @@ spack install -j8 cactusext +julia +valgrind %gcc@7.3.0-spack
 unset MKL
 unset MKLROOT
 spack install -j4 gcc %gcc@6.3.0
-spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
+spack install -j4 cactusext ~extras %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
 """
 
 # Redshift
 """
 export PATH=/Users/eschnett/src/spack/bin:/Users/eschnett/bin:/usr/X11R6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 spack install -j4 gcc %clang@9.0.0-apple
-spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix
+spack install -j4 cactusext ~extras %gcc@7.3.0-spack ^openmpi fabrics=pmix
 """
 
 # [OLD] Stampede-KNL [on head node]:
 """
 module unload intel impi
 spack install -j8 gcc %gcc@4.8.5
-spack install -j8 cactusext +julia +valgrind %gcc@7.3.0-spack
+spack install -j8 cactusext ~extras %gcc@7.3.0-spack
 """
 
 # [WIP] Stampede2 [on head node]:
@@ -91,7 +90,7 @@ spack install -j8 cactusext +julia +valgrind %gcc@7.3.0-spack
 module unload intel impi
 module load gcc/7.1.0
 spack install -j8 gcc %gcc@7.1.0
-spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm ^python +ucs4
+spack install -j8 cactusext ~extras %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm ^python +ucs4
 """
 
 # [NEW] Stampede2 SKX
@@ -99,7 +98,7 @@ spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedule
 # [WIP] Wheeler:
 """
 spack install -j4 gcc %gcc@5.3.0
-spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,verbs schedulers=slurm
+spack install -j4 cactusext ~extras %gcc@7.3.0-spack ^openmpi fabrics=pmix,verbs schedulers=slurm
 """
 
 
