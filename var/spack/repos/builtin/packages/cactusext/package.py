@@ -29,7 +29,7 @@ spack install -j8 cactusext %gcc@7.3.0-spack ^gdbm@1.12 ^openmpi fabrics=pmi,pmi
 """
 module --force purge
 spack install -j8 gcc %gcc@4.8.5
-spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm ^simulationio ~python
+spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
 """
 
 # [???] Comet:
@@ -98,7 +98,7 @@ spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedule
 # [WIP] Wheeler:
 """
 spack install -j4 gcc %gcc@5.3.0
-spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,verbs schedulers=slurm
+spack install -j4 cactusext %gcc@7.3.0-spack fabrics=pmix,verbs schedulers=slurm
 """
 
 
@@ -219,9 +219,10 @@ class Cactusext(Package):
 
     # Virtual packages
     deps["openblas"] = []
-    deps["openmpi"] = []
-    # if sys.platform.startswith("linux"):
-    #     deps["openmpi"] += ["fabrics=verbs +rdma"]
+    deps["openmpi"] = ["@:2.999.999 +thread_multiple"] # OpenMPI 3.0.0 hangs
+
+    # Unnecessary (?) dependencies:
+    # bison, flex, freetype, libevent, libjpeg-turbo, py-matplotlib
 
     # Initialize dependencies that are mentioned below
     deps["bison"] = []
