@@ -43,6 +43,11 @@ class Jemalloc(Package):
     variant('stats', default=False, description='Enable heap statistics')
     variant('prof', default=False, description='Enable heap profiling')
 
+    # At least on Darwin (i.e. with Darwin's "install" script),
+    # parallel builds can fail. See
+    # <https://github.com/jemalloc/jemalloc/issues/1129>.
+    parallel = False
+
     def install(self, spec, prefix):
         configure_args = ['--prefix=%s' % prefix, ]
 
