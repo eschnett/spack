@@ -24,12 +24,12 @@ spack install -j8 cactusext %gcc@7.3.0-spack ^gdbm@1.12 ^openmpi fabrics=pmi,pmi
 """
 
 # [WIP] Cedar
-# Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
-# actually not needed at all
 """
 module --force purge
 spack install -j8 gcc %gcc@4.8.5
 spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
+
+spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,verbs schedulers=slurm
 """
 
 # [???] Comet:
