@@ -1,5 +1,5 @@
 ##############################################################################
-# Copyright (c) 2013-2017, Lawrence Livermore National Security, LLC.
+# Copyright (c) 2013-2018, Lawrence Livermore National Security, LLC.
 # Produced at the Lawrence Livermore National Laboratory.
 #
 # This file is part of Spack.
@@ -25,32 +25,32 @@
 from spack import *
 
 
-class PyPybind11(CMakePackage):
-    """pybind11 -- Seamless operability between C++11 and Python.
-    pybind11 is a lightweight header-only library that exposes C++ types in
-    Python and vice versa, mainly to create Python bindings of existing C++
-    code. Its goals and syntax are similar to the excellent Boost.Python
-    library by David Abrahams: to minimize boilerplate code in traditional
-    extension modules by inferring type information using compile-time
-    introspection."""
+class XtensorPython(CMakePackage):
+    """Python bindings for the xtensor C++ multi-dimensional array library"""
 
-    homepage = "https://pybind11.readthedocs.io"
-    url      = "https://github.com/pybind/pybind11/archive/v2.1.0.tar.gz"
+    homepage = "https://xtensor-python.readthedocs.io"
+    url      = "https://github.com/QuantStack/xtensor-python/archive/0.17.0.tar.gz"
+    maintainers = ['ax3l']
 
     version('develop', branch='master',
-            git='https://github.com/pybind/pybind11.git')
-    version('2.2.2', 'fc174e1bbfe7ec069af7eea86ec37b5c')
-    version('2.2.1', 'bab1d46bbc465af5af3a4129b12bfa3b')
-    version('2.2.0', '978b26aea1c6bfc4f88518ef33771af2')
-    version('2.1.1', '5518988698df937ccee53fb6ba91d12a')
-    version('2.1.0', '3cf07043d677d200720c928569635e12')
+            git='https://github.com/QuantStack/xtensor-python.git')
+    version('0.17.0', '51d22e42909a81201c3421d9e119eed0')
 
-    depends_on('py-pytest', type=('build'))
+    depends_on('xtensor@0.15.1:0.15.99', when='@0.17.0:')
+    depends_on('xtl@0.4.0:0.4.99', when='@0.17.0:')
+    depends_on('py-pybind11@2.2.1', when='@0.17.0:')
+
+    depends_on('py-numpy')
+    depends_on('python', type=('build', 'link', 'run'))
 
     extends('python')
 
     def cmake_args(self):
-        args = []
-        args.append('-DPYTHON_EXECUTABLE:FILEPATH=%s'
-                    % self.spec['python'].command.path)
+        spec = self.spec
+
+        python_exe = spec['python'].command.path
+
+        args = [
+            '-DPYTHON_EXECUTABLE={0}'.format(python_exe)
+        ]
         return args

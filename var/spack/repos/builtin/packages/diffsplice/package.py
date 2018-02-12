@@ -25,32 +25,17 @@
 from spack import *
 
 
-class PyPybind11(CMakePackage):
-    """pybind11 -- Seamless operability between C++11 and Python.
-    pybind11 is a lightweight header-only library that exposes C++ types in
-    Python and vice versa, mainly to create Python bindings of existing C++
-    code. Its goals and syntax are similar to the excellent Boost.Python
-    library by David Abrahams: to minimize boilerplate code in traditional
-    extension modules by inferring type information using compile-time
-    introspection."""
+class Diffsplice(MakefilePackage):
+    """A novel tool for discovering and quantitating alternative splicing
+    variants present in an RNA-seq dataset, without relying on annotated
+    transcriptome or pre-determined splice pattern."""
 
-    homepage = "https://pybind11.readthedocs.io"
-    url      = "https://github.com/pybind/pybind11/archive/v2.1.0.tar.gz"
+    homepage = "http://www.netlab.uky.edu/p/bioinfo/DiffSplice"
+    url      = "http://protocols.netlab.uky.edu/~yin/download/diffsplice/diffsplice_0.1.1.tgz"
 
-    version('develop', branch='master',
-            git='https://github.com/pybind/pybind11.git')
-    version('2.2.2', 'fc174e1bbfe7ec069af7eea86ec37b5c')
-    version('2.2.1', 'bab1d46bbc465af5af3a4129b12bfa3b')
-    version('2.2.0', '978b26aea1c6bfc4f88518ef33771af2')
-    version('2.1.1', '5518988698df937ccee53fb6ba91d12a')
-    version('2.1.0', '3cf07043d677d200720c928569635e12')
+    version('0.1.2beta', 'a1df6e0b50968f2c229d5d7f97327336')
+    version('0.1.1',     'be90e6c072402d5aae0b4e2cbb8c10ac')
 
-    depends_on('py-pytest', type=('build'))
-
-    extends('python')
-
-    def cmake_args(self):
-        args = []
-        args.append('-DPYTHON_EXECUTABLE:FILEPATH=%s'
-                    % self.spec['python'].command.path)
-        return args
+    def install(self, spec, prefix):
+        mkdirp(prefix.bin)
+        install('diffsplice', prefix.bin)

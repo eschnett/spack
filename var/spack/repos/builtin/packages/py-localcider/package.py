@@ -25,32 +25,15 @@
 from spack import *
 
 
-class PyPybind11(CMakePackage):
-    """pybind11 -- Seamless operability between C++11 and Python.
-    pybind11 is a lightweight header-only library that exposes C++ types in
-    Python and vice versa, mainly to create Python bindings of existing C++
-    code. Its goals and syntax are similar to the excellent Boost.Python
-    library by David Abrahams: to minimize boilerplate code in traditional
-    extension modules by inferring type information using compile-time
-    introspection."""
+class PyLocalcider(PythonPackage):
+    """Tools for calculating sequence properties of disordered proteins"""
 
-    homepage = "https://pybind11.readthedocs.io"
-    url      = "https://github.com/pybind/pybind11/archive/v2.1.0.tar.gz"
+    homepage = "http://pappulab.github.io/localCIDER"
+    url      = "https://pypi.io/packages/source/l/localcider/localcider-0.1.14.tar.gz"
 
-    version('develop', branch='master',
-            git='https://github.com/pybind/pybind11.git')
-    version('2.2.2', 'fc174e1bbfe7ec069af7eea86ec37b5c')
-    version('2.2.1', 'bab1d46bbc465af5af3a4129b12bfa3b')
-    version('2.2.0', '978b26aea1c6bfc4f88518ef33771af2')
-    version('2.1.1', '5518988698df937ccee53fb6ba91d12a')
-    version('2.1.0', '3cf07043d677d200720c928569635e12')
+    version('0.1.14', 'cd3c992595c5cb280374de3750663cfa')
 
-    depends_on('py-pytest', type=('build'))
-
-    extends('python')
-
-    def cmake_args(self):
-        args = []
-        args.append('-DPYTHON_EXECUTABLE:FILEPATH=%s'
-                    % self.spec['python'].command.path)
-        return args
+    depends_on('py-setuptools', type='build')
+    depends_on('py-numpy',        type=('build', 'run'))
+    depends_on('py-matplotlib',   type=('build', 'run'))
+    depends_on('py-scipy',        type=('build', 'run'))

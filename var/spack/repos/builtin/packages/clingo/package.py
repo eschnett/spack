@@ -25,32 +25,30 @@
 from spack import *
 
 
-class PyPybind11(CMakePackage):
-    """pybind11 -- Seamless operability between C++11 and Python.
-    pybind11 is a lightweight header-only library that exposes C++ types in
-    Python and vice versa, mainly to create Python bindings of existing C++
-    code. Its goals and syntax are similar to the excellent Boost.Python
-    library by David Abrahams: to minimize boilerplate code in traditional
-    extension modules by inferring type information using compile-time
-    introspection."""
+class Clingo(CMakePackage):
+    """Clingo: A grounder and solver for logic programs
 
-    homepage = "https://pybind11.readthedocs.io"
-    url      = "https://github.com/pybind/pybind11/archive/v2.1.0.tar.gz"
+       Clingo is part of the Potassco project for Answer Set
+       Programming (ASP). ASP offers a simple and powerful modeling
+       language to describe combinatorial problems as logic
+       programs. The clingo system then takes such a logic program and
+       computes answer sets representing solutions to the given
+       problem."""
 
-    version('develop', branch='master',
-            git='https://github.com/pybind/pybind11.git')
-    version('2.2.2', 'fc174e1bbfe7ec069af7eea86ec37b5c')
-    version('2.2.1', 'bab1d46bbc465af5af3a4129b12bfa3b')
-    version('2.2.0', '978b26aea1c6bfc4f88518ef33771af2')
-    version('2.1.1', '5518988698df937ccee53fb6ba91d12a')
-    version('2.1.0', '3cf07043d677d200720c928569635e12')
+    homepage = "https://potassco.org/clingo/"
+    url      = "https://github.com/potassco/clingo/archive/v5.2.2.tar.gz"
 
-    depends_on('py-pytest', type=('build'))
+    version('5.2.2', 'd46a1567f772eebad85c6300d55d2cc3')
 
-    extends('python')
+    depends_on('doxygen', type=('build'))
+    depends_on('python')
 
     def cmake_args(self):
-        args = []
-        args.append('-DPYTHON_EXECUTABLE:FILEPATH=%s'
-                    % self.spec['python'].command.path)
+        if not self.compiler.cxx14_flag:
+            InstallError('clingo requires a C++14-compliant C++ compiler')
+
+        args = ['-DCLINGO_BUILD_WITH_PYTHON=ON',
+                '-DCLING_BUILD_PY_SHARED=ON',
+                '-DPYCLINGO_USE_INSTALL_PREFIX=ON',
+                '-DCLINGO_BUILD_WITH_LUA=OFF']
         return args
