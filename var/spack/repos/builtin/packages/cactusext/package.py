@@ -23,7 +23,7 @@ spack install -j8 gcc %gcc@6.3.0 ^gdbm@1.12
 spack install -j8 cactusext %gcc@7.3.0-spack ^gdbm@1.12 ^openmpi fabrics=pmi,pmix,ugni schedulers=alps
 """
 
-# [WIP] Cedar
+# [BROKEN] Cedar
 """
 module --force purge
 spack install -j8 gcc %gcc@4.8.5
@@ -36,7 +36,7 @@ spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,verbs schedul
 # Don't use too many processes while building. OpenBLAS is
 # particularly troublesome as it uses many threads for its self-tests.
 
-# [WIP] Cori:
+# [BROKEN] Cori:
 # Need pkgconfig work-around; see <https://github.com/spack/spack/issues/6861>
 # Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
 # actually not needed at all
@@ -45,9 +45,9 @@ spack install -j8 gcc %gcc@7.1.0
 spack install -j8 cactusext %gcc@7.3.0-spack ^cmake@3.9.4 ^openmpi schedulers=slurm fabrics=pmi,pmix,rdma,ugni
 """
 
-# [WIP] Cori-KNL: Use Cori
+# [BROKEN] Cori-KNL: Use Cori
 
-# [WIP] Edison:
+# [BROKEN] Edison:
 # Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
 # actually not needed at all
 """
@@ -55,11 +55,17 @@ spack install -j8 gcc %gcc@6.3.0
 spack install -j8 cactusext %gcc@7.3.0-edison-spack
 """
 
-# Graham
+# [BROKEN] Graham
 """
 module --force purge
 spack install -j8 gcc %gcc@4.8.5
 spack install -j8 cactusext %gcc@7.3.0-spack
+"""
+
+# [BROKEN] Holodeck
+"""
+spack install -j10 gcc %gcc@4.9.2
+spack install -j10 cactusext %gcc@7.3.0-spack
 """
 
 # Nvidia:
@@ -84,7 +90,7 @@ spack install -j8 gcc %gcc@4.8.5
 spack install -j8 cactusext %gcc@7.3.0-spack
 """
 
-# [WIP] Stampede2 [on head node]:
+# [BROKEN] Stampede2 [on head node]:
 # Need to manually add module "gcc/7.1.0" to Spack-generated compiler.yaml
 """
 module unload intel impi
@@ -95,7 +101,7 @@ spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedule
 
 # [NEW] Stampede2 SKX
 
-# [WIP] Wheeler:
+# Wheeler:
 """
 spack install -j4 gcc %gcc@5.3.0
 spack install -j4 cactusext %gcc@7.3.0-spack fabrics=pmix,verbs schedulers=slurm
