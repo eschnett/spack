@@ -15,7 +15,7 @@ source share/spack/setup-env.sh
 
 
 
-# Blue Waters:
+# Blue Waters [Spack installs, Cactus builds, submit works]:
 # Need setup-env.sh work-around
 # Need pkgconfig work-around; see <https://github.com/spack/spack/issues/6861>
 """
@@ -23,20 +23,21 @@ spack install -j8 gcc %gcc@6.3.0 ^gdbm@1.12
 spack install -j8 cactusext %gcc@7.3.0-spack ^gdbm@1.12 ^openmpi fabrics=pmi,pmix,ugni schedulers=alps
 """
 
-# [BROKEN] Cedar
+# Cedar [Spack installs, Cactus ???builds, submit FAILS (cannot find
+# libfabric on compute nodes) / core dump]:
+# Build fails. Need to build manually (without distribute?) Or maybe
+# need "module purge" before build?
 """
 module --force purge
 spack install -j8 gcc %gcc@4.8.5
 spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
-
-spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,verbs schedulers=slurm
 """
 
 # [???] Comet:
 # Don't use too many processes while building. OpenBLAS is
 # particularly troublesome as it uses many threads for its self-tests.
 
-# [BROKEN] Cori:
+# Cori [Spack installs, Cactus builds, submit FAILS (MPI error)]:
 # Need pkgconfig work-around; see <https://github.com/spack/spack/issues/6861>
 # Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
 # actually not needed at all
@@ -45,7 +46,7 @@ spack install -j8 gcc %gcc@7.1.0
 spack install -j8 cactusext %gcc@7.3.0-spack ^cmake@3.9.4 ^openmpi schedulers=slurm fabrics=pmi,pmix,rdma,ugni
 """
 
-# [BROKEN] Cori-KNL: Use Cori
+# Cori-KNL [using Spack from Cori, Cactus builds, submit FAILS]
 
 # [BROKEN] Edison:
 # Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
@@ -55,20 +56,20 @@ spack install -j8 gcc %gcc@6.3.0
 spack install -j8 cactusext %gcc@7.3.0-edison-spack
 """
 
-# [BROKEN] Graham
+# Graham [weird quota problems -- files belong to wrong group]
 """
 module --force purge
 spack install -j8 gcc %gcc@4.8.5
 spack install -j8 cactusext %gcc@7.3.0-spack
 """
 
-# [BROKEN] Holodeck
+# Holodeck [Spack installs, Cactus builds, submit FAILS]
 """
 spack install -j10 gcc %gcc@4.9.2
-spack install -j10 cactusext %gcc@7.3.0-spack
+spack install -j10 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
 """
 
-# Nvidia:
+# Nvidia [Spack installs, Cactus builds, submit works]:
 """
 unset MKL
 unset MKLROOT
@@ -76,7 +77,7 @@ spack install -j4 gcc %gcc@6.3.0
 spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
 """
 
-# Redshift
+# Redshift [Spack installs, Cactus builds, submit works]:
 """
 export PATH=/Users/eschnett/src/spack/bin:/Users/eschnett/bin:/usr/X11R6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 spack install -j4 gcc %clang@9.0.0-apple
@@ -90,7 +91,7 @@ spack install -j8 gcc %gcc@4.8.5
 spack install -j8 cactusext %gcc@7.3.0-spack
 """
 
-# [BROKEN] Stampede2 [on head node]:
+# Stampede2 [Spack installs, Cactus builds, submit FAILS]:
 # Need to manually add module "gcc/7.1.0" to Spack-generated compiler.yaml
 """
 module unload intel impi
@@ -99,12 +100,12 @@ spack install -j8 gcc %gcc@7.1.0
 spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm ^python +ucs4
 """
 
-# [NEW] Stampede2 SKX
+# Stampede2 SKX [use Spack from Stampede2, Cactus builds, submit FAILS]
 
-# Wheeler:
+# Wheeler [Spack installs, Cactus builds, submit works]:
 """
 spack install -j4 gcc %gcc@5.3.0
-spack install -j4 cactusext %gcc@7.3.0-spack fabrics=pmix,verbs schedulers=slurm
+spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,verbs schedulers=slurm
 """
 
 
