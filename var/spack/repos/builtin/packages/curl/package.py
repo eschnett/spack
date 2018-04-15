@@ -61,8 +61,9 @@ class Curl(AutotoolsPackage):
 
         args = [
             '--with-zlib={0}'.format(spec['zlib'].prefix),
-            '--with-ssl={0}'.format(spec['openssl'].prefix)
+            '--with-ssl={0}'.format(spec['openssl'].prefix),
+            '--disable-ldap',
+            '--disable-ldaps'
         ]
         args += self.with_or_without('nghttp2')
-        args += self.with_or_without('libssh2')
         return args
