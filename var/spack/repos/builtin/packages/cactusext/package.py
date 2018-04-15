@@ -57,10 +57,13 @@ spack install -j8 cactusext %gcc@7.3.0-edison-spack
 """
 
 # Graham [weird quota problems -- files belong to wrong group]
+# [Reason: my default group is "eschnett"; should be "def-eschnett" instead?]
+# [need to rsync to project directory directly, instead of to symbolic link?]
 """
 module --force purge
+newgroup def-eschnett
 spack install -j8 gcc %gcc@4.8.5
-spack install -j8 cactusext %gcc@7.3.0-spack
+spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi schedulers=slurm fabrics=pmi,pmix,rdma,ugni
 """
 
 # Holodeck [Spack installs, Cactus builds, submit FAILS]
@@ -80,8 +83,10 @@ spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedule
 # Redshift [Spack installs, Cactus builds, submit works]:
 """
 export PATH=/Users/eschnett/src/spack/bin:/Users/eschnett/bin:/usr/X11R6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
-spack install -j4 gcc %clang@9.0.0-apple
-spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix
+#FAIL spack install -j4 gcc %clang@9.0.0-apple
+spack install -j1 gcc %clang@9.0.0-apple
+# curl does not build with +libssh2
+spack install -j4 cactusext %gcc@7.3.0-spack ^curl ~libssh2 ^openmpi fabrics=pmix
 """
 
 # [OLD] Stampede-KNL [on head node]:
