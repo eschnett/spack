@@ -1,5 +1,5 @@
 ##############################################################################
-# Copyright (c) 2013-2017, Lawrence Livermore National Security, LLC.
+# Copyright (c) 2013-2018, Lawrence Livermore National Security, LLC.
 # Produced at the Lawrence Livermore National Laboratory.
 #
 # This file is part of Spack.
@@ -45,10 +45,11 @@ class Julia(Package):
             git='https://github.com/JuliaLang/julia.git', branch='master')
     version('release-0.6',
             git='https://github.com/JuliaLang/julia.git', branch='release-0.6')
-    version('0.6.0', 'b4c451e0a5883c18f134e0fd8bde405a', preferred=True)
+    version('0.6.2', '255d80bc8d56d5f059fe18f0798e32f6', preferred=True)        
+    version('0.6.0', 'b4c451e0a5883c18f134e0fd8bde405a')
     version('release-0.5',
             git='https://github.com/JuliaLang/julia.git', branch='release-0.5')
-    version('0.5.2', '8c3fff150a6f96cf0536fb3b4eaa5cbb')
+    version('0.5.2', '8c3fff150a6f96cf0536fb3b4eaa5cbb')    
     version('0.5.1', 'bce119b98f274e0f07ce01498c463ad5')
     version('0.5.0', 'b61385671ba74767ab452363c43131fb')
     version('release-0.4',
