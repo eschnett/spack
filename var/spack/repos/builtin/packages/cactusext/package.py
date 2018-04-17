@@ -56,20 +56,31 @@ spack install -j8 gcc %gcc@6.3.0
 spack install -j8 cactusext %gcc@7.3.0-edison-spack
 """
 
-# Graham [weird quota problems -- files belong to wrong group]
-# [Reason: my default group is "eschnett"; should be "def-eschnett" instead?]
-# [need to rsync to project directory directly, instead of to symbolic link?]
+# Graham
+# Note: Directories on Graham need to have "g+s" mode, so that newly created
+# files belong to the group "def-eschnett", instead of the default group
+# "eschnett" which has a very low quota. Do not use rsync's "-p" option.
 """
 module --force purge
-newgroup def-eschnett
+newgrp def-eschnett
 spack install -j8 gcc %gcc@4.8.5
-spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi schedulers=slurm fabrics=pmi,pmix,rdma,ugni
+spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
 """
 
 # Holodeck [Spack installs, Cactus builds, submit FAILS]
 """
 spack install -j10 gcc %gcc@4.9.2
 spack install -j10 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
+"""
+
+# Niagara
+"""
+# module --force purge
+# newgroup def-eschnett
+# spack install -j8 gcc %gcc@4.8.5
+# spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
+module load gcc/7.3.0
+spack install -j8 gcc %gcc@7.3.0
 """
 
 # Nvidia [Spack installs, Cactus builds, submit works]:
