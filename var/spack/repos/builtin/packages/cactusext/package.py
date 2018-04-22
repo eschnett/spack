@@ -64,7 +64,14 @@ spack install -j8 cactusext %gcc@7.3.0-edison-spack
 module --force purge
 newgrp def-eschnett
 spack install -j8 gcc %gcc@4.8.5
-spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
+# spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
+# spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi +pmi fabrics=pmix,rdma schedulers=slurm
+spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma
+mkdir -p /project/6001779/eschnett/lib
+cp /lib64/libc[.-]* /project/6001779/eschnett/lib
+cp /lib64/libcrypt[.-]* /project/6001779/eschnett/lib
+cp /lib64/libm[.-]* /project/6001779/eschnett/lib
+cp /lib64/libpthread[.-]* /project/6001779/eschnett/lib
 """
 
 # Holodeck [Spack installs, Cactus builds, submit FAILS]
@@ -81,6 +88,11 @@ spack install -j10 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedul
 # spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
 module load gcc/7.3.0
 spack install -j8 gcc %gcc@7.3.0
+# module load CCEnv
+# module load nixpkgs/16.09
+# module load gcc/6.4.0
+# module load perl/5.22.4
+# spack install -j8 gcc %gcc@6.4.0
 """
 
 # Nvidia [Spack installs, Cactus builds, submit works]:
@@ -160,6 +172,7 @@ class Cactusext(Package):
     deps["boost"] = ["+mpi"]
     deps["cuda"] = []
     deps["fftw"] = ["+mpi", "+openmp"]
+    # deps["findutils"] = []
     deps["funhpc"] = []
     deps["gasnet"] = ["+mpi"]
     deps["gdb"] = []
