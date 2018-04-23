@@ -24,6 +24,7 @@
 ##############################################################################
 from spack import *
 import os
+import sys
 
 
 class PyMatplotlib(PythonPackage):
@@ -101,12 +102,16 @@ class PyMatplotlib(PythonPackage):
 
     # Required libraries that ship with matplotlib
     # depends_on('agg@2.4:')
-    depends_on('qhull@2012.1:')
+    # qhull does not provide a pkgconfig definition
+    # depends_on('qhull@2012.1:')
     # depends_on('ttconv')
     depends_on('py-six@1.9.0:', type=('build', 'run'))
 
     @run_before('build')
     def set_cc(self):
+        # Somethig doesn't work right on Darwin
+        if sys.platform == 'darwin':
+            env['MPLLOCALFREETYPE'] = '1'
         if self.spec.satisfies('%intel'):
             env['CC'] = spack_cxx
 
