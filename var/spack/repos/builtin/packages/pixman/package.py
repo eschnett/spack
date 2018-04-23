@@ -40,6 +40,8 @@ class Pixman(AutotoolsPackage):
     depends_on('pkgconfig', type='build')
     depends_on('libpng')
 
+    patch('Werror.patch')
+
     def configure_args(self):
         args = [
             '--enable-libpng',

@@ -1,0 +1,21 @@
+# --- a/configure.ac
+# +++ b/configure.ac
+# @@ -114,6 +114,6 @@
+#  
+#  dnl Find a -Werror for catching warnings.
+#  WERROR=
+# -for w in -Werror -errwarn; do
+# +for w in; do
+#      if test "z$WERROR" = "z"; then
+#          AC_MSG_CHECKING([whether the compiler supports $w])
+#          PIXMAN_LINK_WITH_ENV(
+--- a/configure
++++ b/configure
+@@ -12725,6 +12725,6 @@
+ 
+ 
+ WERROR=
+-for w in -Werror -errwarn; do
++for w in; do
+     if test "z$WERROR" = "z"; then
+         { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether the compiler supports $w" >&5
