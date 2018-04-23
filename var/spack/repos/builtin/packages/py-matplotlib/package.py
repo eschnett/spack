@@ -109,9 +109,8 @@ class PyMatplotlib(PythonPackage):
 
     @run_before('build')
     def set_cc(self):
-        # Somethig doesn't work right on Darwin
-        if sys.platform == 'darwin':
-            env['MPLLOCALFREETYPE'] = '1'
+        # Somethig doesn't work right
+        env['MPLLOCALFREETYPE'] = '1'
         if self.spec.satisfies('%intel'):
             env['CC'] = spack_cxx
 
