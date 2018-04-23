@@ -279,7 +279,7 @@ class Cactusext(Package):
     deps["pcre"] = []
     deps["perl"] = []
     deps["pkg-config"] = []
-    deps["py-matplotlib"] = []
+    deps["py-matplotlib"] = ["+animation"]
     deps["py-ipython"] = []
     # deps["py-numpy"] = []
     # deps["py-scipy"] = []
