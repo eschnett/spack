@@ -100,7 +100,8 @@ spack install -j8 gcc %gcc@7.3.0
 unset MKL
 unset MKLROOT
 spack install -j4 gcc %gcc@6.3.0
-spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
+# spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
+spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma
 """
 
 # Redshift [Spack installs, Cactus builds, submit works]:
@@ -133,7 +134,8 @@ spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedule
 # Wheeler [Spack installs, Cactus builds, submit works]:
 """
 spack install -j4 gcc %gcc@5.3.0
-spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,verbs schedulers=slurm
+# spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,verbs schedulers=slurm
+spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,verbs
 """
 
 
@@ -279,7 +281,8 @@ class Cactusext(Package):
     deps["pcre"] = []
     deps["perl"] = []
     deps["pkg-config"] = []
-    deps["py-matplotlib"] = ["+animation"]
+    # deps["py-matplotlib"] = ["+animation"]
+    deps["py-matplotlib"] = []
     deps["py-ipython"] = []
     # deps["py-numpy"] = []
     # deps["py-scipy"] = []
