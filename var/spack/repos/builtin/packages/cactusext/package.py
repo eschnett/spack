@@ -43,7 +43,8 @@ spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedule
 # actually not needed at all
 """
 spack install -j8 gcc %gcc@7.1.0
-spack install -j8 cactusext %gcc@7.3.0-spack ^cmake@3.9.4 ^openmpi schedulers=slurm fabrics=pmi,pmix,rdma,ugni
+# spack install -j8 cactusext %gcc@7.3.0-spack ^cmake@3.9.4 ^openmpi schedulers=slurm fabrics=pmi,pmix,rdma,ugni
+spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmi,pmix,rdma,ugni schedulers=slurm
 """
 
 # Cori-KNL [using Spack from Cori, Cactus builds, submit FAILS]
@@ -107,10 +108,10 @@ spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma
 # Redshift [Spack installs, Cactus builds, submit works]:
 """
 export PATH=/Users/eschnett/src/spack/bin:/Users/eschnett/bin:/usr/X11R6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
-#FAIL spack install -j4 gcc %clang@9.0.0-apple
 spack install -j1 gcc %clang@9.0.0-apple
 # curl does not build with +libssh2
-spack install -j4 cactusext %gcc@7.3.0-spack ^curl ~libssh2 ^openmpi fabrics=pmix
+# spack install -j4 cactusext %gcc@7.3.0-spack ^curl ~libssh2 ^openmpi fabrics=pmix
+spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabrics=pmix
 """
 
 # [OLD] Stampede-KNL [on head node]:
@@ -257,7 +258,8 @@ class Cactusext(Package):
 
     # Virtual packages
     deps["openblas"] = []
-    deps["openmpi"] = ["@:2.999.999 +thread_multiple"] # OpenMPI 3.0.0 hangs
+    # deps["openmpi"] = ["@:2.999.999 +thread_multiple"] # OpenMPI 3.0.0 hangs
+    deps["openmpi"] = []
 
     # Unnecessary (?) dependencies:
     # bison, flex, freetype, libevent, libjpeg-turbo, py-matplotlib
