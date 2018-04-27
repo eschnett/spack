@@ -67,7 +67,8 @@ newgrp def-eschnett
 spack install -j8 gcc %gcc@4.8.5
 # spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
 # spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi +pmi fabrics=pmix,rdma schedulers=slurm
-spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma
+# spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma
+spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabrics=pmix,rdma
 mkdir -p /project/6001779/eschnett/lib
 cp /lib64/libc[.-]* /project/6001779/eschnett/lib
 cp /lib64/libcrypt[.-]* /project/6001779/eschnett/lib
@@ -89,6 +90,7 @@ spack install -j10 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedul
 # spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
 module load gcc/7.3.0
 spack install -j8 gcc %gcc@7.3.0
+spack install -j8 cactusext %gcc@7.3.0-spack
 # module load CCEnv
 # module load nixpkgs/16.09
 # module load gcc/6.4.0
@@ -102,7 +104,8 @@ unset MKL
 unset MKLROOT
 spack install -j4 gcc %gcc@6.3.0
 # spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
-spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma
+# spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma
+spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabrics=pmix,rdma
 """
 
 # Redshift [Spack installs, Cactus builds, submit works]:
@@ -136,7 +139,8 @@ spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedule
 """
 spack install -j4 gcc %gcc@5.3.0
 # spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,verbs schedulers=slurm
-spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,verbs
+# spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,verbs
+spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabrics=pmix,rdma
 """
 
 
