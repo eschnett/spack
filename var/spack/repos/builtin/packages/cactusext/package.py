@@ -65,9 +65,6 @@ spack install -j8 cactusext %gcc@7.3.0-edison-spack
 module --force purge
 newgrp def-eschnett
 spack install -j8 gcc %gcc@4.8.5
-# spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
-# spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi +pmi fabrics=pmix,rdma schedulers=slurm
-# spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma
 spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabrics=pmix,rdma
 mkdir -p /project/6001779/eschnett/lib
 cp /lib64/libc[.-]* /project/6001779/eschnett/lib
@@ -90,7 +87,7 @@ spack install -j10 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedul
 # spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
 module load gcc/7.3.0
 spack install -j8 gcc %gcc@7.3.0
-spack install -j8 cactusext %gcc@7.3.0-spack
+spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabrics=pmix,rdma
 # module load CCEnv
 # module load nixpkgs/16.09
 # module load gcc/6.4.0
