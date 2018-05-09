@@ -42,6 +42,13 @@ class Pixman(AutotoolsPackage):
 
     patch('Werror.patch')
 
+    # As discussed here:
+    # https://bugs.freedesktop.org/show_bug.cgi?id=104886
+    # __builtin_shuffle was removed in clang 5.0.
+    # From version 9.1 apple-clang is based on clang 5.0.
+    # Patch is obtained from above link.
+    patch('clang.patch', when='%clang@9.1.0-apple:')
+
     def configure_args(self):
         args = [
             '--enable-libpng',

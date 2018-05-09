@@ -1,13 +1,13 @@
 ##############################################################################
-# Copyright (c) 2013-2016, Lawrence Livermore National Security, LLC.
+# Copyright (c) 2013-2018, Lawrence Livermore National Security, LLC.
 # Produced at the Lawrence Livermore National Laboratory.
 #
 # This file is part of Spack.
 # Created by Todd Gamblin, tgamblin@llnl.gov, All rights reserved.
 # LLNL-CODE-647188
 #
-# For details, see https://github.com/llnl/spack
-# Please also see the LICENSE file for our notice and the LGPL.
+# For details, see https://github.com/spack/spack
+# Please also see the NOTICE and LICENSE files for our notice and the LGPL.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License (as
@@ -24,7 +24,6 @@
 ##############################################################################
 
 from spack import *
-import sys
 
 
 class Libnl(AutotoolsPackage):
@@ -40,8 +39,4 @@ class Libnl(AutotoolsPackage):
     depends_on('flex', type='build')
     depends_on('m4', type='build')
 
-    @run_before('autoreconf')
-    def check_platform(self):
-        if not (sys.platform.startswith('freebsd') or
-                sys.platform.startswith('linux')):
-            raise InstallError("libnl requires FreeBSD or Linux")
+    conflicts('platform=darwin', msg='libnl requires FreeBSD or Linux')
