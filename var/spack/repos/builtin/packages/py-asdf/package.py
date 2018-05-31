@@ -22,35 +22,26 @@
 # License along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 ##############################################################################
+
 from spack import *
 
 
-class YamlCpp(CMakePackage):
-    """A YAML parser and emitter in C++"""
+class PyAsdf(PythonPackage):
+    """ASDF (Advanced Scientific Data Format) is a next generation
+       interchange format for scientific data"""
+    
+    # FIXME: Add a proper url for your package's homepage here.
+    homepage = "http://asdf.readthedocs.io"
+    url      = "https://github.com/spacetelescope/asdf/archive/2.0.1.tar.gz"
 
-    homepage = "https://github.com/jbeder/yaml-cpp"
-    url      = "https://github.com/jbeder/yaml-cpp/archive/yaml-cpp-0.5.3.tar.gz"
+    version('2.0.1', 'ea8db99c8f261deec1c5e2aa62b1da4b')
 
-    version('0.6.2', '5b943e9af0060d0811148b037449ef82')
-    version('0.5.3', '2bba14e6a7f12c7272f87d044e4a7211')
-    version('develop', git='https://github.com/jbeder/yaml-cpp', branch='master')
+    # FIXME: Add dependencies if required.
+    # depends_on('py-setuptools', type='build')
+    # depends_on('py-foo',        type=('build', 'run'))
 
-    variant('shared', default=True,
-            description='Enable build of shared libraries')
-    variant('pic',   default=True,
-            description='Build with position independent code')
-
-    depends_on('boost', when='@:0.5.3')
-
-    def cmake_args(self):
-        spec = self.spec
-        options = []
-
-        options.extend([
-            '-DBUILD_SHARED_LIBS:BOOL=%s' % (
-                'ON' if '+shared' in spec else 'OFF'),
-            '-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=%s' % (
-                'ON' if '+pic' in spec else 'OFF'),
-        ])
-
-        return options
+    def build_args(self, spec, prefix):
+        # FIXME: Add arguments other than --prefix
+        # FIXME: If not needed delete this function
+        args = []
+        return args

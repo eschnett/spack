@@ -22,35 +22,25 @@
 # License along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 ##############################################################################
+
 from spack import *
 
 
-class YamlCpp(CMakePackage):
-    """A YAML parser and emitter in C++"""
+class AsdfCxx(CMakePackage):
+    """ASDF - Advanced Scientific Data Format, a C++ implementation"""
 
-    homepage = "https://github.com/jbeder/yaml-cpp"
-    url      = "https://github.com/jbeder/yaml-cpp/archive/yaml-cpp-0.5.3.tar.gz"
+    homepage = "https://github.com/eschnett/asdf-cxx"
+    url      = "https://github.com/eschnett/asdf-cxx/archive/version/1.0.0.tar.gz"
 
-    version('0.6.2', '5b943e9af0060d0811148b037449ef82')
-    version('0.5.3', '2bba14e6a7f12c7272f87d044e4a7211')
-    version('develop', git='https://github.com/jbeder/yaml-cpp', branch='master')
+    version('2.1.0', '9baf440e85dc00bea9cb3f77ca7c4d0a')
+    version('1.1.0', 'd054a51d89c212879b6c9869f6a2c85c')
+    version('1.0.0', 'c2353a3705615ed47c2c0871dca0a272')
 
-    variant('shared', default=True,
-            description='Enable build of shared libraries')
-    variant('pic',   default=True,
-            description='Build with position independent code')
-
-    depends_on('boost', when='@:0.5.3')
+    depends_on('bzip2')
+    depends_on('openssl')
+    depends_on('yaml-cpp')
+    depends_on('zlib')
 
     def cmake_args(self):
-        spec = self.spec
-        options = []
-
-        options.extend([
-            '-DBUILD_SHARED_LIBS:BOOL=%s' % (
-                'ON' if '+shared' in spec else 'OFF'),
-            '-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=%s' % (
-                'ON' if '+pic' in spec else 'OFF'),
-        ])
-
-        return options
+        args = []
+        return args

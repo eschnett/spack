@@ -172,6 +172,7 @@ class Cactusext(Package):
     whens = {}
 
     # Actual dependencies
+    deps["asdf-cxx"] = []
     # deps["blas"] = []
     deps["boost"] = ["+mpi"]
     deps["cuda"] = []
@@ -200,6 +201,7 @@ class Cactusext(Package):
     deps["openssl"] = []
     deps["papi"] = []
     deps["petsc"] = ["+boost", "+hdf5", "+mpi"]
+    # deps["py-asdf"] = []
     # deps["py-magic-wormhole"] = []
     deps["py-yt"] = []
     deps["rsync"] = []
