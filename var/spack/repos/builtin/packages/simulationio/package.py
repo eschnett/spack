@@ -31,6 +31,7 @@ class Simulationio(CMakePackage):
     homepage = "https://github.com/eschnett/SimulationIO"
     url      = "https://github.com/eschnett/SimulationIO/archive/version/0.1.0.tar.gz"
 
+    version('2.12.0', 'a62722574c47753572541219b9328d7f')
     version('2.11.0', '5778c3f9ad847a4a4a5cae1b39436b37')
     version('2.10.0', '95fb2de260399e92d15a7628f1f0607a')
     version('2.9.0', '1b6e616b6c43a4cf2b60a8905c6f4e77')
