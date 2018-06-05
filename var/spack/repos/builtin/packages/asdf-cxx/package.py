@@ -32,6 +32,12 @@ class AsdfCxx(CMakePackage):
     homepage = "https://github.com/eschnett/asdf-cxx"
     url      = "https://github.com/eschnett/asdf-cxx/archive/version/1.0.0.tar.gz"
 
+    version('2.5.1', '0b17ea36681acc4959412f55ce8e8308')
+    version('2.5.0', '9d2c28b8b62cc1f5d3aadbebe43c8767')
+    version('2.4.1', '68e50c7597c79e47e311df5b37960439')
+    version('2.4.0', 'ebce6859db74c91c2e11422052078a49')
+    version('2.3.1', 'dd3bf93d05b189b5486aa94b5abc2028')
+    version('2.2.1', '20df71ea7e9cbcdf4a9f8495b3005cd1')
     version('2.1.1', '203acdd49ba7133e69b6a29de95910ad')
     version('2.1.0', '9baf440e85dc00bea9cb3f77ca7c4d0a')
     version('1.1.0', 'd054a51d89c212879b6c9869f6a2c85c')

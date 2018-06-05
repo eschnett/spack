@@ -76,7 +76,7 @@ cp /lib64/libpthread[.-]* /project/6001779/eschnett/lib
 # Holodeck [Spack installs, Cactus builds, submit FAILS]
 """
 spack install -j10 gcc %gcc@4.9.2
-spack install -j10 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
+spack install -j10 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabrics=pmix,rdma
 """
 
 # Niagara
