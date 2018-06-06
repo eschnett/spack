@@ -30,11 +30,12 @@ class PyAsdf(PythonPackage):
     """ASDF (Advanced Scientific Data Format) is a next generation
        interchange format for scientific data"""
     
-    # FIXME: Add a proper url for your package's homepage here.
     homepage = "http://asdf.readthedocs.io"
     url      = "https://github.com/spacetelescope/asdf/archive/2.0.1.tar.gz"
 
     version('2.0.1', 'ea8db99c8f261deec1c5e2aa62b1da4b')
+
+    depends_on('python@3.3:')
 
     # FIXME: Add dependencies if required.
     # depends_on('py-setuptools', type='build')

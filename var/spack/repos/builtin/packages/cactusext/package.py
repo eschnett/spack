@@ -201,7 +201,7 @@ class Cactusext(Package):
     deps["openssl"] = []
     deps["papi"] = []
     deps["petsc"] = ["+boost", "+hdf5", "+mpi"]
-    # deps["py-asdf"] = []
+    # deps["py-asdf"] = []   # requires Python @3.3:
     # deps["py-magic-wormhole"] = []
     deps["py-yt"] = []
     deps["rsync"] = []
