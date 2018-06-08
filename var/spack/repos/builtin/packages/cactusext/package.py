@@ -172,6 +172,7 @@ class Cactusext(Package):
     whens = {}
 
     # Actual dependencies
+    # deps["adios"] = ["+bzip2", "+hdf5"]
     deps["asdf-cxx"] = []
     # deps["blas"] = []
     deps["boost"] = ["+mpi"]

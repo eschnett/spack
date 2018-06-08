@@ -31,6 +31,8 @@ class Simulationio(CMakePackage):
     homepage = "https://github.com/eschnett/SimulationIO"
     url      = "https://github.com/eschnett/SimulationIO/archive/version/0.1.0.tar.gz"
 
+    version('4.0.0', '9ec0fa6ea0999d6db0aeeeb0153e621d')
+    version('2.17.0', 'fd68eda3f1a58a245b4165dabd134aaa')
     version('2.16.1', 'd81acb33544c22aa3ed1f8e343693c4b')
     version('2.16.0', '59c635c90868b773f9d278d25b03510f')
     version('2.15.0', 'db02c981e2b7b970d8d26520b13a5a44')
@@ -53,15 +55,17 @@ class Simulationio(CMakePackage):
             git='https://github.com/eschnett/SimulationIO.git', branch='master')
 
     variant('asdf-cxx', default=True)
+    variant('hdf5', default=True)
     variant('julia', default=False)
     variant('python', default=True)
 
     variant('pic', default=True,
             description="Produce position-independent code")
 
-    depends_on('asdf-cxx @2.1.0:', when='+asdf-cxx')
-    depends_on('hdf5 +cxx @:1.10.0-patch1', when='@:1.999.999')
-    depends_on('hdf5 +cxx @1.10.1:', when='@2.0.0:')
+    depends_on('asdf-cxx @2.1.0:@2.999.999', when='@2.0.0:2.999.999 +asdf-cxx')
+    depends_on('asdf-cxx @3.1.0', when='@3.0.0 +asdf-cxx')
+    depends_on('hdf5 +cxx @:1.10.0-patch1', when='+hdf5 @:1.999.999')
+    depends_on('hdf5 +cxx @1.10.1:', when='+hdf5 @2.0.0:')
     depends_on('julia', when='+julia', type=('build', 'run'))
     depends_on('py-h5py', when='+python', type=('build', 'run'))
     depends_on('py-numpy', when='+python', type=('build', 'run'))
@@ -73,6 +77,10 @@ class Simulationio(CMakePackage):
     def cmake_args(self):
         spec = self.spec
         options = []
+        if '~asdf-cxx' in spec:
+            options.append("-DENABLE_ASDF_CXX=OFF")
+        if '~hdf5' in spec:
+            options.append("-DENABLE_HDF5=OFF")
         if '+pic' in spec:
             options.append("-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=true")
         return options
