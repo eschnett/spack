@@ -63,7 +63,7 @@ class Simulationio(CMakePackage):
             description="Produce position-independent code")
 
     depends_on('asdf-cxx @2.1.0:@2.999.999', when='@2.0.0:2.999.999 +asdf-cxx')
-    depends_on('asdf-cxx @3.1.0', when='@3.0.0 +asdf-cxx')
+    depends_on('asdf-cxx @3.1.0', when='@4.0.0: +asdf-cxx')
     depends_on('hdf5 +cxx @:1.10.0-patch1', when='+hdf5 @:1.999.999')
     depends_on('hdf5 +cxx @1.10.1:', when='+hdf5 @2.0.0:')
     depends_on('julia', when='+julia', type=('build', 'run'))
