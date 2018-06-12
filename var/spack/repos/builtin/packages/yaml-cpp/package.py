@@ -35,6 +35,10 @@ class YamlCpp(CMakePackage):
     version('0.5.3', '2bba14e6a7f12c7272f87d044e4a7211')
     version('develop', git='https://github.com/jbeder/yaml-cpp', branch='master')
 
+    # This patch is required for asdf-cpp; see
+    # <https://github.com/jbeder/yaml-cpp/pull/585>
+    patch('easier-to-inherit.diff')
+
     variant('shared', default=True,
             description='Enable build of shared libraries')
     variant('pic',   default=True,
