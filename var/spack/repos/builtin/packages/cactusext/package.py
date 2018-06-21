@@ -33,7 +33,7 @@ spack install -j8 gcc %gcc@4.8.5
 spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
 """
 
-# [???] Comet:
+# [???] Comet
 # Don't use too many processes while building. OpenBLAS is
 # particularly troublesome as it uses many threads for its self-tests.
 
@@ -62,15 +62,16 @@ spack install -j8 cactusext %gcc@7.3.0-edison-spack
 # files belong to the group "def-eschnett", instead of the default group
 # "eschnett" which has a very low quota. Do not use rsync's "-p" option.
 """
-module --force purge
-newgrp def-eschnett
-spack install -j8 gcc %gcc@4.8.5
-spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabrics=pmix,rdma
 mkdir -p /project/6001779/eschnett/lib
 cp /lib64/libc[.-]* /project/6001779/eschnett/lib
 cp /lib64/libcrypt[.-]* /project/6001779/eschnett/lib
 cp /lib64/libm[.-]* /project/6001779/eschnett/lib
 cp /lib64/libpthread[.-]* /project/6001779/eschnett/lib
+module --force purge
+newgrp def-eschnett
+spack install -j8 gcc %gcc@4.8.5
+# spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabrics=pmix,rdma
+spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma
 """
 
 # Holodeck [Spack installs, Cactus builds, submit FAILS]
@@ -112,7 +113,7 @@ unset QTDIR
 spack install -j1 gcc %clang@9.0.0-apple
 # curl does not build with +libssh2
 # spack install -j4 cactusext %gcc@7.3.0-spack ^curl ~libssh2 ^openmpi fabrics=pmix
-spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabrics=pmix
+spack install -j4 cactusext %gcc@7.3.0-spack
 """
 
 # [OLD] Stampede-KNL [on head node]:

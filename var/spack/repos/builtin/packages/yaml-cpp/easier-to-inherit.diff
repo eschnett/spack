@@ -1,0 +1,227 @@
+diff --git a/include/yaml-cpp/node/node.h b/include/yaml-cpp/node/node.h
+index 1ded7d27..dc92d646 100644
+--- a/include/yaml-cpp/node/node.h
++++ b/include/yaml-cpp/node/node.h
+@@ -113,7 +113,7 @@ class YAML_CPP_API Node {
+   template <typename Key, typename Value>
+   void force_insert(const Key& key, const Value& value);
+ 
+- private:
++ protected:
+   enum Zombie { ZombieNode };
+   explicit Node(Zombie);
+   explicit Node(detail::node& node, detail::shared_memory_holder pMemory);
+@@ -128,7 +128,7 @@ class YAML_CPP_API Node {
+   void AssignData(const Node& rhs);
+   void AssignNode(const Node& rhs);
+ 
+- private:
++ protected:
+   bool m_isValid;
+   mutable detail::shared_memory_holder m_pMemory;
+   mutable detail::node* m_pNode;
+diff --git a/src/nodebuilder.h b/include/yaml-cpp/nodebuilder.h
+similarity index 98%
+rename from src/nodebuilder.h
+rename to include/yaml-cpp/nodebuilder.h
+index a6a47f00..f0481ded 100644
+#--- a/src/nodebuilder.h
+#+++ b/include/yaml-cpp/nodebuilder.h
+#@@ -47,15 +47,15 @@ class NodeBuilder : public EventHandler {
+#                           anchor_t anchor, EmitterStyle::value style);
+#   virtual void OnMapEnd();
+# 
+#- private:
+#+ protected:
+#   detail::node& Push(const Mark& mark, anchor_t anchor);
+#   void Push(detail::node& node);
+#   void Pop();
+#   void RegisterAnchor(anchor_t anchor, detail::node& node);
+# 
+#- private:
+#+ protected:
+#   detail::shared_memory_holder m_pMemory;
+#   detail::node* m_pRoot;
+--- a/src/nodebuilder.h
++++ b/src/nodebuilder.h
+@@ -1,70 +0,0 @@
+-#ifndef NODE_NODEBUILDER_H_62B23520_7C8E_11DE_8A39_0800200C9A66
+-#define NODE_NODEBUILDER_H_62B23520_7C8E_11DE_8A39_0800200C9A66
+-
+-#if defined(_MSC_VER) ||                                            \
+-    (defined(__GNUC__) && (__GNUC__ == 3 && __GNUC_MINOR__ >= 4) || \
+-     (__GNUC__ >= 4))  // GCC supports "pragma once" correctly since 3.4
+-#pragma once
+-#endif
+-
+-#include <vector>
+-
+-#include "yaml-cpp/anchor.h"
+-#include "yaml-cpp/emitterstyle.h"
+-#include "yaml-cpp/eventhandler.h"
+-#include "yaml-cpp/node/ptr.h"
+-
+-namespace YAML {
+-namespace detail {
+-class node;
+-}  // namespace detail
+-struct Mark;
+-}  // namespace YAML
+-
+-namespace YAML {
+-class Node;
+-
+-class NodeBuilder : public EventHandler {
+- public:
+-  NodeBuilder();
+-  virtual ~NodeBuilder();
+-
+-  Node Root();
+-
+-  virtual void OnDocumentStart(const Mark& mark);
+-  virtual void OnDocumentEnd();
+-
+-  virtual void OnNull(const Mark& mark, anchor_t anchor);
+-  virtual void OnAlias(const Mark& mark, anchor_t anchor);
+-  virtual void OnScalar(const Mark& mark, const std::string& tag,
+-                        anchor_t anchor, const std::string& value);
+-
+-  virtual void OnSequenceStart(const Mark& mark, const std::string& tag,
+-                               anchor_t anchor, EmitterStyle::value style);
+-  virtual void OnSequenceEnd();
+-
+-  virtual void OnMapStart(const Mark& mark, const std::string& tag,
+-                          anchor_t anchor, EmitterStyle::value style);
+-  virtual void OnMapEnd();
+-
+- private:
+-  detail::node& Push(const Mark& mark, anchor_t anchor);
+-  void Push(detail::node& node);
+-  void Pop();
+-  void RegisterAnchor(anchor_t anchor, detail::node& node);
+-
+- private:
+-  detail::shared_memory_holder m_pMemory;
+-  detail::node* m_pRoot;
+-
+-  typedef std::vector<detail::node*> Nodes;
+-  Nodes m_stack;
+-  Nodes m_anchors;
+-
+-  typedef std::pair<detail::node*, bool> PushedKey;
+-  std::vector<PushedKey> m_keys;
+-  std::size_t m_mapDepth;
+-};
+-}
+-
+-#endif  // NODE_NODEBUILDER_H_62B23520_7C8E_11DE_8A39_0800200C9A66
+--- a/include/yaml-cpp/nodebuilder.h
++++ b/include/yaml-cpp/nodebuilder.h
+@@ -0,0 +1,70 @@
++#ifndef NODE_NODEBUILDER_H_62B23520_7C8E_11DE_8A39_0800200C9A66
++#define NODE_NODEBUILDER_H_62B23520_7C8E_11DE_8A39_0800200C9A66
++
++#if defined(_MSC_VER) ||                                            \
++    (defined(__GNUC__) && (__GNUC__ == 3 && __GNUC_MINOR__ >= 4) || \
++     (__GNUC__ >= 4))  // GCC supports "pragma once" correctly since 3.4
++#pragma once
++#endif
++
++#include <vector>
++
++#include "yaml-cpp/anchor.h"
++#include "yaml-cpp/emitterstyle.h"
++#include "yaml-cpp/eventhandler.h"
++#include "yaml-cpp/node/ptr.h"
++
++namespace YAML {
++namespace detail {
++class node;
++}  // namespace detail
++struct Mark;
++}  // namespace YAML
++
++namespace YAML {
++class Node;
++
++class NodeBuilder : public EventHandler {
++ public:
++  NodeBuilder();
++  virtual ~NodeBuilder();
++
++  Node Root();
++
++  virtual void OnDocumentStart(const Mark& mark);
++  virtual void OnDocumentEnd();
++
++  virtual void OnNull(const Mark& mark, anchor_t anchor);
++  virtual void OnAlias(const Mark& mark, anchor_t anchor);
++  virtual void OnScalar(const Mark& mark, const std::string& tag,
++                        anchor_t anchor, const std::string& value);
++
++  virtual void OnSequenceStart(const Mark& mark, const std::string& tag,
++                               anchor_t anchor, EmitterStyle::value style);
++  virtual void OnSequenceEnd();
++
++  virtual void OnMapStart(const Mark& mark, const std::string& tag,
++                          anchor_t anchor, EmitterStyle::value style);
++  virtual void OnMapEnd();
++
++ protected:
++  detail::node& Push(const Mark& mark, anchor_t anchor);
++  void Push(detail::node& node);
++  void Pop();
++  void RegisterAnchor(anchor_t anchor, detail::node& node);
++
++ protected:
++  detail::shared_memory_holder m_pMemory;
++  detail::node* m_pRoot;
++
++  typedef std::vector<detail::node*> Nodes;
++  Nodes m_stack;
++  Nodes m_anchors;
++
++  typedef std::pair<detail::node*, bool> PushedKey;
++  std::vector<PushedKey> m_keys;
++  std::size_t m_mapDepth;
++};
++}
++
++#endif  // NODE_NODEBUILDER_H_62B23520_7C8E_11DE_8A39_0800200C9A66
+diff --git a/src/node.cpp b/src/node.cpp
+index 2088e13c..3fab63b3 100644
+--- a/src/node.cpp
++++ b/src/node.cpp
+@@ -1,5 +1,5 @@
+ #include "yaml-cpp/node/node.h"
+-#include "nodebuilder.h"
++#include "yaml-cpp/nodebuilder.h"
+ #include "nodeevents.h"
+ 
+ namespace YAML {
+diff --git a/src/nodebuilder.cpp b/src/nodebuilder.cpp
+index 093d2efe..9a2ecc38 100644
+--- a/src/nodebuilder.cpp
++++ b/src/nodebuilder.cpp
+@@ -1,7 +1,7 @@
+ #include <assert.h>
+ #include <cassert>
+ 
+-#include "nodebuilder.h"
++#include "yaml-cpp/nodebuilder.h"
+ #include "yaml-cpp/node/detail/node.h"
+ #include "yaml-cpp/node/impl.h"
+ #include "yaml-cpp/node/node.h"
+diff --git a/src/parse.cpp b/src/parse.cpp
+index 0b2ae4a4..32fbaea5 100644
+--- a/src/parse.cpp
++++ b/src/parse.cpp
+@@ -6,7 +6,7 @@
+ #include "yaml-cpp/node/node.h"
+ #include "yaml-cpp/node/impl.h"
+ #include "yaml-cpp/parser.h"
+-#include "nodebuilder.h"
++#include "yaml-cpp/nodebuilder.h"
+ 
+ namespace YAML {
+ Node Load(const std::string& input) {
