@@ -31,6 +31,7 @@ class Simulationio(CMakePackage):
     homepage = "https://github.com/eschnett/SimulationIO"
     url      = "https://github.com/eschnett/SimulationIO/archive/version/0.1.0.tar.gz"
 
+    version('6.0.0', '2657ad8b93d5d9b9f43bcac3ad290f38')
     version('5.0.0', '815c91eaefad1f9eee53f826f1a99afd')
     version('2.17.0', 'fd68eda3f1a58a245b4165dabd134aaa')
     version('2.16.1', 'd81acb33544c22aa3ed1f8e343693c4b')
@@ -64,6 +65,7 @@ class Simulationio(CMakePackage):
 
     depends_on('asdf-cxx @2.1.0:@2.999.999', when='@2.0.0:2.999.999 +asdf-cxx')
     depends_on('asdf-cxx @4.0.1:', when='@5.0.0: +asdf-cxx')
+    depends_on('asdf-cxx @6.3.0:', when='@6.0.0: +asdf-cxx')
     depends_on('hdf5 +cxx @:1.10.0-patch1', when='+hdf5 @:1.999.999')
     depends_on('hdf5 +cxx @1.10.1:', when='+hdf5 @2.0.0:')
     depends_on('julia', when='+julia', type=('build', 'run'))

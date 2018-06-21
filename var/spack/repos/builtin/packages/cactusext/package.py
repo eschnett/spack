@@ -108,6 +108,7 @@ spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabri
 # Redshift [Spack installs, Cactus builds, submit works]:
 """
 export PATH=/Users/eschnett/src/spack/bin:/Users/eschnett/bin:/usr/X11R6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+unset QTDIR
 spack install -j1 gcc %clang@9.0.0-apple
 # curl does not build with +libssh2
 # spack install -j4 cactusext %gcc@7.3.0-spack ^curl ~libssh2 ^openmpi fabrics=pmix
@@ -167,6 +168,7 @@ class Cactusext(Package):
     # variant("scalasca", default=False, description="Enable Scalasca")
     variant("rust", default=False, description="Enable Rust")
     variant("valgrind", default=False, description="Enable Valgrind")
+    variant("visit", default=False, description="Enable VisIt")
 
     deps = {}
     whens = {}
@@ -214,6 +216,7 @@ class Cactusext(Package):
     deps["tmux"] = []
     deps["valgrind"] = []
     deps["vecmathlib"] = []
+    deps["visit"] = ["^opengl"]
     deps["zlib"] = []
 
     # Possible other packages:
@@ -257,13 +260,15 @@ class Cactusext(Package):
     whens["rust"] = ["+rust"]
     whens["simulationio +julia"] = ["+julia"]
     whens["valgrind"] = ["+valgrind"]
+    whens["visit"] = ["+visit"]
 
     # Configure dependencies for convenience
 
     # Virtual packages
     deps["openblas"] = []
+    # deps["openmpi"] = []
     # deps["openmpi"] = ["@:2.999.999 +thread_multiple"] # OpenMPI 3.0.0 hangs
-    deps["openmpi"] = []
+    deps["openmpi"] = ["+thread_multiple ~vt fabrics=pmix"]
 
     # Unnecessary (?) dependencies:
     # bison, flex, freetype, libevent, libjpeg-turbo, py-matplotlib

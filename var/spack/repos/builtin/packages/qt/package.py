@@ -47,6 +47,7 @@ class Qt(Package):
     version('5.4.0',  'e8654e4b37dd98039ba20da7a53877e6')
     version('5.3.2',  'febb001129927a70174467ecb508a682')
     version('5.2.1',  'a78408c887c04c34ce615da690e0b4c8')
+    version('4.8.7',  'd990ee66bf7ab0c785589776f35ba6ad')
     version('4.8.6',  '2edbe4d6c2eff33ef91732602f3518eb')
     version('3.3.8b', '9f05b4125cfe477cc52c9742c3c09009')
 
