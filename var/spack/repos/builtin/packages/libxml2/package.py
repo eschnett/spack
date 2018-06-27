@@ -41,8 +41,9 @@ class Libxml2(AutotoolsPackage):
     extends('python', when='+python',
             ignore=r'(bin.*$)|(include.*$)|(share.*$)|(lib/libxml2.*$)|'
             '(lib/xml2.*$)|(lib/cmake.*$)')
-    depends_on('zlib')
+    depends_on('libiconv')
     depends_on('xz')
+    depends_on('zlib')
 
     depends_on('pkgconfig', type='build')
 
