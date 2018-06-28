@@ -36,3 +36,5 @@ class Nasm(AutotoolsPackage):
 
     version('2.13.03', 'd5ca2ad7121ccbae69dd606b1038532c')
     version('2.11.06', '2b958e9f5d200641e6fc9564977aecc5')
+
+    patch('pure_func.patch')
