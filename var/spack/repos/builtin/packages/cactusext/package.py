@@ -19,7 +19,7 @@ source share/spack/setup-env.sh
 # Need setup-env.sh work-around
 # Need pkgconfig work-around; see <https://github.com/spack/spack/issues/6861>
 """
-spack install -j8 gcc %gcc@6.3.0 ^gdbm@1.12
+spack install -j8 gcc@7.3.0 %gcc@6.3.0 ^gdbm@1.12
 spack install -j8 cactusext %gcc@7.3.0-spack ^gdbm@1.12 ^openmpi fabrics=pmi,pmix,ugni schedulers=alps
 """
 
@@ -29,7 +29,7 @@ spack install -j8 cactusext %gcc@7.3.0-spack ^gdbm@1.12 ^openmpi fabrics=pmi,pmi
 # need "module purge" before build?
 """
 module --force purge
-spack install -j8 gcc %gcc@4.8.5
+spack install -j8 gcc@7.3.0 %gcc@4.8.5
 spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
 """
 
@@ -42,7 +42,7 @@ spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedule
 # Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
 # actually not needed at all
 """
-spack install -j8 gcc %gcc@7.1.0
+spack install -j8 gcc@7.3.0 %gcc@7.1.0
 # spack install -j8 cactusext %gcc@7.3.0-spack ^cmake@3.9.4 ^openmpi schedulers=slurm fabrics=pmi,pmix,rdma,ugni
 spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmi,pmix,rdma,ugni schedulers=slurm
 """
@@ -53,7 +53,7 @@ spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmi,pmix,rdma,ugni
 # Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
 # actually not needed at all
 """
-spack install -j8 gcc %gcc@6.3.0
+spack install -j8 gcc@7.3.0 %gcc@6.3.0
 spack install -j8 cactusext %gcc@7.3.0-edison-spack
 """
 
@@ -69,14 +69,14 @@ cp /lib64/libm[.-]* /project/6001779/eschnett/lib
 cp /lib64/libpthread[.-]* /project/6001779/eschnett/lib
 module --force purge
 newgrp def-eschnett
-spack install -j8 gcc %gcc@4.8.5
+spack install -j8 gcc@7.3.0 %gcc@4.8.5
 # spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabrics=pmix,rdma
 spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma
 """
 
 # Holodeck [Spack installs, Cactus builds, submit FAILS]
 """
-spack install -j10 gcc %gcc@4.9.2
+spack install -j10 gcc@7.3.0 %gcc@4.9.2
 spack install -j10 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabrics=pmix,rdma
 """
 
@@ -84,34 +84,33 @@ spack install -j10 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabr
 """
 # module --force purge
 # newgroup def-eschnett
-# spack install -j8 gcc %gcc@4.8.5
+# spack install -j8 gcc@7.3.0 %gcc@4.8.5
 # spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
 module load gcc/7.3.0
-spack install -j8 gcc %gcc@7.3.0
-spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabrics=pmix,rdma
+spack install -j8 gcc@7.3.0 %gcc@7.3.0-sys
+#? spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabrics=pmix,rdma
+spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma
 # module load CCEnv
 # module load nixpkgs/16.09
 # module load gcc/6.4.0
 # module load perl/5.22.4
-# spack install -j8 gcc %gcc@6.4.0
+# spack install -j8 gcc@7.3.0 %gcc@6.4.0
 """
 
 # Nvidia [Spack installs, Cactus builds, submit works]:
 """
 unset MKL
 unset MKLROOT
-spack install -j4 gcc %gcc@6.3.0
-# spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
-# spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma
-spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabrics=pmix,rdma
+spack install -j4 gcc@7.3.0 %gcc@6.3.0-sys
+spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma
 """
 
 # Redshift [Spack installs, Cactus builds, submit works]:
 """
 export PATH=/Users/eschnett/src/spack/bin:/Users/eschnett/bin:/usr/X11R6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 unset QTDIR
-#? spack install -j1 gcc %clang@9.1.0-apple
-spack install -j4 gcc %clang@9.1.0-apple
+#? spack install -j1 gcc@7.3.0 %clang@9.1.0-apple
+spack install -j4 gcc@7.3.0 %clang@9.1.0-apple
 # curl does not build with +libssh2
 # spack install -j4 cactusext %gcc@7.3.0-spack ^curl ~libssh2 ^openmpi fabrics=pmix
 spack install -j4 cactusext %gcc@7.3.0-spack
@@ -120,7 +119,7 @@ spack install -j4 cactusext %gcc@7.3.0-spack
 # [OLD] Stampede-KNL [on head node]:
 """
 module unload intel impi
-spack install -j8 gcc %gcc@4.8.5
+spack install -j8 gcc@7.3.0 %gcc@4.8.5
 spack install -j8 cactusext %gcc@7.3.0-spack
 """
 
@@ -129,7 +128,7 @@ spack install -j8 cactusext %gcc@7.3.0-spack
 """
 module unload intel impi
 module load gcc/7.1.0
-spack install -j8 gcc %gcc@7.1.0
+spack install -j8 gcc@7.3.0 %gcc@7.1.0
 spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm ^python +ucs4
 """
 
@@ -137,7 +136,7 @@ spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedule
 
 # Wheeler [Spack installs, Cactus builds, submit works]:
 """
-spack install -j4 gcc %gcc@5.3.0
+spack install -j4 gcc@7.3.0 %gcc@5.3.0
 # spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,verbs schedulers=slurm
 # spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,verbs
 spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabrics=pmix,rdma
@@ -280,7 +279,7 @@ class Cactusext(Package):
     deps["bzip2"] = []
     deps["charm"] = []
     deps["cmake"] = []
-    deps["flex"] = ["@2.6.3"] # flex@2.6.4 and gcc@8.1.0 conflict (see flex)
+    deps["flex"] = ["@2.6.3"] # flex@2.6.4 and gcc@7.3.0 conflict (see flex)
     deps["freetype"] = []
     deps["gettext"] = []
     deps["git"] = []
@@ -333,7 +332,7 @@ class Cactusext(Package):
     deps["py-setuptools"] = ["@:30.999.999"]
 
     # Compilers
-    cactusext_compiler = "gcc@8.1.0-spack"
+    cactusext_compiler = "gcc@7.3.0-spack"
     darwin_compiler = "clang@9.1.0-apple"
     bison_compiler = cactusext_compiler
     cmake_compiler = cactusext_compiler
