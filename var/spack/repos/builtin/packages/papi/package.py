@@ -62,7 +62,7 @@ class Papi(Package):
 
             # Don't use -Werror
             for level in [".", "*", "*/*"]:
-                files = glob.iglob(join_path(level, "*"))
+                files = glob.iglob(join_path(level, "*.mk"))
                 filter_file(r"-Werror", "", *files)
 
             # Don't use <malloc.h>
