@@ -110,7 +110,8 @@ spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabri
 """
 export PATH=/Users/eschnett/src/spack/bin:/Users/eschnett/bin:/usr/X11R6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 unset QTDIR
-spack install -j1 gcc %clang@9.0.0-apple
+#? spack install -j1 gcc %clang@9.1.0-apple
+spack install -j4 gcc %clang@9.1.0-apple
 # curl does not build with +libssh2
 # spack install -j4 cactusext %gcc@7.3.0-spack ^curl ~libssh2 ^openmpi fabrics=pmix
 spack install -j4 cactusext %gcc@7.3.0-spack
@@ -279,7 +280,7 @@ class Cactusext(Package):
     deps["bzip2"] = []
     deps["charm"] = []
     deps["cmake"] = []
-    deps["flex"] = ["@2.6.3"] # flex@2.6.4 and gcc@7.3.0 conflict (see flex)
+    deps["flex"] = ["@2.6.3"] # flex@2.6.4 and gcc@8.1.0 conflict (see flex)
     deps["freetype"] = []
     deps["gettext"] = []
     deps["git"] = []
@@ -332,8 +333,8 @@ class Cactusext(Package):
     deps["py-setuptools"] = ["@:30.999.999"]
 
     # Compilers
-    cactusext_compiler = "gcc@7.3.0-spack"
-    darwin_compiler = "clang@9.0.0-apple"
+    cactusext_compiler = "gcc@8.1.0-spack"
+    darwin_compiler = "clang@9.1.0-apple"
     bison_compiler = cactusext_compiler
     cmake_compiler = cactusext_compiler
     gettext_compiler = cactusext_compiler
