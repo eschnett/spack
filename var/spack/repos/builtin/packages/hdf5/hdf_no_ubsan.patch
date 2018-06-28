@@ -1,0 +1,11 @@
+--- a/src/H5detect.c
++++ b/src/H5detect.c
+@@ -56,7 +56,7 @@
+ 
+ #if defined(__has_attribute)
+ #if __has_attribute(no_sanitize)
+-#define HDF_NO_UBSAN __attribute__((no_sanitize("undefined")))
++#define HDF_NO_UBSAN
+ #else
+ #define HDF_NO_UBSAN
+ #endif
