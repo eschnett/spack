@@ -41,6 +41,7 @@ class Papi(Package):
     homepage = "http://icl.cs.utk.edu/papi/index.html"
 
     url      = "http://icl.cs.utk.edu/projects/papi/downloads/papi-5.4.1.tar.gz"
+    version('5.6.0', 'fdd075860b2bc4b8de8b8b5c3abf594a')
     version('5.5.1', '86a8a6f3d0f34cd83251da3514aae15d')
     version('5.5.0', '5e1244a04ca031d4cc29b46ce3dd05b5')
     version('5.4.3', '3211b5a5bb389fe692370f5cf4cc2412')
@@ -58,6 +59,11 @@ class Papi(Package):
             configure_args.append('MPICC=:')
 
             configure(*configure_args)
+
+            # Don't use -Werror
+            for level in [".", "*", "*/*"]:
+                files = glob.iglob(join_path(level, "*"))
+                filter_file(r"-Werror", "", *files)
 
             # Don't use <malloc.h>
             for level in [".", "*", "*/*"]:
