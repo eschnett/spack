@@ -23,7 +23,7 @@ mv "../spack-view.old" "../spack-view" 2>/dev/null || true;
 mv "../spack-view" "../spack-view.old" 2>/dev/null || true;
 
 spack view -d true hardlink -i "../spack-view" cactusext%"$compiler"
-spack view -d false hardlink -i "../spack-view" gcc@7.3.0-sys # %"$compiler1"
+spack view -d false hardlink -i "../spack-view" gcc # %"$compiler1"
 
 easy_install_file="../spack-view/lib/python2.7/site-packages/easy-install.pth"
 rm -f "$easy_install_file"
