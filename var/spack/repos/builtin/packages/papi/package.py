@@ -70,6 +70,13 @@ class Papi(Package):
                 files = glob.iglob(join_path(level, "*.[ch]"))
                 filter_file(r"\<malloc\.h\>", "<stdlib.h>", *files)
 
+            if sys.platform == 'darwin':
+                # Don't link with -lrt; the system has no (and needs no) librt
+                for level in [".", "*", "*/*", "*/*/*", "*/*/*/*", "*/*/*/*/*"]:
+                    files = glob.iglob(join_path(level, "[Mm]akefile*"))
+                    filter_file(r' -lrt$', '', *files)
+                    filter_file(r' -lrt ', ' ', *files)
+
             make()
             make("install")
 
