@@ -101,19 +101,20 @@ spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma
 """
 unset MKL
 unset MKLROOT
-spack install -j4 gcc@7.3.0 %gcc@6.3.0-sys
-spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma
+#? spack install -j4 gcc@7.3.0 %gcc@6.3.0-sys
+#? spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma
+spack install -j4 gcc@8.1.0 %gcc@6.3.0-sys
+spack install -j4 cactusext %gcc@8.1.0-spack ^openmpi fabrics=pmix,rdma
 """
 
 # Redshift [Spack installs, Cactus builds, submit works]:
 """
 export PATH=/Users/eschnett/src/spack/bin:/Users/eschnett/bin:/usr/X11R6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 unset QTDIR
-#? spack install -j1 gcc@7.3.0 %clang@9.1.0-apple
-spack install -j4 gcc@7.3.0 %clang@9.1.0-apple
-# curl does not build with +libssh2
-# spack install -j4 cactusext %gcc@7.3.0-spack ^curl ~libssh2 ^openmpi fabrics=pmix
-spack install -j4 cactusext %gcc@7.3.0-spack
+#? spack install -j4 gcc@7.3.0 %clang@9.1.0-apple
+#? spack install -j4 cactusext %gcc@7.3.0-spack
+spack install -j4 gcc@8.1.0 %clang@9.1.0-apple
+spack install -j4 cactusext %gcc@8.1.0-spack
 """
 
 # [OLD] Stampede-KNL [on head node]:
@@ -204,7 +205,8 @@ class Cactusext(Package):
     deps["opencoarrays"] = []
     deps["openssl"] = []
     deps["papi"] = []
-    deps["petsc"] = ["+boost", "+hdf5", "+mpi"]
+    # deps["petsc"] = ["+boost", "+hdf5", "+mpi"]
+    deps["petsc"] = ["+hdf5", "+mpi"]
     # deps["py-asdf"] = []   # requires Python @3.3:
     # deps["py-magic-wormhole"] = []
     deps["py-yt"] = []
@@ -332,7 +334,7 @@ class Cactusext(Package):
     deps["py-setuptools"] = ["@:30.999.999"]
 
     # Compilers
-    cactusext_compiler = "gcc@7.3.0-spack"
+    cactusext_compiler = "gcc@8.1.0-spack"
     darwin_compiler = "clang@9.1.0-apple"
     bison_compiler = cactusext_compiler
     cmake_compiler = cactusext_compiler
