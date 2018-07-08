@@ -326,8 +326,7 @@ class Cactusext(Package):
 
     # Versions
     # TODO: Remove this once Spack chooses the latest 2.7 version by default
-    # deps["python"] += ["@2.7.14"]
-    deps["python"] += ["@2.7.13"]
+    deps["python"] += ["@2.7.15"]
     # py-ipython@6: requires python@3.3:
     deps["py-ipython"] = ["@:5.999.999"]
     # Why?
