@@ -31,6 +31,7 @@ class Jemalloc(Package):
     homepage = "http://www.canonware.com/jemalloc/"
     url      = "https://github.com/jemalloc/jemalloc/releases/download/4.0.4/jemalloc-4.0.4.tar.bz2"
 
+    version('5.1.0', '1f47a5aff2d323c317dfa4cf23be1ce4')
     version('5.0.1', '507f7b6b882d868730d644510491d18f')
     version('4.5.0', 'a5624318fbf5bf653697306642683a11')
     version('4.4.0', '81b59778e19696d99e2f7922820671b0')
