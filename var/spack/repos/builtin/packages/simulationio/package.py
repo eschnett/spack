@@ -28,8 +28,10 @@ from spack import *
 
 class Simulationio(CMakePackage):
     """SimulationIO: Efficient and convenient I/O for large PDE simulations"""
+
     homepage = "https://github.com/eschnett/SimulationIO"
     url      = "https://github.com/eschnett/SimulationIO/archive/version/0.1.0.tar.gz"
+    git      = "https://github.com/eschnett/SimulationIO.git"
 
     version('7.2.0', '26eb9d17c064ef1e03fd4590cc6b9f51')
     version('7.1.0', '5e099beb3253732e7224063b2b6e2364')
@@ -55,8 +57,6 @@ class Simulationio(CMakePackage):
     version('1.0.1', '5cbf1d0084eb436d861ffcdd297eaa08')
     version('1.0.0', '5cbf1d0084eb436d861ffcdd297eaa08')
     version('0.1.0', '00f7dabc08ed1ab77858785ce0809f50')
-    version('develop',
-            git='https://github.com/eschnett/SimulationIO.git', branch='master')
 
     variant('asdf-cxx', default=True)
     variant('hdf5', default=True)

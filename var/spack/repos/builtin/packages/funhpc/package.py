@@ -28,8 +28,10 @@ from spack import *
 
 class Funhpc(CMakePackage):
     """FunHPC: Functional HPC Programming"""
+
     homepage = "https://github.com/eschnett/FunHPC.cxx"
-    url = "https://github.com/eschnett/FunHPC.cxx/archive/version/0.1.0.tar.gz"
+    url      = "https://github.com/eschnett/FunHPC.cxx/archive/version/0.1.0.tar.gz"
+    git      = "https://github.com/eschnett/FunHPC.cxx.git"
 
     version('1.4.0', 'bc75938899ef20287c617f5a965c148f')
     version('1.3.1', '935333f47790e2bc8558b43bd6a2033b')
@@ -40,8 +42,6 @@ class Funhpc(CMakePackage):
     version('1.0.0', 'f34e71ccd5548b42672e692c913ba5ee')
     version('0.1.1', 'f0248710f2de88ed2a595ad40d99997c')
     version('0.1.0', '00f7dabc08ed1ab77858785ce0809f50')
-    version('develop',
-            git='https://github.com/eschnett/FunHPC.cxx', branch='master')
 
     variant('pic', default=True,
             description="Produce position-independent code")
