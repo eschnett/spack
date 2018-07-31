@@ -111,10 +111,10 @@ spack install -j4 cactusext %gcc@8.1.0-spack ^openmpi fabrics=pmix,rdma
 """
 export PATH=/Users/eschnett/src/spack/bin:/Users/eschnett/bin:/usr/X11R6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 unset QTDIR
-#? spack install -j4 gcc@7.3.0 %clang@9.1.0-apple
-#? spack install -j4 cactusext %gcc@7.3.0-spack
-spack install -j4 gcc@8.1.0 %clang@9.1.0-apple
-spack install -j4 cactusext %gcc@8.1.0-spack
+#? spack install -j4 gcc@8.1.0 %clang@9.1.0-apple
+#? spack install -j4 cactusext %gcc@8.1.0-spack
+spack install -j4 gcc@8.2.0 %clang@9.1.0-apple
+spack install -j4 cactusext %gcc@8.2.0-spack
 """
 
 # [OLD] Stampede-KNL [on head node]:
@@ -333,7 +333,7 @@ class Cactusext(Package):
     deps["py-setuptools"] = ["@:30.999.999"]
 
     # Compilers
-    cactusext_compiler = "gcc@8.1.0-spack"
+    cactusext_compiler = "gcc@8.2.0-spack"
     darwin_compiler = "clang@9.1.0-apple"
     bison_compiler = cactusext_compiler
     cmake_compiler = cactusext_compiler
