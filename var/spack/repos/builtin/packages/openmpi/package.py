@@ -204,7 +204,6 @@ class Openmpi(AutotoolsPackage):
         patch('syslog2.patch', when="@2.0.0:2.999.999")
         patch('syslog3.patch', when="@3.0.0")
 
-    # 'rdma' enables 'verbs', but implemented via the 'rdma-core' Spack package
     fabrics = (
         'libfabric',
         'mxm',
@@ -212,7 +211,6 @@ class Openmpi(AutotoolsPackage):
         'pmix',
         'psm',
         'psm2',
-        'rdma',
         'ucx',
         'ugni',
         'verbs',
@@ -241,7 +239,10 @@ class Openmpi(AutotoolsPackage):
             description='Enable MPI_THREAD_MULTIPLE support')
     variant('cuda', default=False, description='Enable CUDA support')
     variant('pmi', default=False, description='Enable PMI support')
-    variant('cxx_exceptions', default=True, description='Enable C++ Exception support')
+    variant('rdma', default=False,
+            description='Use rdma-core package for verbs fabric')
+    variant('cxx_exceptions', default=True,
+            description='Enable C++ Exception support')
     # Adding support to build a debug version of OpenMPI that activates
     # Memchecker, as described here:
     #
@@ -272,7 +273,7 @@ class Openmpi(AutotoolsPackage):
     depends_on('hwloc +cuda', when='+cuda')
     depends_on('jdk', when='+java')
     depends_on('java', when='+java')
-    depends_on('rdma-core', when='fabrics=rdma')
+    depends_on('rdma-core', when='+rdma')
     depends_on('sqlite', when='+sqlite3@:1.11')
     depends_on('zlib', when='@3.0.0:')
     depends_on('valgrind~mpi', when='+memchecker')
@@ -346,24 +347,10 @@ class Openmpi(AutotoolsPackage):
         if not activated:
             return '--without-{0}'.format(opt)
         line = '--with-{0}'.format(opt)
-        path = _verbs_dir()
-        if (path is not None) and (path not in ('/usr', '/usr/local')):
-            line += '={0}'.format(path)
-        return line
-
-    def with_or_without_rdma(self, activated):
-        # Up through version 1.6, this option was previously named
-        # --with-openib
-        opt = 'openib'
-        # In version 1.7, it was renamed to be --with-verbs
-        if self.spec.satisfies('@1.7:'):
-            opt = 'verbs'
-        # If the option has not been activated return
-        # --without-openib or --without-verbs
-        if not activated:
-            return '--without-{0}'.format(opt)
-        line = '--with-{0}'.format(opt)
-        path = self.spec['rdma-core'].prefix
+        if '+rdma' in self.spec:
+            path = self.spec['rdma-core'].prefix
+        else:
+            path = _verbs_dir()
         if (path is not None) and (path not in ('/usr', '/usr/local')):
             line += '={0}'.format(path)
         return line
