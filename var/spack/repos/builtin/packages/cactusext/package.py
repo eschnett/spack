@@ -19,8 +19,10 @@ source share/spack/setup-env.sh
 # Need setup-env.sh work-around
 # Need pkgconfig work-around; see <https://github.com/spack/spack/issues/6861>
 """
-spack install -j8 gcc@7.3.0 %gcc@6.3.0 ^gdbm@1.12
-spack install -j8 cactusext %gcc@7.3.0-spack ^gdbm@1.12 ^openmpi fabrics=pmi,pmix,ugni schedulers=alps
+#? spack install -j8 gcc@7.3.0 %gcc@6.3.0 ^gdbm@1.12
+#? spack install -j8 cactusext %gcc@7.3.0-spack ^gdbm@1.12 ^openmpi fabrics=pmi,pmix,ugni schedulers=alps
+spack install -j8 gcc@8.2.0 %gcc@7.3.0 ^gdbm@1.12
+spack install -j8 cactusext %gcc@8.2.0-spack ^gdbm@1.12 ^openmpi fabrics=pmi,pmix,ugni schedulers=alps
 """
 
 # Cedar [Spack installs, Cactus ???builds, submit FAILS (cannot find
@@ -95,24 +97,24 @@ spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma
 # module load gcc/6.4.0
 # module load perl/5.22.4
 # spack install -j8 gcc@7.3.0 %gcc@6.4.0
+spack install -j8 gcc@8.2.0 %gcc@7.3.0-sys
+spack install -j8 cactusext %gcc@8.2.0-spack ^openmpi fabrics=pmix,rdma
 """
 
 # Nvidia [Spack installs, Cactus builds, submit works]:
 """
 unset MKL
 unset MKLROOT
-#? spack install -j4 gcc@7.3.0 %gcc@6.3.0-sys
-#? spack install -j4 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma
-spack install -j4 gcc@8.1.0 %gcc@6.3.0-sys
-spack install -j4 cactusext %gcc@8.1.0-spack ^openmpi fabrics=pmix,rdma
+#? spack install -j4 gcc@8.1.0 %gcc@6.3.0-sys
+#? spack install -j4 cactusext %gcc@8.1.0-spack ^openmpi fabrics=pmix,rdma
+spack install -j4 gcc@8.2.0 %gcc@7.3.0-sys
+spack install -j4 cactusext %gcc@8.2.0-spack ^openmpi fabrics=pmix,rdma
 """
 
 # Redshift [Spack installs, Cactus builds, submit works]:
 """
 export PATH=/Users/eschnett/src/spack/bin:/Users/eschnett/bin:/usr/X11R6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 unset QTDIR
-#? spack install -j4 gcc@8.1.0 %clang@9.1.0-apple
-#? spack install -j4 cactusext %gcc@8.1.0-spack
 spack install -j4 gcc@8.2.0 %clang@9.1.0-apple
 spack install -j4 cactusext %gcc@8.2.0-spack
 """
@@ -134,6 +136,12 @@ spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedule
 """
 
 # Stampede2 SKX [use Spack from Stampede2, Cactus builds, submit FAILS]
+
+# Symmetry
+"""
+spack install -j20 gcc@8.2.0 %gcc@5.4.0-sys
+spack install -j20 cactusext %gcc@8.2.0-spack ^openmpi fabrics=pmix,rdma
+"""
 
 # Wheeler [Spack installs, Cactus builds, submit works]:
 """
