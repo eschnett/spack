@@ -346,10 +346,24 @@ class Openmpi(AutotoolsPackage):
         if not activated:
             return '--without-{0}'.format(opt)
         line = '--with-{0}'.format(opt)
-        if 'fabrics=rdma' in self.spec:
-            path = self.spec['rdma-core'].prefix
-        else:
-            path = _verbs_dir()
+        path = _verbs_dir()
+        if (path is not None) and (path not in ('/usr', '/usr/local')):
+            line += '={0}'.format(path)
+        return line
+
+    def with_or_without_rdma(self, activated):
+        # Up through version 1.6, this option was previously named
+        # --with-openib
+        opt = 'openib'
+        # In version 1.7, it was renamed to be --with-verbs
+        if self.spec.satisfies('@1.7:'):
+            opt = 'verbs'
+        # If the option has not been activated return
+        # --without-openib or --without-verbs
+        if not activated:
+            return '--without-{0}'.format(opt)
+        line = '--with-{0}'.format(opt)
+        path = self.spec['rdma-core'].prefix
         if (path is not None) and (path not in ('/usr', '/usr/local')):
             line += '={0}'.format(path)
         return line
