@@ -16,7 +16,7 @@ mv "../spack-tmux.old" "../spack-tmux" 2>/dev/null || true
 mv "../spack-tmux" "../spack-tmux.old" 2>/dev/null || true
 
 #TODO spack view -d false hardlink "../spack-tmux" lmod%"$compiler"
-spack view -d false hardlink -i "../spack-tmux" rsync%"$compiler"
+spack view -d false hardlink -i "../spack-tmux" rsync # %"$compiler"
 spack view -d false hardlink -i "../spack-tmux" tmux%"$compiler"
 
 mv "../spack-view.old" "../spack-view" 2>/dev/null || true;
