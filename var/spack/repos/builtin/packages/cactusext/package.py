@@ -84,21 +84,10 @@ spack install -j10 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabr
 
 # Niagara
 """
-# module --force purge
-# newgroup def-eschnett
-# spack install -j8 gcc@7.3.0 %gcc@4.8.5
-# spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedulers=slurm
 module load gcc/7.3.0
-spack install -j8 gcc@7.3.0 %gcc@7.3.0-sys
-#? spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabrics=pmix,rdma
-spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma
-# module load CCEnv
-# module load nixpkgs/16.09
-# module load gcc/6.4.0
-# module load perl/5.22.4
-# spack install -j8 gcc@7.3.0 %gcc@6.4.0
 spack install -j8 gcc@8.2.0 %gcc@7.3.0-sys
-spack install -j8 cactusext %gcc@8.2.0-spack ^openmpi fabrics=pmix,rdma
+#? spack install -j8 cactusext %gcc@8.2.0-spack ^openmpi fabrics=pmix,rdma
+spack install -j8 cactusext %gcc@8.2.0-spack ^openmpi fabrics=pmix,verbs +rdma
 """
 
 # Nvidia [Spack installs, Cactus builds, submit works]:
@@ -115,7 +104,7 @@ spack install -j4 cactusext %gcc@8.2.0-spack ^openmpi fabrics=pmix,rdma
 """
 export PATH=/Users/eschnett/src/spack/bin:/Users/eschnett/bin:/usr/X11R6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 unset QTDIR
-spack install -j4 gcc@8.2.0 %clang@9.1.0-apple
+spack install -j4 gcc@8.2.0 %clang@10.0.0-apple
 spack install -j4 cactusext %gcc@8.2.0-spack
 """
 
@@ -140,7 +129,7 @@ spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedule
 # Symmetry
 """
 spack install -j20 gcc@8.2.0 %gcc@5.4.0-sys
-spack install -j20 cactusext %gcc@8.2.0-spack ^openmpi fabrics=pmix,rdma
+spack install -j20 cactusext %gcc@8.2.0-spack ^openmpi fabrics=pmix,verbs +rdma
 """
 
 # Wheeler [Spack installs, Cactus builds, submit works]:
@@ -342,7 +331,7 @@ class Cactusext(Package):
 
     # Compilers
     cactusext_compiler = "gcc@8.2.0-spack"
-    darwin_compiler = "clang@9.1.0-apple"
+    darwin_compiler = "clang@10.0.0-apple"
     bison_compiler = cactusext_compiler
     cmake_compiler = cactusext_compiler
     gettext_compiler = cactusext_compiler
