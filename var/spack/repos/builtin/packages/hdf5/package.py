@@ -100,7 +100,7 @@ class Hdf5(AutotoolsPackage):
     # https://software.intel.com/en-us/forums/intel-fortran-compiler-for-linux-and-mac-os-x/topic/747951.
     patch('h5f90global-mult-obj-same-equivalence-same-common-block.patch',
           when='@1.10.1%intel@18')
-    patch('hdf_no_ubsan.patch', when='%gcc@8')
+    # patch('hdf_no_ubsan.patch', when='%gcc@8')
 
     # Turn line comments into block comments to conform with pre-C99 language
     # standards. Versions of hdf5 after 1.8.10 don't require this patch,
