@@ -30,15 +30,9 @@ class Libxml2(AutotoolsPackage):
     extends('python', when='+python',
             ignore=r'(bin.*$)|(include.*$)|(share.*$)|(lib/libxml2.*$)|'
             '(lib/xml2.*$)|(lib/cmake.*$)')
-<<<<<<< HEAD
     depends_on('libiconv')
     depends_on('xz')
     depends_on('zlib')
-||||||| merged common ancestors
-    depends_on('zlib')
-    depends_on('xz')
-=======
->>>>>>> develop
 
     # XML Conformance Test Suites
     # See http://www.w3.org/XML/Test/ for information
