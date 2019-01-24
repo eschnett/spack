@@ -127,7 +127,8 @@ spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedule
 # Symmetry
 """
 spack install -j20 gcc@8.2.0 %gcc@5.4.0-sys
-spack install -j20 cactusext %gcc@8.2.0-spack ^openmpi fabrics=pmix,verbs
+# spack install -j20 cactusext %gcc@8.2.0-spack ^openmpi fabrics=pmix,verbs
+spack install -j20 cactusext %gcc@8.2.0-spack ^openmpi fabrics=verbs
 """
 
 # Wheeler [Spack installs, Cactus builds, submit works]:
@@ -266,7 +267,8 @@ class Cactusext(Package):
     deps["openblas"] = []
     # deps["openmpi"] = []
     # deps["openmpi"] = ["@:2.999.999 +thread_multiple"] # OpenMPI 3.0.0 hangs
-    deps["openmpi"] = ["+thread_multiple ~vt fabrics=pmix"]
+    # deps["openmpi"] = ["+thread_multiple ~vt fabrics=pmix"]
+    deps["openmpi"] = ["+thread_multiple ~vt"]
 
     # Unnecessary (?) dependencies:
     # bison, flex, freetype, libevent, libjpeg-turbo
