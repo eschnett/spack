@@ -269,7 +269,7 @@ class Cactusext(Package):
     deps["openmpi"] = ["+thread_multiple ~vt fabrics=pmix"]
 
     # Unnecessary (?) dependencies:
-    # bison, flex, freetype, libevent, libjpeg-turbo, py-matplotlib
+    # bison, flex, freetype, libevent, libjpeg-turbo
 
     # Initialize dependencies that are mentioned below
     deps["bison"] = []
@@ -291,7 +291,7 @@ class Cactusext(Package):
     deps["perl"] = []
     deps["pkg-config"] = []
     # deps["py-matplotlib"] = ["+animation"]
-    deps["py-matplotlib"] = []
+    # deps["py-matplotlib"] = []
     deps["py-ipython"] = []
     # deps["py-numpy"] = []
     # deps["py-scipy"] = []
@@ -362,7 +362,7 @@ class Cactusext(Package):
     deps["openssl"].append("%"+openssl_compiler)
     deps["perl"].append("%"+perl_compiler)
     deps["pkg-config"].append("%"+pkg_config_compiler)
-    deps["py-matplotlib"].append("%"+python_compiler)
+    # deps["py-matplotlib"].append("%"+python_compiler)
     # deps["py-scipy"].append("%"+python_compiler)
     # deps["py-setuptools"].append("%"+python_compiler)
     deps["python"].append("%"+python_compiler)
