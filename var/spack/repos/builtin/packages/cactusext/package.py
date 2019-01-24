@@ -71,9 +71,8 @@ cp /lib64/libm[.-]* /project/6001779/eschnett/lib
 cp /lib64/libpthread[.-]* /project/6001779/eschnett/lib
 module --force purge
 newgrp def-eschnett
-spack install -j8 gcc@7.3.0 %gcc@4.8.5
-# spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabrics=pmix,rdma
-spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma
+spack install -j8 gcc@8.2.0 %gcc@4.8.5
+spack install -j8 cactusext %gcc@8.2.0-spack ^openmpi fabrics=pmix,verbs
 """
 
 # Holodeck [Spack installs, Cactus builds, submit FAILS]
@@ -86,8 +85,7 @@ spack install -j10 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabr
 """
 module load gcc/7.3.0
 spack install -j8 gcc@8.2.0 %gcc@7.3.0-sys
-#? spack install -j8 cactusext %gcc@8.2.0-spack ^openmpi fabrics=pmix,rdma
-spack install -j8 cactusext %gcc@8.2.0-spack ^openmpi fabrics=pmix,verbs +rdma
+spack install -j8 cactusext %gcc@8.2.0-spack ^openmpi fabrics=pmix,verbs
 """
 
 # Nvidia [Spack installs, Cactus builds, submit works]:
@@ -129,7 +127,7 @@ spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedule
 # Symmetry
 """
 spack install -j20 gcc@8.2.0 %gcc@5.4.0-sys
-spack install -j20 cactusext %gcc@8.2.0-spack ^openmpi fabrics=pmix,verbs +rdma
+spack install -j20 cactusext %gcc@8.2.0-spack ^openmpi fabrics=pmix,verbs
 """
 
 # Wheeler [Spack installs, Cactus builds, submit works]:
