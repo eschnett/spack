@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 from spack import *
+import sys
 
 
 class Libxdmcp(AutotoolsPackage):
@@ -17,4 +18,4 @@ class Libxdmcp(AutotoolsPackage):
     depends_on('xproto', type='build')
     depends_on('pkgconfig', type='build')
     depends_on('util-macros', type='build')
-    depends_on('libbsd')
+    depends_on('libbsd', when=sys.platform != 'darwin')
