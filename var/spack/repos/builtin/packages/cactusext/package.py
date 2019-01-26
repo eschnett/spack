@@ -22,7 +22,8 @@ source share/spack/setup-env.sh
 #? spack install -j8 gcc@7.3.0 %gcc@6.3.0 ^gdbm@1.12
 #? spack install -j8 cactusext %gcc@7.3.0-spack ^gdbm@1.12 ^openmpi fabrics=pmi,pmix,ugni schedulers=alps
 spack install -j8 gcc@8.2.0 %gcc@7.3.0 ^gdbm@1.12
-spack install -j8 cactusext %gcc@8.2.0-spack ^gdbm@1.12 ^openmpi fabrics=pmi,pmix,ugni schedulers=alps
+# spack install -j8 cactusext %gcc@8.2.0-spack ^gdbm@1.12 ^openmpi fabrics=pmi,pmix,ugni schedulers=alps
+spack install -j8 cactusext %gcc@8.2.0-spack ^gdbm@1.12 ^openmpi fabrics=ucx schedulers=alps
 """
 
 # Cedar [Spack installs, Cactus ???builds, submit FAILS (cannot find
@@ -85,7 +86,7 @@ spack install -j10 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabr
 """
 module load gcc/7.3.0
 spack install -j8 gcc@8.2.0 %gcc@7.3.0-sys
-spack install -j8 cactusext %gcc@8.2.0-spack ^openmpi fabrics=pmix,verbs
+spack install -j8 cactusext %gcc@8.2.0-spack ^openmpi fabrics=verbs
 """
 
 # Nvidia [Spack installs, Cactus builds, submit works]:
@@ -102,8 +103,8 @@ spack install -j4 cactusext %gcc@8.2.0-spack ^openmpi fabrics=pmix,rdma
 """
 export PATH=/Users/eschnett/src/spack/bin:/Users/eschnett/bin:/usr/X11R6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 unset QTDIR
-spack install -j4 gcc@8.2.0 %clang@10.0.0-apple
-spack install -j4 cactusext %gcc@8.2.0-spack
+spack install -j6 gcc@8.2.0 %clang@10.0.0-apple
+spack install -j6 cactusext %gcc@8.2.0-spack
 """
 
 # [OLD] Stampede-KNL [on head node]:
