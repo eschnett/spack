@@ -14,6 +14,7 @@ class Simulationio(CMakePackage):
     url      = "https://github.com/eschnett/SimulationIO/archive/version/0.1.0.tar.gz"
     git      = "https://github.com/eschnett/SimulationIO.git"
 
+    version('8.0.0', sha256='c46e84d1ecc3ee3e9f77a25fdb6bdc1ae2ca69c59ce4f2f929e33f4854acfa14')
     version('7.6.0', sha256='805cfb5c3ef579c23688edaadeeaadcf84e13515f16d9256d2e955c12b2f1fcc')
     version('7.5.0', sha256='a0e7ced42db11247ba879343f63543e33cf6f7ebdcd90d574999c33421329e06')
     version('7.4.0', sha256='f80a75a7b568d2ad18e2ead78af529ecaebba35430aec347565299bd3c70d259')
@@ -51,9 +52,10 @@ class Simulationio(CMakePackage):
     variant('pic', default=True,
             description="Produce position-independent code")
 
-    depends_on('asdf-cxx @2.1.0:@2.999.999', when='@2.0.0:2.999.999 +asdf-cxx')
+    depends_on('asdf-cxx @2.1.0:2.999.999', when='@2.0.0:2.999.999 +asdf-cxx')
     depends_on('asdf-cxx @4.0.1:', when='@5.0.0: +asdf-cxx')
-    depends_on('asdf-cxx @6.3.0:', when='@6.0.0: +asdf-cxx')
+    depends_on('asdf-cxx @6.3.0:6.999.999', when='@6.0.0:7.999.999 +asdf-cxx')
+    depends_on('asdf-cxx @7.0.0:', when='@8.0.0: +asdf-cxx')
     depends_on('hdf5 +cxx @:1.10.0-patch1', when='+hdf5 @:1.999.999')
     depends_on('hdf5 +cxx @1.10.1:', when='+hdf5 @2.0.0:')
     depends_on('julia', when='+julia', type=('build', 'run'))
