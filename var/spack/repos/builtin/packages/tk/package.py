@@ -16,6 +16,7 @@ class Tk(AutotoolsPackage):
     homepage = "http://www.tcl.tk"
     url      = "http://prdownloads.sourceforge.net/tcl/tk8.6.5-src.tar.gz"
 
+    version('8.6.9', 'e3cf6290999ee30651d75864eccfec63')
     version('8.6.8', '5e0faecba458ee1386078fb228d008ba')
     version('8.6.6', 'dd7dbb3a6523c42d05f6ab6e86096e99')
     version('8.6.5', '11dbbd425c3e0201f20d6a51482ce6c4')

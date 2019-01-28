@@ -19,11 +19,9 @@ source share/spack/setup-env.sh
 # Need setup-env.sh work-around
 # Need pkgconfig work-around; see <https://github.com/spack/spack/issues/6861>
 """
-#? spack install -j8 gcc@7.3.0 %gcc@6.3.0 ^gdbm@1.12
-#? spack install -j8 cactusext %gcc@7.3.0-spack ^gdbm@1.12 ^openmpi fabrics=pmi,pmix,ugni schedulers=alps
 spack install -j8 gcc@8.2.0 %gcc@7.3.0 ^gdbm@1.12
-# spack install -j8 cactusext %gcc@8.2.0-spack ^gdbm@1.12 ^openmpi fabrics=pmi,pmix,ugni schedulers=alps
-spack install -j8 cactusext %gcc@8.2.0-spack ^gdbm@1.12 ^openmpi fabrics=ucx schedulers=alps
+#? spack install -j8 cactusext %gcc@8.2.0-spack ^gdbm@1.12 ^openmpi fabrics=ucx schedulers=alps
+spack install -j8 cactusext %gcc@8.2.0-spack ^gdbm@1.12 ^openmpi schedulers=alps
 """
 
 # Cedar [Spack installs, Cactus ???builds, submit FAILS (cannot find
