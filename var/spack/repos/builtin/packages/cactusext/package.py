@@ -303,7 +303,7 @@ class Cactusext(Package):
     deps["sqlite"] = []
     deps["swig"] = []
     deps["tar"] = []
-    deps["tk"] = []
+    # deps["tk"] = []
     deps["xz"] = []
 
     deps["charm"] += ["-netlrts", "+mpi", "+smp"]
@@ -388,7 +388,7 @@ class Cactusext(Package):
     # deps["scorep"].append("%"+cactusext_compiler)
     # deps["tau"].append("%"+cactusext_compiler)
     deps["tar"].append("%"+cactusext_compiler)
-    deps["tk"].append("%"+cactusext_compiler)
+    # deps["tk"].append("%"+cactusext_compiler)
     
     deps["openblas"].append("%"+cactusext_compiler)
     deps["openmpi"].append("%"+cactusext_compiler)
