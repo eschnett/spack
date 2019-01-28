@@ -15,6 +15,7 @@ class Libxcb(AutotoolsPackage):
     homepage = "https://xcb.freedesktop.org/"
     url      = "https://xcb.freedesktop.org/dist/libxcb-1.13.tar.gz"
 
+    version('1.13.1', sha256='f09a76971437780a602303170fd51b5f7474051722bc39d566a272d2c4bde1b5')
     version('1.13',   '3ba7fe0a7d60650bfb73fbf623aa57cc')
     version('1.12',   '95eee7c28798e16ba5443f188b27a476')
     version('1.11.1', '118623c15a96b08622603a71d8789bf3')
