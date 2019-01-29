@@ -197,7 +197,7 @@ class Openmpi(AutotoolsPackage):
     patch('btl_vader.patch', when='@3.0.1:3.0.2')
     patch('btl_vader.patch', when='@3.1.0:3.1.2')
 
-    fabrics = ('psm', 'psm2', 'verbs', 'mxm', 'ucx', 'libfabric')
+    fabrics = ('psm', 'psm2', 'verbs', 'mxm', 'ugni', 'ucx', 'libfabric')
     variant(
         'fabrics', values=auto_or_any_combination_of(*fabrics).with_default(
             'auto' if _verbs_dir() is None else 'verbs'
