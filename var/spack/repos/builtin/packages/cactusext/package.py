@@ -21,7 +21,7 @@ source share/spack/setup-env.sh
 """
 spack install -j8 gcc@8.2.0 %gcc@7.3.0 ^gdbm@1.12
 #? spack install -j8 cactusext %gcc@8.2.0-spack ^gdbm@1.12 ^openmpi fabrics=ucx schedulers=alps
-spack install -j8 cactusext %gcc@8.2.0-spack ^gdbm@1.12 ^openmpi schedulers=alps
+spack install -j8 cactusext %gcc@8.2.0-spack ^gdbm@1.12 ^openmpi fabrics=ugni schedulers=alps
 """
 
 # Cedar [Spack installs, Cactus ???builds, submit FAILS (cannot find
@@ -71,7 +71,7 @@ cp /lib64/libpthread[.-]* /project/6001779/eschnett/lib
 module --force purge
 newgrp def-eschnett
 spack install -j8 gcc@8.2.0 %gcc@4.8.5
-spack install -j8 cactusext %gcc@8.2.0-spack ^openmpi fabrics=pmix,verbs
+spack install -j8 cactusext %gcc@8.2.0-spack ^openmpi fabrics=verbs
 """
 
 # Holodeck [Spack installs, Cactus builds, submit FAILS]
