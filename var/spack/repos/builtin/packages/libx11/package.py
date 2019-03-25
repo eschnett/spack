@@ -10,7 +10,7 @@ class Libx11(AutotoolsPackage):
     """libX11 - Core X11 protocol client library."""
 
     homepage = "https://www.x.org/"
-    url      = "https://www.x.org/archive/individual/lib/libX11-1.6.5.tar.gz"
+    url      = "https://www.x.org/archive/individual/lib/libX11-1.6.7.tar.gz"
 
     version('1.6.7', sha256='f62ab88c2a87b55e1dc338726a55bb6ed8048084fe6a3294a7ae324ca45159d1')
     version('1.6.5', '300b5831916ffcc375468431d856917e')
