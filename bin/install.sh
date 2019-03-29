@@ -5,9 +5,9 @@ set -o pipefail
 set -u
 set -x
 
-compiler='gcc@8.2.0-spack'
+compiler='gcc@8.3.0-spack'
 if [ $(uname) = Darwin ]; then
-    compiler1='clang@9.1.0'
+    compiler1='clang@10.0.1'
 else
     compiler1="$compiler"       # this is wrong
 fi
@@ -23,7 +23,7 @@ mv "../spack-view.old" "../spack-view" 2>/dev/null || true;
 mv "../spack-view" "../spack-view.old" 2>/dev/null || true;
 
 spack view -d true hardlink -i "../spack-view" cactusext%"$compiler"
-spack view -d false hardlink -i "../spack-view" gcc@8.2.0 # %"$compiler1"
+spack view -d false hardlink -i "../spack-view" gcc@8.3.0 # %"$compiler1"
 
 easy_install_file="../spack-view/lib/python2.7/site-packages/easy-install.pth"
 rm -f "$easy_install_file"

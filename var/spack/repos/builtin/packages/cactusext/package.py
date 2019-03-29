@@ -19,9 +19,9 @@ source share/spack/setup-env.sh
 # Need setup-env.sh work-around
 # Need pkgconfig work-around; see <https://github.com/spack/spack/issues/6861>
 """
-spack install -j8 gcc@8.2.0 %gcc@7.3.0 ^gdbm@1.12
-#? spack install -j8 cactusext %gcc@8.2.0-spack ^gdbm@1.12 ^openmpi fabrics=ucx schedulers=alps
-spack install -j8 cactusext %gcc@8.2.0-spack ^gdbm@1.12 ^openmpi fabrics=ugni schedulers=alps
+spack install -j8 gcc@8.3.0 %gcc@7.3.0 ^gdbm@1.12
+#? spack install -j8 cactusext %gcc@8.3.0-spack ^gdbm@1.12 ^openmpi fabrics=ucx schedulers=alps
+spack install -j8 cactusext %gcc@8.3.0-spack ^gdbm@1.12 ^openmpi fabrics=ugni schedulers=alps
 """
 
 # Cedar [Spack installs, Cactus ???builds, submit FAILS (cannot find
@@ -70,8 +70,8 @@ cp /lib64/libm[.-]* /project/6001779/eschnett/lib
 cp /lib64/libpthread[.-]* /project/6001779/eschnett/lib
 module --force purge
 newgrp def-eschnett
-spack install -j8 gcc@8.2.0 %gcc@4.8.5
-spack install -j8 cactusext %gcc@8.2.0-spack ^openmpi fabrics=verbs
+spack install -j8 gcc@8.3.0 %gcc@4.8.5
+spack install -j8 cactusext %gcc@8.3.0-spack ^openmpi fabrics=verbs
 """
 
 # Holodeck [Spack installs, Cactus builds, submit FAILS]
@@ -83,8 +83,8 @@ spack install -j10 cactusext %gcc@7.3.0-spack ^openmpi +thread_multiple ~vt fabr
 # Niagara
 """
 module load gcc/7.3.0
-spack install -j8 gcc@8.2.0 %gcc@7.3.0-sys
-spack install -j8 cactusext %gcc@8.2.0-spack ^openmpi fabrics=verbs
+spack install -j8 gcc@8.3.0 %gcc@7.3.0-sys
+spack install -j8 cactusext %gcc@8.3.0-spack ^openmpi fabrics=verbs
 """
 
 # Nvidia [Spack installs, Cactus builds, submit works]:
@@ -93,16 +93,16 @@ unset MKL
 unset MKLROOT
 #? spack install -j4 gcc@8.1.0 %gcc@6.3.0-sys
 #? spack install -j4 cactusext %gcc@8.1.0-spack ^openmpi fabrics=pmix,rdma
-spack install -j4 gcc@8.2.0 %gcc@7.3.0-sys
-spack install -j4 cactusext %gcc@8.2.0-spack ^openmpi fabrics=pmix,rdma
+spack install -j4 gcc@8.3.0 %gcc@7.3.0-sys
+spack install -j4 cactusext %gcc@8.3.0-spack ^openmpi fabrics=pmix,rdma
 """
 
 # Redshift [Spack installs, Cactus builds, submit works]:
 """
 export PATH=/Users/eschnett/src/spack/bin:/Users/eschnett/bin:/usr/X11R6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 unset QTDIR
-spack install -j6 gcc@8.2.0 %clang@10.0.0-apple
-spack install -j6 cactusext %gcc@8.2.0-spack
+spack install -j6 gcc@8.3.0 %clang@10.0.1-apple
+spack install -j6 cactusext %gcc@8.3.0-spack
 """
 
 # [OLD] Stampede-KNL [on head node]:
@@ -125,9 +125,10 @@ spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedule
 
 # Symmetry
 """
-spack install -j20 gcc@8.2.0 %gcc@5.4.0-sys
-# spack install -j20 cactusext %gcc@8.2.0-spack ^openmpi fabrics=pmix,verbs
-spack install -j20 cactusext %gcc@8.2.0-spack ^openmpi fabrics=verbs
+#REMOVE spack install -j20 gcc@8.3.0 %gcc@5.4.0-sys
+spack install -j20 gcc@8.3.0 +nvptx %gcc@5.4.0-sys
+# spack install -j20 cactusext %gcc@8.3.0-spack ^openmpi fabrics=pmix,verbs
+spack install -j20 cactusext %gcc@8.3.0-spack ^openmpi fabrics=verbs
 """
 
 # Wheeler [Spack installs, Cactus builds, submit works]:
@@ -211,6 +212,7 @@ class Cactusext(Package):
     # deps["tau"] = []   # ["+scorep"]
     deps["simulationio"] = []
     deps["simulationio +julia"] = []
+    deps["tiledb"] = []
     deps["tmux"] = []
     deps["valgrind"] = []
     deps["vecmathlib"] = []
@@ -329,8 +331,8 @@ class Cactusext(Package):
     deps["py-setuptools"] = ["@:30.999.999"]
 
     # Compilers
-    cactusext_compiler = "gcc@8.2.0-spack"
-    darwin_compiler = "clang@10.0.0-apple"
+    cactusext_compiler = "gcc@8.3.0-spack"
+    darwin_compiler = "clang@10.0.1-apple"
     bison_compiler = cactusext_compiler
     cmake_compiler = cactusext_compiler
     gettext_compiler = cactusext_compiler
@@ -388,6 +390,7 @@ class Cactusext(Package):
     # deps["scorep"].append("%"+cactusext_compiler)
     # deps["tau"].append("%"+cactusext_compiler)
     deps["tar"].append("%"+cactusext_compiler)
+    deps["tiledb"].append("%"+cactusext_compiler)
     # deps["tk"].append("%"+cactusext_compiler)
     
     deps["openblas"].append("%"+cactusext_compiler)
