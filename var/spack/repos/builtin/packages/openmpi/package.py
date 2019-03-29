@@ -263,6 +263,7 @@ class Openmpi(AutotoolsPackage):
     # Future ompi releases may support it, needs to be verified.
     # See #7483 for context.
     depends_on('hwloc@:1.999')
+    depends_on('libevent')
 
     depends_on('hwloc +cuda', when='+cuda')
     depends_on('jdk', when='+java')
@@ -446,6 +447,10 @@ class Openmpi(AutotoolsPackage):
         # Hwloc support
         if spec.satisfies('@1.5.2:'):
             config_args.append('--with-hwloc={0}'.format(spec['hwloc'].prefix))
+
+        # Libevent support
+        config_args.append(
+            '--with-libevent={0}'.format(spec['libevent'].prefix))
 
         # Java support
         if spec.satisfies('@1.7.4:'):
