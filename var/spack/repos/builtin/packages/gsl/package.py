@@ -17,6 +17,8 @@ class Gsl(AutotoolsPackage):
     homepage = "http://www.gnu.org/software/gsl"
     url      = "https://ftpmirror.gnu.org/gsl/gsl-2.3.tar.gz"
 
+    parallel = False
+
     version('2.5', sha256='0460ad7c2542caaddc6729762952d345374784100223995eb14d614861f2258d')
     version('2.4',   'dba736f15404807834dc1c7b93e83b92')
     version('2.3',   '905fcbbb97bc552d1037e34d200931a0')
