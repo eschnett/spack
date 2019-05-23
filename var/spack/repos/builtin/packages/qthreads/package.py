@@ -21,6 +21,7 @@ class Qthreads(AutotoolsPackage):
 
     url = "https://github.com/Qthreads/qthreads/releases/download/1.10/qthread-1.10.tar.bz2"
 
+    version('1.14', sha256='16f15e5b2e35b6329a857d24c283a1e43cd49921ee49a1446d4f31bf9c6f5cf9')
     version("1.13", "65a88fb9d159b56ccc2b3e3086ef914c")
     version("1.12", "c857d175f8135eaa669f3f8fa0fb0c09")
     version("1.11", "68b5f9a41cfd1a2ac112cc4db0612326")
