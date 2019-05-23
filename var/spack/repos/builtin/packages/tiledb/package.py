@@ -24,6 +24,8 @@ class Tiledb(CMakePackage):
     depends_on('zlib')
     depends_on('zstd')
 
+    patch('uri_max_len.patch')
+
     def cmake_args(self):
         args = ['-DTILEDB_WERROR=OFF']
         if '+static' in self.spec:

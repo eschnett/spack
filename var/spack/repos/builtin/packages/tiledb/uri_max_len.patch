@@ -1,0 +1,11 @@
+--- a/tiledb/sm/misc/constants.cc
++++ b/tiledb/sm/misc/constants.cc
+@@ -202,7 +202,7 @@
+ const uint64_t vfs_file_max_parallel_ops = vfs_num_threads;
+ 
+ /** The maximum name length. */
+-const uint32_t uri_max_len = 256;
++const uint32_t uri_max_len = 1024;
+ 
+ /** The maximum file path length (depending on platform). */
+ #ifndef _WIN32
