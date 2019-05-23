@@ -1,4 +1,4 @@
-diff -ruN gcc-8.3.0-old/fixincludes/fixincl.x gcc-8.3.0/fixincludes/fixincl.x
+dadiff -ruN gcc-8.3.0-old/fixincludes/fixincl.x gcc-8.3.0/fixincludes/fixincl.x
 --- gcc-8.3.0-old/fixincludes/fixincl.x	2018-02-22 11:12:26.000000000 -0500
 +++ gcc-8.3.0/fixincludes/fixincl.x	2019-03-28 15:59:33.000000000 -0400
 @@ -2,11 +2,11 @@
@@ -110,7 +110,7 @@ diff -ruN gcc-8.3.0-old/fixincludes/fixincl.x gcc-8.3.0/fixincludes/fixincl.x
 diff -ruN gcc-8.3.0-old/fixincludes/inclhack.def gcc-8.3.0/fixincludes/inclhack.def
 --- gcc-8.3.0-old/fixincludes/inclhack.def	2018-02-22 11:12:26.000000000 -0500
 +++ gcc-8.3.0/fixincludes/inclhack.def	2019-03-28 15:59:18.739714124 -0400
-@@ -1268,6 +1268,36 @@
+@@ -1268,6 +1268,31 @@
  };
  
  /*
@@ -122,23 +122,18 @@ diff -ruN gcc-8.3.0-old/fixincludes/inclhack.def gcc-8.3.0/fixincludes/inclhack.
 +    files     = sys/ucred.h;
 +    select    = "_Atomic";
 +
-+    c_fix     = wrap;
++sed = "/#include <sys\\/appleapiopts.h>/"
++      "i#if defined(__cplusplus) && __cplusplus >= 201103L\\\n"
++      "#  include <stdatomic>\\\n"
++      "#  define _Atomic(T) std::atomic< T >\\\n"
++      "#endif\\\n"
 +
-+    c_fix_arg = <<- _EOArg_
++sed = "s/_Atomic u_long /_Atomic(u_long)/"
 +
-+	#if defined(__cplusplus) && __cplusplus >= 201103L
-+	#  define _Atomic volatile
-+	#endif
-+
-+	_EOArg_;
-+
-+    c_fix_arg = <<- _EOArg_
-+
-+	#if defined(__cplusplus) && __cplusplus >= 201103L
-+	#  undef _Atomic
-+	#endif
-+
-+	_EOArg_;
++sed = "/#endif \\/* !_SYS_UCRED_H_ *\\//"
++      "i#if defined(__cplusplus) && __cplusplus >= 201103L\\\n"
++      "#  undef _Atomic\\\n"
++      "#endif\\\n"
 +
 +    test_text = "#include <sys/sysctl.h>\n";
 +};
@@ -150,13 +145,19 @@ diff -ruN gcc-8.3.0-old/fixincludes/inclhack.def gcc-8.3.0/fixincludes/inclhack.
 diff -ruN gcc-8.3.0-old/gcc/config/darwin-driver.c gcc-8.3.0/gcc/config/darwin-driver.c
 --- gcc-8.3.0-old/gcc/config/darwin-driver.c	2018-01-03 05:03:58.000000000 -0500
 +++ gcc-8.3.0/gcc/config/darwin-driver.c	2019-03-28 16:05:19.856598766 -0400
-@@ -27,7 +27,9 @@
+@@ -27,7 +27,15 @@
  #include "diagnostic-core.h"
  
  #ifndef CROSS_DIRECTORY_STRUCTURE
++#if defined(__cplusplus) && __cplusplus >= 201103L
++// This is safe because it applies only to struct ucred, which is
++// not actually used by gcc.
 +#define _Atomic volatile
++#endif
  #include <sys/sysctl.h>
++#if defined(__cplusplus) && __cplusplus >= 201103L
 +#undef _Atomic
++#endif
  #include "xregex.h"
  
  static char *
