@@ -10,6 +10,10 @@ class Libyaml(Package):
     """A C library for parsing and emitting YAML."""
 
     homepage = "https://github.com/yaml/libyaml"
+    # TODO: Download instead from
+    # <https://pyyaml.org/download/libyaml/>, which is the actual
+    # released tarball that also has "configure" and doesn't require
+    # running "bootstrap"
     url      = "https://github.com/yaml/libyaml/archive/0.2.1.tar.gz"
     git      = "https://github.com/yaml/libyaml.git"
 
