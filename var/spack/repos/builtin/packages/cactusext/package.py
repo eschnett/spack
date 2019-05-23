@@ -43,7 +43,7 @@ spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmix,rdma schedule
 # Disable check for H5Py in SimulationIO's CMakeLists.txt; it's
 # actually not needed at all
 """
-spack install -j8 gcc@7.3.0 %gcc@7.1.0
+spack install -j8 gcc@8.3.0 %gcc@7.3.0
 # spack install -j8 cactusext %gcc@7.3.0-spack ^cmake@3.9.4 ^openmpi schedulers=slurm fabrics=pmi,pmix,rdma,ugni
 spack install -j8 cactusext %gcc@7.3.0-spack ^openmpi fabrics=pmi,pmix,rdma,ugni schedulers=slurm
 """
