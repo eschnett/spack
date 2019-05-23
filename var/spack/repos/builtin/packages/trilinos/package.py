@@ -28,7 +28,7 @@ class Trilinos(CMakePackage):
     url      = "https://github.com/trilinos/Trilinos/archive/trilinos-release-12-12-1.tar.gz"
     git      = "https://github.com/trilinos/Trilinos.git"
 
-    maintainers = ['aprokop']
+    maintainers = ['aprokop', 'keitat']
 
     # ###################### Versions ##########################
 
@@ -81,8 +81,6 @@ class Trilinos(CMakePackage):
             description='Compile with Boost')
     variant('cgns',         default=False,
             description='Enable CGNS')
-    variant('exodus',       default=True,
-            description='Compile with Exodus from SEACAS')
     variant('gtest',        default=True,
             description='Compile with Gtest')
     variant('hdf5',         default=True,
@@ -119,10 +117,17 @@ class Trilinos(CMakePackage):
             description='Compile with Aztec')
     variant('belos',        default=True,
             description='Compile with Belos')
+    # chaco is disabled by default. As of 12.14.1 libchaco.so
+    # has the global symbol divide (and maybe others) that can
+    # lead to symbol clash.
+    variant('chaco',       default=False,
+            description='Compile with Chaco from SEACAS')
     variant('epetra',       default=True,
             description='Compile with Epetra')
     variant('epetraext',    default=True,
             description='Compile with EpetraExt')
+    variant('exodus',       default=True,
+            description='Compile with Exodus from SEACAS')
     variant('ifpack',       default=True,
             description='Compile with Ifpack')
     variant('ifpack2',      default=True,
@@ -157,6 +162,8 @@ class Trilinos(CMakePackage):
             description='Compile with STK')
     variant('shards',       default=False,
             description='Compile with Shards')
+    variant('shylu',        default=False,
+            description='Compile with ShyLU')
     variant('teko',         default=False,
             description='Compile with Teko')
     variant('tempus',       default=False,
@@ -417,6 +424,8 @@ class Trilinos(CMakePackage):
                 'ON' if '+sacado' in spec else 'OFF'),
             '-DTrilinos_ENABLE_Shards=%s' % (
                 'ON' if '+shards' in spec else 'OFF'),
+            '-DTrilinos_ENABLE_ShyLU=%s' % (
+                'ON' if '+shylu' in spec else 'OFF'),
             '-DTrilinos_ENABLE_Teko=%s' % (
                 'ON' if '+teko' in spec else 'OFF'),
             '-DTrilinos_ENABLE_Tempus=%s' % (
@@ -474,6 +483,18 @@ class Trilinos(CMakePackage):
             options.extend([
                 '-DTrilinos_ENABLE_SEACAS:BOOL=OFF',
                 '-DTrilinos_ENABLE_SEACASExodus:BOOL=OFF'
+            ])
+
+        if '+chaco' in spec:
+            options.extend([
+                '-DTrilinos_ENABLE_SEACAS:BOOL=ON'
+                '-DTrilinos_ENABLE_SEACASChaco:BOOL=ON'
+            ])
+        else:
+            # don't disable SEACAS, could be needed elsewhere
+            options.extend([
+                '-DTrilinos_ENABLE_SEACASChaco:BOOL=OFF',
+                '-DTrilinos_ENABLE_SEACASNemslice=OFF'
             ])
 
         # ######################### TPLs #############################
@@ -701,6 +722,7 @@ class Trilinos(CMakePackage):
             options.extend([
                 '-DTpetra_INST_DOUBLE:BOOL=ON',
                 '-DTpetra_INST_INT_LONG:BOOL=ON',
+                '-DTpetra_INST_INT_LONG_LONG:BOOL=ON',
                 '-DTpetra_INST_COMPLEX_DOUBLE=%s' % complex_s,
                 '-DTpetra_INST_COMPLEX_FLOAT=%s' % complex_float_s,
                 '-DTpetra_INST_FLOAT=%s' % float_s,

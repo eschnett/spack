@@ -28,6 +28,8 @@ class Kokkos(Package):
     version('2.02.15', 'de41e38f452a50bb03363c519fe20769')
     version('2.02.07', 'd5baeea70109249f7dca763074ffb202')
 
+    variant('debug', default=False, description="Build debug version of Kokkos")
+
     variant('serial', default=True, description="enable Serial backend (default)")
     variant('pthreads', default=False, description="enable Pthreads backend")
     variant('qthreads', default=False, description="enable Qthreads backend")
@@ -123,10 +125,9 @@ class Kokkos(Package):
     # conflicts on kokkos version and cuda enabled
     # see kokkos issue #1296
     # https://github.com/kokkos/kokkos/issues/1296
-    conflicts('+cuda', when='@2.5.00:develop',
-        msg='Kokkos build system has issue when CUDA enabled'
-        ' in version 2.5.00 through 2.7.00, and develop until '
-        'issue #1296 is resolved.')
+    conflicts('+cuda', when='@2.5.00:2.7.00',
+        msg='Kokkos build system has issue (#1296) when CUDA enabled'
+        ' in version 2.5.00 through 2.7.00.')
 
     # Specify that v1.x is required as v2.x has API changes
     depends_on('hwloc@:1')
@@ -148,6 +149,10 @@ class Kokkos(Package):
             # PIC
             if '+pic' in spec:
                 g_args.append('--cxxflags=-fPIC')
+
+            # Build Debug
+            if '+debug' in spec:
+                g_args.append('--debug')
 
             # Backends
             if '+serial' in spec:
