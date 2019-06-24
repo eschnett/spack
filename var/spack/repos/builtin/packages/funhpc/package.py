@@ -14,6 +14,7 @@ class Funhpc(CMakePackage):
     url      = "https://github.com/eschnett/FunHPC.cxx/archive/version/0.1.0.tar.gz"
     git      = "https://github.com/eschnett/FunHPC.cxx.git"
 
+    version('1.4.1', sha256='e054ba59fa07770e83312e3d9cf636ff1fb75d0f1accbe9d105b5ed2aaf97a2d')
     version('1.4.0', 'bc75938899ef20287c617f5a965c148f')
     version('1.3.1', '935333f47790e2bc8558b43bd6a2033b')
     version('1.3.0', '71a1e57c4d882cdf001f29122edf7fc6')
