@@ -32,6 +32,7 @@ class AsdfCxx(CMakePackage):
     homepage = "https://github.com/eschnett/asdf-cxx"
     url      = "https://github.com/eschnett/asdf-cxx/archive/version/1.0.0.tar.gz"
 
+    version('7.1.0', sha256='81fd8c7f91f8daf0f85a1486480ae9e736b9712e82ccb858271f7ee2c2b425f7')
     version('7.0.0', sha256='a50718dfa68b86b0c3e280e6a9d0a4edb03d500ba70244bd38fa86bac1433979')
     version('6.3.0', '5f7a24a62b398991b38abbfb14f3eb67')
     version('6.0.0', '8881646c4a3cca88e733adcdd6e03070')
@@ -53,6 +54,9 @@ class AsdfCxx(CMakePackage):
 
     depends_on('bzip2')
     depends_on('openssl')
+    depends_on('py-numpy', type=('build', 'run'))
+    depends_on('python', type=('build', 'run'))
+    depends_on('swig', type='build')
     depends_on('yaml-cpp')
     depends_on('zlib')
 
