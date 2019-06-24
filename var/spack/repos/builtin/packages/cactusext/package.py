@@ -87,22 +87,14 @@ spack install -j8 gcc@8.3.0 %gcc@7.3.0-sys
 spack install -j8 cactusext %gcc@8.3.0-spack ^openmpi fabrics=verbs
 """
 
-# Nvidia [Spack installs, Cactus builds, submit works]:
-"""
-unset MKL
-unset MKLROOT
-#? spack install -j4 gcc@8.1.0 %gcc@6.3.0-sys
-#? spack install -j4 cactusext %gcc@8.1.0-spack ^openmpi fabrics=pmix,rdma
-spack install -j4 gcc@8.3.0 %gcc@7.3.0-sys
-spack install -j4 cactusext %gcc@8.3.0-spack ^openmpi fabrics=pmix,rdma
-"""
-
 # Redshift [Spack installs, Cactus builds, submit works]:
 """
 export PATH=/Users/eschnett/src/spack/bin:/Users/eschnett/bin:/usr/X11R6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 unset QTDIR
-spack install -j6 gcc@8.3.0 %clang@10.0.1-apple
-spack install -j6 cactusext %gcc@8.3.0-spack
+#REMOVE spack install -j6 gcc@8.3.0 %clang@10.0.1-apple
+#REMOVE spack install -j6 cactusext %gcc@8.3.0-spack
+spack install -j6 gcc@9.1.0 %clang@10.0.1-apple
+spack install -j6 cactusext %gcc@9.1.0-spack
 """
 
 # [OLD] Stampede-KNL [on head node]:
@@ -176,6 +168,7 @@ class Cactusext(Package):
     deps["asdf-cxx"] = []
     # deps["blas"] = []
     deps["boost"] = ["+mpi"]
+    deps["cereal"] = []
     deps["cuda"] = []
     deps["fftw"] = ["+mpi", "+openmp"]
     # deps["findutils"] = []
@@ -206,6 +199,7 @@ class Cactusext(Package):
     # deps["py-asdf"] = []   # requires Python @3.3:
     # deps["py-magic-wormhole"] = []
     deps["py-yt"] = []
+    deps["qthreads"] = []
     deps["rsync"] = []
     # deps["scalasca"] = []   # depends on scorep
     # deps["scorep"] = []   # requires a case sensitive file system
@@ -290,6 +284,7 @@ class Cactusext(Package):
     deps["libpng"] = []
     deps["libsigsegv"] = []
     deps["llvm"] = []
+    deps["mimalloc"] = []
     deps["pcre"] = []
     deps["perl"] = []
     deps["pkg-config"] = []
@@ -299,7 +294,8 @@ class Cactusext(Package):
     # deps["py-numpy"] = []
     # deps["py-scipy"] = []
     deps["py-setuptools"] = []
-    deps["python"] = []
+    # See <https://github.com/facebookarchive/caffe2/issues/854>:
+    deps["python"] = ["+shared"]
     deps["qhull"] = []
     deps["rust"] = []
     deps["sqlite"] = []
@@ -324,14 +320,14 @@ class Cactusext(Package):
 
     # Versions
     # TODO: Remove this once Spack chooses the latest 2.7 version by default
-    deps["python"] += ["@2.7.15"]
+    deps["python"] += ["@2.7.16"]
     # py-ipython@6: requires python@3.3:
     deps["py-ipython"] = ["@:5.999.999"]
     # Why?
     deps["py-setuptools"] = ["@:30.999.999"]
 
     # Compilers
-    cactusext_compiler = "gcc@8.3.0-spack"
+    cactusext_compiler = "gcc@9.1.0-spack"
     darwin_compiler = "clang@10.0.1-apple"
     bison_compiler = cactusext_compiler
     cmake_compiler = cactusext_compiler
@@ -372,6 +368,7 @@ class Cactusext(Package):
     deps["rsync"].append("%"+rsync_compiler)
     deps["zlib"].append("%"+zlib_compiler)
     
+    deps["cereal"].append("%"+cactusext_compiler)
     deps["fftw"].append("%"+cactusext_compiler)
     deps["freetype"].append("%"+cactusext_compiler)
     deps["gsl"].append("%"+cactusext_compiler)
@@ -400,6 +397,7 @@ class Cactusext(Package):
     deps["funhpc"].append("%"+cactusext_compiler)
     deps["julia"].append("%"+cactusext_compiler)
     deps["llvm"].append("%"+cactusext_compiler)
+    deps["qthreads"].append("%"+cactusext_compiler)
     deps["rust"].append("%"+cactusext_compiler)
     deps["simulationio"].append("%"+cactusext_compiler)
     
